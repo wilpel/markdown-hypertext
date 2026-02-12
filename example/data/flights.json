@@ -1,0 +1,199 @@
+{
+  "routes": [
+    {
+      "from": "ARN",
+      "to": "BCN",
+      "offers": [
+        {
+          "offer_id": "off_arn_bcn_1",
+          "airline": "SAS",
+          "flight_number": "SK1893",
+          "departure": "2026-03-10T06:30:00",
+          "arrival": "2026-03-10T10:15:00",
+          "duration_minutes": 225,
+          "stops": 0,
+          "price": { "amount": 189, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_arn_bcn_2",
+          "airline": "Vueling",
+          "flight_number": "VY1266",
+          "departure": "2026-03-10T14:00:00",
+          "arrival": "2026-03-10T17:50:00",
+          "duration_minutes": 230,
+          "stops": 0,
+          "price": { "amount": 142, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_arn_bcn_3",
+          "airline": "Lufthansa",
+          "flight_number": "LH2423",
+          "departure": "2026-03-10T08:15:00",
+          "arrival": "2026-03-10T13:40:00",
+          "duration_minutes": 325,
+          "stops": 1,
+          "price": { "amount": 167, "currency": "EUR" },
+          "cabin": "economy"
+        }
+      ]
+    },
+    {
+      "from": "ARN",
+      "to": "LHR",
+      "offers": [
+        {
+          "offer_id": "off_arn_lhr_1",
+          "airline": "SAS",
+          "flight_number": "SK1521",
+          "departure": "2026-03-10T07:00:00",
+          "arrival": "2026-03-10T09:15:00",
+          "duration_minutes": 195,
+          "stops": 0,
+          "price": { "amount": 211, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_arn_lhr_2",
+          "airline": "British Airways",
+          "flight_number": "BA777",
+          "departure": "2026-03-10T16:30:00",
+          "arrival": "2026-03-10T18:45:00",
+          "duration_minutes": 195,
+          "stops": 0,
+          "price": { "amount": 238, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_arn_lhr_3",
+          "airline": "SAS",
+          "flight_number": "SK1525",
+          "departure": "2026-03-10T12:00:00",
+          "arrival": "2026-03-10T14:10:00",
+          "duration_minutes": 190,
+          "stops": 0,
+          "price": { "amount": 445, "currency": "EUR" },
+          "cabin": "business"
+        }
+      ]
+    },
+    {
+      "from": "JFK",
+      "to": "CDG",
+      "offers": [
+        {
+          "offer_id": "off_jfk_cdg_1",
+          "airline": "Air France",
+          "flight_number": "AF9",
+          "departure": "2026-03-10T19:00:00",
+          "arrival": "2026-03-11T08:30:00",
+          "duration_minutes": 450,
+          "stops": 0,
+          "price": { "amount": 412, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_jfk_cdg_2",
+          "airline": "Delta",
+          "flight_number": "DL264",
+          "departure": "2026-03-10T22:00:00",
+          "arrival": "2026-03-11T11:45:00",
+          "duration_minutes": 465,
+          "stops": 0,
+          "price": { "amount": 389, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_jfk_cdg_3",
+          "airline": "Air France",
+          "flight_number": "AF11",
+          "departure": "2026-03-10T21:30:00",
+          "arrival": "2026-03-11T11:00:00",
+          "duration_minutes": 450,
+          "stops": 0,
+          "price": { "amount": 1820, "currency": "EUR" },
+          "cabin": "business"
+        }
+      ]
+    },
+    {
+      "from": "LHR",
+      "to": "JFK",
+      "offers": [
+        {
+          "offer_id": "off_lhr_jfk_1",
+          "airline": "British Airways",
+          "flight_number": "BA115",
+          "departure": "2026-03-10T09:30:00",
+          "arrival": "2026-03-10T12:30:00",
+          "duration_minutes": 480,
+          "stops": 0,
+          "price": { "amount": 534, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_lhr_jfk_2",
+          "airline": "Virgin Atlantic",
+          "flight_number": "VS3",
+          "departure": "2026-03-10T11:00:00",
+          "arrival": "2026-03-10T14:15:00",
+          "duration_minutes": 495,
+          "stops": 0,
+          "price": { "amount": 498, "currency": "EUR" },
+          "cabin": "economy"
+        }
+      ]
+    },
+    {
+      "from": "CDG",
+      "to": "ARN",
+      "offers": [
+        {
+          "offer_id": "off_cdg_arn_1",
+          "airline": "Air France",
+          "flight_number": "AF1062",
+          "departure": "2026-03-10T09:45:00",
+          "arrival": "2026-03-10T12:30:00",
+          "duration_minutes": 165,
+          "stops": 0,
+          "price": { "amount": 178, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_cdg_arn_2",
+          "airline": "SAS",
+          "flight_number": "SK1422",
+          "departure": "2026-03-10T17:20:00",
+          "arrival": "2026-03-10T20:00:00",
+          "duration_minutes": 160,
+          "stops": 0,
+          "price": { "amount": 195, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_cdg_arn_3",
+          "airline": "KLM",
+          "flight_number": "KL1244",
+          "departure": "2026-03-10T07:00:00",
+          "arrival": "2026-03-10T12:10:00",
+          "duration_minutes": 310,
+          "stops": 1,
+          "price": { "amount": 156, "currency": "EUR" },
+          "cabin": "economy"
+        },
+        {
+          "offer_id": "off_cdg_arn_4",
+          "airline": "Air France",
+          "flight_number": "AF1262",
+          "departure": "2026-03-10T13:00:00",
+          "arrival": "2026-03-10T15:40:00",
+          "duration_minutes": 160,
+          "stops": 0,
+          "price": { "amount": 385, "currency": "EUR" },
+          "cabin": "business"
+        }
+      ]
+    }
+  ]
+}

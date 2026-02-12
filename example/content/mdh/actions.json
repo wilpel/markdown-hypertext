@@ -1,0 +1,41 @@
+{
+  "spec": "mdh/1.0",
+  "actions": [
+    {
+      "id": "flights.search",
+      "node_id": "doc:flights-search",
+      "title": "Search Flights",
+      "method": "GET",
+      "url": "/api/flights/search",
+      "accept": "application/json",
+      "auth": { "type": "none" },
+      "query": {
+        "required": ["from", "to"],
+        "optional": ["date", "cabin", "max_price", "limit", "cursor"]
+      },
+      "pagination": {
+        "type": "cursor",
+        "request": {
+          "cursor_param": "cursor",
+          "limit_param": "limit"
+        },
+        "response": {
+          "next_cursor_jsonpath": "$.next_cursor"
+        }
+      }
+    },
+    {
+      "id": "flights.get_offer",
+      "node_id": "doc:flights-search",
+      "title": "Get Offer",
+      "method": "GET",
+      "url": "/api/flights/offers/{id}",
+      "accept": "application/json",
+      "auth": { "type": "none" },
+      "query": {
+        "required": [],
+        "optional": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "spec": "mdh/1.0",
+  "nodes": [
+    {
+      "id": "doc:index",
+      "type": "section",
+      "title": "SkySearch — Flight Search API",
+      "md_url": "/md/index"
+    },
+    {
+      "id": "doc:flights",
+      "type": "section",
+      "title": "Flights",
+      "md_url": "/md/flights"
+    },
+    {
+      "id": "doc:flights-search",
+      "type": "page",
+      "title": "Search Flights",
+      "md_url": "/md/flights-search"
+    },
+    {
+      "id": "doc:airports",
+      "type": "reference",
+      "title": "Airports",
+      "md_url": "/md/airports"
+    },
+    {
+      "id": "doc:help",
+      "type": "guide",
+      "title": "Getting Started",
+      "md_url": "/md/help"
+    }
+  ]
+}

@@ -8,7 +8,13 @@ links:
   - rel: related_to
     target: flights-search
   - rel: related_to
+    target: flights-book
+  - rel: related_to
     target: hotels-search
+  - rel: related_to
+    target: hotels-book
+  - rel: related_to
+    target: bookings
   - rel: related_to
     target: airports
 ---
@@ -19,10 +25,11 @@ This site is an MDH-enabled travel search API. Here's how to navigate it.
 
 ## Discovery
 
-Start at `/` or `/md/index` to read this site's root page. Two artifacts describe the site structure:
+Start at `/` or `/md/index` to read this site's root page.
 
 - **nodes.json** — lists every page on this site with its ID, title, and type (`/mdh/nodes.json`)
-- **actions.json** — lists API actions you can call (`/mdh/actions.json`)
+
+Action definitions live in each page's YAML frontmatter. Request any page with `Accept: application/json` to get structured metadata including actions.
 
 ## Navigation
 
@@ -36,15 +43,18 @@ The [search flights](/md/flights-search) page describes the flight search action
 
 Each search result includes an ID (`offer_id` for flights, `hotel_id` for hotels). Use the ID with the detail endpoint to get the full record.
 
+To book, use the POST actions described in [book flight](/md/flights-book) and [book hotel](/md/hotels-book). After booking, retrieve confirmations via [bookings](/md/bookings).
+
 ## Typical flow
 
 1. Read `/` or `/md/index` for an overview
 2. Read `/mdh/nodes.json` to see all pages
-3. Read `/mdh/actions.json` to see available actions
-4. Navigate to [search flights](/md/flights-search) or [search hotels](/md/hotels-search) to learn the parameters
-5. Call `GET /api/flights/search?from=ARN&to=BCN` to search flights
-6. Call `GET /api/flights/offers/off_arn_bcn_1` to get flight details
+3. Navigate to [search flights](/md/flights-search) or [search hotels](/md/hotels-search) to learn the parameters
+4. Call `GET /api/flights/search?from=ARN&to=BCN` to search flights
+5. Call `GET /api/flights/offers/off_arn_bcn_1` to get flight details
+6. Call `POST /api/flights/book` with `offer_id` and passengers to book — see [book flight](/md/flights-book)
 7. Call `GET /api/hotels/search?city=BCN` to find hotels at the destination
-8. Call `GET /api/hotels/htl_bcn_1` to get hotel details
+8. Call `POST /api/hotels/book` with hotel details and guests to book — see [book hotel](/md/hotels-book)
+9. Call `GET /api/bookings/{booking_id}` to retrieve a booking confirmation
 
 See [airports](/md/airports) for valid city/airport codes.

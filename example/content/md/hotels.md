@@ -8,6 +8,8 @@ links:
   - rel: related_to
     target: hotels-search
   - rel: related_to
+    target: hotels-book
+  - rel: related_to
     target: airports
 ---
 
@@ -46,5 +48,9 @@ Hotels are available in all 15 cities, with 5 hotels per city ranging from budge
 Each hotel includes: name, city, star rating, neighborhood, amenities, and room types with prices per night in EUR.
 
 Room types vary by hotel — budget hotels offer standard rooms, while higher-rated hotels also have superior rooms and suites.
+
+## Booking
+
+Once you've found a hotel, you can book a room. See [book hotel](/md/hotels-book) for the POST booking action. You'll need the `hotel_id`, room type, dates, and guest details.
 
 See [search hotels](/md/hotels-search) for the full API reference.

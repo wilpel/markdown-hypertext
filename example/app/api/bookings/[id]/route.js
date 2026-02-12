@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readArtifact } from "@/lib/content";
+import { getBooking } from "@/lib/bookings";
 
 export const dynamic = "force-dynamic";
 
@@ -10,15 +10,15 @@ const NO_CACHE = {
 };
 
 export async function GET(request, { params }) {
-  const { file } = await params;
+  const { id } = await params;
+  const booking = getBooking(id);
 
-  try {
-    const raw = readArtifact(file);
-    return NextResponse.json(JSON.parse(raw), { headers: NO_CACHE });
-  } catch {
+  if (!booking) {
     return NextResponse.json(
-      { error: "not found" },
+      { error: "Booking not found" },
       { status: 404, headers: NO_CACHE }
     );
   }
+
+  return NextResponse.json(booking, { headers: NO_CACHE });
 }

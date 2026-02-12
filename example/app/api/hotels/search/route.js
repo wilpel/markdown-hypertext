@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { getHotelData } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
+const NO_CACHE = {
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+  Pragma: "no-cache",
+  Expires: "0",
+};
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const city = searchParams.get("city");
@@ -15,7 +23,7 @@ export async function GET(request) {
   if (!city) {
     return NextResponse.json(
       { error: "city is a required query parameter" },
-      { status: 400 }
+      { status: 400, headers: NO_CACHE }
     );
   }
 
@@ -81,5 +89,5 @@ export async function GET(request) {
     }
   }
 
-  return NextResponse.json(response);
+  return NextResponse.json(response, { headers: NO_CACHE });
 }

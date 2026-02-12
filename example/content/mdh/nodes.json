@@ -38,6 +38,24 @@
       "md_url": "/md/airports"
     },
     {
+      "id": "flights-book",
+      "type": "page",
+      "title": "Book Flight",
+      "md_url": "/md/flights-book"
+    },
+    {
+      "id": "hotels-book",
+      "type": "page",
+      "title": "Book Hotel",
+      "md_url": "/md/hotels-book"
+    },
+    {
+      "id": "bookings",
+      "type": "section",
+      "title": "Bookings",
+      "md_url": "/md/bookings"
+    },
+    {
       "id": "help",
       "type": "guide",
       "title": "Getting Started",

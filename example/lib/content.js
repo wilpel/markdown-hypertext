@@ -1,5 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
+import yaml from "js-yaml";
 
 const contentDir = join(process.cwd(), "content");
 const dataDir = join(process.cwd(), "data");
@@ -18,28 +19,7 @@ export function parseFrontmatter(raw) {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!match) return { body: raw };
 
-  const meta = {};
-  for (const line of match[1].split("\n")) {
-    if (line.startsWith(" ") || line.startsWith("\t")) continue;
-    const colon = line.indexOf(":");
-    if (colon === -1) continue;
-    const key = line.slice(0, colon).trim();
-    let val = line.slice(colon + 1).trim();
-    if (!val) continue;
-    if (
-      (val.startsWith('"') && val.endsWith('"')) ||
-      (val.startsWith("'") && val.endsWith("'"))
-    ) {
-      val = val.slice(1, -1);
-    }
-    if (val.startsWith("[") && val.endsWith("]")) {
-      val = val
-        .slice(1, -1)
-        .split(",")
-        .map((s) => s.trim().replace(/^["']|["']$/g, ""));
-    }
-    meta[key] = val;
-  }
+  const meta = yaml.load(match[1]);
 
   return { meta, frontmatter_raw: match[1], body: match[2].trim() };
 }

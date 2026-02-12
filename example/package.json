@@ -1,7 +1,7 @@
 {
   "name": "mdh-example-flights",
   "version": "1.0.0",
-  "description": "Example MDH site: flight search API",
+  "description": "Example MDH site: travel search and booking API",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "js-yaml": "^4.1.1",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

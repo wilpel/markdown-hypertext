@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { getFlightData } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
+const NO_CACHE = {
+  "Cache-Control": "no-store, no-cache, must-revalidate",
+  Pragma: "no-cache",
+  Expires: "0",
+};
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const from = searchParams.get("from");
@@ -14,7 +22,7 @@ export async function GET(request) {
   if (!from || !to) {
     return NextResponse.json(
       { error: "from and to are required query parameters" },
-      { status: 400 }
+      { status: 400, headers: NO_CACHE }
     );
   }
 
@@ -59,9 +67,8 @@ export async function GET(request) {
   const hasMore = startIdx + pageSize < offers.length;
   const nextCursor = hasMore ? page[page.length - 1].offer_id : null;
 
-  return NextResponse.json({
-    results: page,
-    total: offers.length,
-    next_cursor: nextCursor,
-  });
+  return NextResponse.json(
+    { results: page, total: offers.length, next_cursor: nextCursor },
+    { headers: NO_CACHE }
+  );
 }

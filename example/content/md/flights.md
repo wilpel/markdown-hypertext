@@ -8,6 +8,8 @@ links:
   - rel: related_to
     target: flights-search
   - rel: related_to
+    target: flights-book
+  - rel: related_to
     target: airports
 ---
 
@@ -48,5 +50,9 @@ All routes are one-way. For return trips, search each direction separately.
 ## Offer data
 
 Each offer includes: airline, flight number, departure and arrival times, duration in minutes, number of stops, price (amount + currency), and cabin class (economy or business).
+
+## Booking
+
+Once you've found a flight, you can book it. See [book flight](/md/flights-book) for the POST booking action. You'll need the `offer_id` from search results and passenger details.
 
 For the full list of airport codes and names, see [airports](/md/airports). Looking for hotels too? See [hotels](/md/hotels).

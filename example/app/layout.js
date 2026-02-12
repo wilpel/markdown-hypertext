@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "MDH Example — Flight Search",
+  title: "MDH Example — Wayfare Travel",
 };
 
 export default function RootLayout({ children }) {

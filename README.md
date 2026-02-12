@@ -16,25 +16,41 @@ MDH takes a different approach: describe your site as a graph of Markdown docume
 
 Every page on an MDH site is a Markdown document with YAML frontmatter at the top. The frontmatter declares the page's identity, its relationships to other pages, and any actions (API calls) it describes. The body is natural Markdown prose — written for an agent to read and act on.
 
-```
-                 ┌─────────┐
-                 │  index   │
-                 │ (root)   │
-                 └────┬─────┘
-           ┌──────────┼──────────┐
-           ▼          ▼          ▼
-      ┌─────────┐ ┌─────────┐ ┌──────────┐
-      │ flights │ │ hotels  │ │ bookings │
-      └────┬────┘ └────┬────┘ └────┬─────┘
-           ▼          ▼          ▼
-    ┌────────────┐ ┌────────────┐ ┌──────────────┐
-    │flights-    │ │hotels-     │ │flights-book  │
-    │search      │ │search      │ │hotels-book   │
-    │            │ │            │ │package-book  │
-    └────────────┘ └────────────┘ └──────────────┘
+```mermaid
+graph TD
+    root["/ (root page)"]
+    root --> section_a["Section A"]
+    root --> section_b["Section B"]
+    root --> ref["Reference"]
+    section_a --> search["Search"]
+    section_a --> create["Create"]
+    section_b --> browse["Browse"]
+    section_b --> update["Update"]
+
+    style root fill:#e8f4f8,stroke:#333
+    style section_a fill:#f0f0f0,stroke:#333
+    style section_b fill:#f0f0f0,stroke:#333
+    style ref fill:#f0f0f0,stroke:#333
+    style search fill:#fff,stroke:#333
+    style create fill:#fff,stroke:#333
+    style browse fill:#fff,stroke:#333
+    style update fill:#fff,stroke:#333
 ```
 
 The flow: read the root page → follow links to sections of interest → find an action → call the API.
+
+```mermaid
+sequenceDiagram
+    participant Agent
+    participant Site
+
+    Agent->>Site: GET / (read root page)
+    Site-->>Agent: Markdown with links + actions
+    Agent->>Site: GET /products (follow link)
+    Site-->>Agent: Markdown with search action
+    Agent->>Site: GET /api/products/search?q=shoes (execute action)
+    Site-->>Agent: JSON results
+```
 
 ## Page structure
 
@@ -46,24 +62,24 @@ The frontmatter is YAML between `---` delimiters. It declares who the page is, w
 
 ```yaml
 ---
-id: flights-search
+id: products-search
 type: page
-title: Search Flights
+title: Search Products
 links:
   - rel: in_section
-    target: flights
-    href: /flights
+    target: products
+    href: /products
   - rel: related_to
-    target: airports
-    href: /airports
+    target: categories
+    href: /categories
 actions:
-  - id: flights.search
+  - id: products.search
     method: GET
-    url: /api/flights/search
+    url: /api/products/search
     accept: application/json
     query:
-      required: [from, to]
-      optional: [date, cabin, max_price, limit, cursor]
+      required: [q]
+      optional: [category, min_price, max_price, limit, cursor]
 ---
 ```
 
@@ -71,7 +87,7 @@ actions:
 
 | Field | Description |
 |-------|-------------|
-| `id` | Unique identifier for this page (e.g. `flights-search`) |
+| `id` | Unique identifier for this page (e.g. `products-search`) |
 | `type` | Page type — `section`, `page`, `reference`, `guide`, etc. |
 | `title` | Human-readable title |
 
@@ -90,12 +106,12 @@ actions:
 The body is standard Markdown. Write it like you're explaining the page to someone who needs to understand it and do something with it. Use natural prose, include examples, and link to other pages with standard Markdown links:
 
 ```markdown
-# Search Flights
+# Search Products
 
-Find available flights between any two cities. You need a departure
-and arrival airport code — see [airports](/airports) for the full list.
+Find products by keyword. You can filter by category and price range —
+see [categories](/categories) for the full list.
 
-`GET /api/flights/search?from=ARN&to=LHR&date=2026-03-10`
+`GET /api/products/search?q=shoes&category=footwear&max_price=100`
 ```
 
 The body and frontmatter work together. The frontmatter gives agents structured, parseable metadata. The body gives context, explanations, and examples that help agents understand *how* and *when* to use the actions.
@@ -112,13 +128,13 @@ MDH pages support multiple response formats based on the `Accept` header:
 
 ```bash
 # Raw markdown (default)
-curl https://example.com/flights-search
+curl https://example.com/products-search
 
 # Structured JSON — useful for agents that want typed access to actions and links
-curl -H "Accept: application/json" https://example.com/flights-search
+curl -H "Accept: application/json" https://example.com/products-search
 
 # HTML — for humans clicking around in a browser
-curl -H "Accept: text/html" https://example.com/flights-search
+curl -H "Accept: text/html" https://example.com/products-search
 ```
 
 The JSON format returns the parsed frontmatter as structured data, making it easy for agents to extract actions, links, and metadata without parsing YAML:
@@ -126,22 +142,22 @@ The JSON format returns the parsed frontmatter as structured data, making it eas
 ```json
 {
   "meta": {
-    "id": "flights-search",
+    "id": "products-search",
     "type": "page",
-    "title": "Search Flights",
+    "title": "Search Products",
     "links": [
-      { "rel": "in_section", "target": "flights", "href": "/flights" }
+      { "rel": "in_section", "target": "products", "href": "/products" }
     ],
     "actions": [
       {
-        "id": "flights.search",
+        "id": "products.search",
         "method": "GET",
-        "url": "/api/flights/search",
-        "query": { "required": ["from", "to"], "optional": ["date", "cabin"] }
+        "url": "/api/products/search",
+        "query": { "required": ["q"], "optional": ["category", "max_price"] }
       }
     ]
   },
-  "body": "# Search Flights\n\nFind available flights..."
+  "body": "# Search Products\n\nFind products by keyword..."
 }
 ```
 
@@ -155,33 +171,33 @@ The simplest and most compatible approach. All parameters go in the query string
 
 ```yaml
 action:
-  id: flights.book
+  id: orders.create
   method: GET
-  url: /api/flights/book
+  url: /api/orders/create
   accept: application/json
   query:
     required:
-      - offer_id
-      - passenger
+      - product_id
+      - name
     properties:
-      offer_id:
+      product_id:
         type: string
-        description: The offer_id from a flight search result
-      passenger:
+        description: The product_id from a search result
+      name:
         type: string
-        description: "Passenger full name (e.g. Alice Lindqvist). Repeat for multiple."
+        description: "Customer full name (e.g. Alice Lindqvist)"
 ```
 
 The agent calls it with a simple GET request:
 
 ```
-GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist
+GET /api/orders/create?product_id=prod_123&name=Alice+Lindqvist
 ```
 
-This works with any agent that can make HTTP GET requests — which is all of them. For parameters that accept multiple values (like passengers), the parameter is repeated:
+This works with any agent that can make HTTP GET requests — which is all of them. For parameters that accept multiple values, the parameter is repeated:
 
 ```
-GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist&passenger=Bob+Smith
+GET /api/orders/create?product_id=prod_123&name=Alice+Lindqvist&name=Bob+Smith
 ```
 
 ### POST actions with request bodies
@@ -190,39 +206,42 @@ For more complex operations, actions can use POST with a JSON request body:
 
 ```yaml
 action:
-  id: flights.book
+  id: orders.create
   method: POST
-  url: /api/flights/book
+  url: /api/orders
   content_type: application/json
   accept: application/json
   body_schema:
     required:
-      - offer_id
-      - passengers
+      - product_id
+      - customer
     properties:
-      offer_id:
+      product_id:
         type: string
-      passengers:
-        type: array
-        items:
-          required: [first_name, last_name]
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
+      customer:
+        type: object
+        required: [first_name, last_name, email]
+        properties:
+          first_name:
+            type: string
+          last_name:
+            type: string
+          email:
+            type: string
 ```
 
 The agent sends a POST with a JSON body:
 
 ```bash
-curl -X POST https://example.com/api/flights/book \
+curl -X POST https://example.com/api/orders \
   -H "Content-Type: application/json" \
   -d '{
-    "offer_id": "off_arn_lhr_1",
-    "passengers": [
-      { "first_name": "Alice", "last_name": "Lindqvist" }
-    ]
+    "product_id": "prod_123",
+    "customer": {
+      "first_name": "Alice",
+      "last_name": "Lindqvist",
+      "email": "alice@example.com"
+    }
   }'
 ```
 
@@ -241,26 +260,24 @@ POST is the more natural fit for state-changing operations — it follows HTTP s
 
 **Our recommendation:** Start with GET-only. Most AI agents today navigate the web using tools like `webfetch` that only support GET requests. Even agents with full HTTP access (like those using `curl`) find GET simpler to construct. You can always add POST support later when agent capabilities catch up.
 
-The example site (Wayfare) uses GET for everything — searches and bookings alike. This sacrifices HTTP purity for maximum agent compatibility.
-
 ### Supporting both
 
 You can support GET and POST on the same endpoint. Declare both in the frontmatter and document both in the page body:
 
 ```yaml
 action:
-  id: flights.book
-  title: Book Flight
+  id: orders.create
+  title: Create Order
   methods:
     - method: GET
-      url: /api/flights/book
+      url: /api/orders/create
       query:
-        required: [offer_id, passenger]
+        required: [product_id, name]
     - method: POST
-      url: /api/flights/book
+      url: /api/orders
       content_type: application/json
       body_schema:
-        required: [offer_id, passengers]
+        required: [product_id, customer]
 ```
 
 This lets agents use whichever approach they support.
@@ -277,24 +294,24 @@ The root page (`/`) is the entry point. It should give agents an overview of eve
 ---
 id: index
 type: section
-title: Wayfare — Travel Search
+title: My Store
 links:
   - rel: contains
-    target: flights
-    href: /flights
+    target: products
+    href: /products
   - rel: contains
-    target: hotels
-    href: /hotels
+    target: orders
+    href: /orders
   - rel: contains
-    target: bookings
-    href: /bookings
+    target: categories
+    href: /categories
 actions:
-  - id: flights.search
+  - id: products.search
     method: GET
-    url: /api/flights/search
+    url: /api/products/search
     query:
-      required: [from, to]
-      optional: [date, cabin, max_price, limit, cursor]
+      required: [q]
+      optional: [category, max_price, limit, cursor]
 ---
 ```
 
@@ -304,11 +321,11 @@ Putting the most common actions on the root page means agents can start searchin
 
 Every page links to related pages using standard Markdown links in the body and typed edges in the frontmatter. An agent reads a page, decides what it needs, and follows the relevant link:
 
-```
-Agent reads /           → sees flights section, follows link
-Agent reads /flights    → sees search action, follows link
-Agent reads /flights-search → sees action definition, makes API call
-Agent calls /api/flights/search?from=ARN&to=LHR → gets results
+```mermaid
+graph LR
+    A["Agent reads /"] -->|follows link| B["Agent reads /products"]
+    B -->|follows link| C["Agent reads /products-search"]
+    C -->|executes action| D["GET /api/products/search?q=shoes"]
 ```
 
 ### Link relationships
@@ -328,18 +345,18 @@ The `rel` field on frontmatter links helps agents understand the graph structure
 Your page body is what the agent reads to decide what to do. Be specific and concrete:
 
 ```markdown
-# Search Flights
+# Search Products
 
-Find flights between any two cities. You need departure and arrival
-airport codes — see [airports](/airports) for all 15 codes.
+Find products by keyword. Filter by category or price range —
+see [categories](/categories) for all available categories.
 
-`GET /api/flights/search?from=ARN&to=LHR&date=2026-03-10`
+`GET /api/products/search?q=shoes&max_price=100`
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| from      | yes      | Departure airport code (e.g. ARN) |
-| to        | yes      | Arrival airport code (e.g. LHR) |
-| date      | no       | Travel date (YYYY-MM-DD) |
+| q         | yes      | Search keyword |
+| category  | no       | Category slug (e.g. footwear) |
+| max_price | no       | Maximum price in USD |
 ```
 
 Don't be vague. Show the exact endpoint, the exact parameters, and an example. The agent needs to construct a request — give it everything it needs on the page.
@@ -359,29 +376,29 @@ The root page should explain what the site is and what you can do on it. Think o
 
 ### Keep pages focused
 
-Each page should cover one topic or one action. Don't put flight search and hotel search on the same page. Split them so agents can navigate to exactly what they need.
+Each page should cover one topic or one action. Don't put product search and order creation on the same page. Split them so agents can navigate to exactly what they need.
 
 ### Link generously
 
-When you mention another page's topic, link to it. This is how agents navigate — they follow links to find what they need. A page about booking flights should link to the flight search page, the airports page, and the bookings overview.
+When you mention another page's topic, link to it. This is how agents navigate — they follow links to find what they need. A page about creating an order should link to the product search, the categories reference, and the orders overview.
 
 ### Include agent guidelines for sensitive actions
 
-For actions that change state (booking, payments, account changes), include explicit guidance for the agent:
+For actions that change state (orders, payments, account changes), include explicit guidance for the agent:
 
 ```markdown
 ## Important: confirm with the user first
 
-Before making this booking request, always show the user a summary of
-what will be booked — the flight details, price, and passenger names.
-Only proceed after the user confirms.
+Before placing this order, always show the user a summary of what will
+be ordered — the product, quantity, price, and shipping address. Only
+proceed after the user confirms.
 ```
 
 This sets behavioral expectations that well-built agents will follow.
 
 ### Don't duplicate content
 
-If airport codes are listed on the airports page, link to it rather than copying the table onto every other page. Keep information in one place and link to it.
+If categories are listed on the categories page, link to it rather than copying the list onto every other page. Keep information in one place and link to it.
 
 ## Pagination
 
@@ -389,9 +406,9 @@ For endpoints that return lists, use cursor-based pagination. Declare the pagina
 
 ```yaml
 actions:
-  - id: flights.search
+  - id: products.search
     method: GET
-    url: /api/flights/search
+    url: /api/products/search
     pagination:
       type: cursor
       request:
@@ -407,100 +424,11 @@ Responses include a cursor for the next page:
 {
   "results": [...],
   "total": 42,
-  "next_cursor": "off_arn_bcn_11"
+  "next_cursor": "prod_abc123"
 }
 ```
 
 When `next_cursor` is `null`, there are no more results. The agent passes the cursor value back as a query parameter to get the next page.
-
-## Example site
-
-The `example/` directory contains a complete MDH site — Wayfare, a travel search site with flights, hotels, and bookings across 15 European and North American cities.
-
-The example uses GET requests exclusively — including for booking actions that would traditionally use POST. This is a deliberate choice to maximize compatibility with current AI agents, most of which only have access to `webfetch` or equivalent GET-only tools. See [GET vs POST: choosing an approach](#get-vs-post-choosing-an-approach) for the trade-offs.
-
-### Running it
-
-```bash
-cd example
-npm install
-npm run dev
-```
-
-### Trying the discovery flow
-
-```bash
-# 1. Read the root page — see what's available
-curl http://localhost:3000/
-
-# 2. Navigate to the flights section
-curl http://localhost:3000/flights
-
-# 3. Read the search page — learn how to search
-curl http://localhost:3000/flights-search
-
-# 4. Search for flights from Stockholm to London
-curl "http://localhost:3000/api/flights/search?from=ARN&to=LHR"
-
-# 5. Search with a specific date
-curl "http://localhost:3000/api/flights/search?from=ARN&to=LHR&date=2026-03-10"
-
-# 6. Get details on a specific offer
-curl http://localhost:3000/api/flights/offers/off_arn_lhr_1
-
-# 7. Book a flight
-curl "http://localhost:3000/api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist"
-
-# 8. Look up the booking
-curl http://localhost:3000/api/bookings/bkg_f_1
-```
-
-### Get structured metadata
-
-```bash
-# Get any page as JSON — parsed frontmatter + body
-curl -H "Accept: application/json" http://localhost:3000/flights-search
-```
-
-### Site structure
-
-```
-example/
-├── content/md/          # Markdown pages
-│   ├── index.md         # Root page — site overview and key actions
-│   ├── flights.md       # Flights section
-│   ├── flights-search.md # How to search flights (action defined here)
-│   ├── flights-book.md  # How to book a flight
-│   ├── hotels.md        # Hotels section
-│   ├── hotels-search.md # How to search hotels
-│   ├── hotels-book.md   # How to book a hotel
-│   ├── bookings.md      # Bookings overview
-│   ├── package-book.md  # Book flight + hotel together
-│   ├── airports.md      # Airport code reference
-│   └── help.md          # Getting started guide
-├── data/                # Static data files
-│   ├── flights.json     # Flight offers
-│   └── hotels.json      # Hotel listings
-├── app/                 # Next.js route handlers
-│   ├── route.js         # Root page handler (/)
-│   ├── [node]/route.js  # Dynamic page handler (/{page-id})
-│   └── api/             # API endpoints
-│       ├── flights/search/route.js
-│       ├── flights/book/route.js
-│       ├── flights/offers/[id]/route.js
-│       ├── hotels/search/route.js
-│       ├── hotels/book/route.js
-│       ├── hotels/[id]/route.js
-│       ├── bookings/[id]/route.js
-│       └── bookings/package/route.js
-└── lib/
-    ├── content.js       # Markdown reading, frontmatter parsing, HTML rendering
-    └── bookings.js      # In-memory booking store
-```
-
-### Live demo
-
-The example site is deployed at [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app).
 
 ## Security
 
@@ -512,7 +440,7 @@ Giving an agent unrestricted HTTP access opens the door to serious risks:
 
 - **Prompt injection.** A malicious website could embed instructions in its content that trick the agent into making unintended requests — sending data to attacker-controlled servers, calling APIs with harmful parameters, or leaking sensitive information from the conversation context.
 - **Data exfiltration.** An agent with full HTTP access could be manipulated into sending private data (API keys, user details, conversation contents) to external endpoints via query parameters or request bodies.
-- **Unintended side effects.** POST, PUT, and DELETE requests change state. An agent that misinterprets a page — or gets tricked by injected instructions — could create bookings, modify accounts, delete data, or trigger payments without the user's intent.
+- **Unintended side effects.** POST, PUT, and DELETE requests change state. An agent that misinterprets a page — or gets tricked by injected instructions — could create orders, modify accounts, delete data, or trigger payments without the user's intent.
 - **SSRF (Server-Side Request Forgery).** If an agent runs in a server environment, unrestricted HTTP access could let it probe internal networks, access metadata endpoints, or reach services that should never be publicly accessible.
 
 This is why agent frameworks restrict HTTP tools to GET-only, require user confirmation for state-changing actions, or sandbox network access entirely. The restrictions aren't a temporary limitation — they're a deliberate security boundary.
@@ -523,7 +451,7 @@ MDH is designed with this reality in mind:
 
 - **Navigation is read-only.** All page discovery and content reading uses plain GET requests. An agent with nothing but `webfetch` can fully navigate an MDH site, read every page, understand the graph structure, and discover all available actions.
 - **Actions are explicit.** Rather than hoping agents will figure out how to interact with a site, MDH declares actions in structured frontmatter. The agent knows exactly what endpoint to call, what parameters are needed, and what the action does — reducing the chance of misinterpreting content or following injected instructions.
-- **Confirmation guidance is embedded.** MDH pages can include explicit behavioral guidance ("confirm with the user before booking"). Well-built agents follow these instructions, keeping the human in the loop for anything that changes state.
+- **Confirmation guidance is embedded.** MDH pages can include explicit behavioral guidance ("confirm with the user before ordering"). Well-built agents follow these instructions, keeping the human in the loop for anything that changes state.
 - **GET-only actions are a pragmatic option.** For sites that want maximum agent compatibility today, actions can be exposed as GET endpoints with query parameters. This lets agents execute actions using only their existing `webfetch` tool, while the page content and confirmation guidance provide the safety layer.
 
 ### Looking ahead
@@ -542,6 +470,10 @@ As agent security models mature — with better sandboxing, permission scoping, 
 | Transport | Plain HTTP | HTTP | HTTP | Custom protocol |
 | Server requirements | Serve Markdown files | None | None | MCP server |
 | Agent requirements | HTTP GET + read text | Parse HTML + heuristics | Parse OpenAPI schema | MCP client |
+
+## Example
+
+See the [example/](example/) directory for a complete working MDH site — a travel search app with flights, hotels, and bookings. It includes 11 Markdown pages, search and booking APIs, content negotiation, and pagination. A live demo is at [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app).
 
 ## Project
 

@@ -21,12 +21,6 @@ SkySearch is a flight search API. You can search for flights between airports, v
 - **Browse airports** — see which airports are supported in the [airport reference](/md/airports).
 - **Get help** — if you're not sure where to start, see [getting started](/md/help).
 
-## Routes available
+## Cities served
 
-This demo covers five routes across Europe and the North Atlantic:
-
-- Stockholm (ARN) to Barcelona (BCN)
-- Stockholm (ARN) to London (LHR)
-- New York (JFK) to Paris (CDG)
-- London (LHR) to New York (JFK)
-- Paris (CDG) to Stockholm (ARN)
+SkySearch covers 15 cities across Europe and North America. Every city connects to every other city. See [airports](/md/airports) for the full list of airport codes.

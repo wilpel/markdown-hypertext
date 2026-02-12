@@ -16,11 +16,21 @@ Supported airports and their IATA codes.
 | Code | City | Airport |
 |------|------|---------|
 | ARN  | Stockholm | Stockholm Arlanda |
-| BCN  | Barcelona | Barcelona-El Prat |
-| CDG  | Paris | Charles de Gaulle |
-| JFK  | New York | John F. Kennedy |
 | LHR  | London | Heathrow |
+| CDG  | Paris | Charles de Gaulle |
+| AMS  | Amsterdam | Schiphol |
+| FRA  | Frankfurt | Frankfurt Airport |
+| BCN  | Barcelona | Barcelona-El Prat |
+| MAD  | Madrid | Adolfo Suarez Madrid-Barajas |
+| FCO  | Rome | Leonardo da Vinci-Fiumicino |
+| BER  | Berlin | Berlin Brandenburg |
+| CPH  | Copenhagen | Copenhagen Kastrup |
+| OSL  | Oslo | Oslo Gardermoen |
+| HEL  | Helsinki | Helsinki-Vantaa |
+| VIE  | Vienna | Vienna Schwechat |
+| ZRH  | Zurich | Zurich Airport |
+| JFK  | New York | John F. Kennedy |
 
 Use these codes as `from` and `to` values when searching flights. See [search flights](/md/flights-search) for the search action.
 
-Not every pair has a direct route. Check [flights](/md/flights) for available routes.
+Every city connects to every other city. Search any pair to see available offers.

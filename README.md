@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="mdh.png" alt="MDH" width="500">
-</p>
+<img src="mdh.png" alt="MDH" width="500">
 
 # MDH (Markdown Hypertext)
 

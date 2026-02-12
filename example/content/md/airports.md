@@ -1,12 +1,12 @@
 ---
-id: "doc:airports"
+id: airports
 type: reference
 title: Airports
 links:
   - rel: related_to
-    target: "doc:flights-search"
+    target: flights-search
   - rel: related_to
-    target: "doc:flights"
+    target: flights
 ---
 
 # Airports
@@ -21,6 +21,6 @@ Supported airports and their IATA codes.
 | JFK  | New York | John F. Kennedy |
 | LHR  | London | Heathrow |
 
-Use these codes as `from` and `to` values when searching flights. See [[doc:flights-search]] for the search action.
+Use these codes as `from` and `to` values when searching flights. See [search flights](/md/flights-search) for the search action.
 
-Not every pair has a direct route. Check [[doc:flights]] for available routes.
+Not every pair has a direct route. Check [flights](/md/flights) for available routes.

@@ -1,12 +1,12 @@
 ---
-id: "doc:flights-search"
+id: flights-search
 type: page
 title: Search Flights
 links:
   - rel: in_section
-    target: "doc:flights"
+    target: flights
   - rel: related_to
-    target: "doc:airports"
+    target: airports
 actions:
   - id: flights.search
     method: GET
@@ -56,7 +56,7 @@ Response:
 }
 ```
 
-Each result is an offer object. See [[doc:flights]] for the offer schema.
+Each result is an offer object. See [flights](/md/flights) for the offer schema.
 
 Example — economy flights from Stockholm to Barcelona on March 10:
 
@@ -68,4 +68,4 @@ Example — economy flights from Stockholm to Barcelona on March 10:
 
 Returns a single offer by its ID. Example: `GET /api/flights/offers/off_arn_bcn_1`
 
-See [[doc:airports]] for valid airport codes.
+See [airports](/md/airports) for valid airport codes.

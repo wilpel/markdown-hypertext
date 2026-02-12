@@ -1,14 +1,14 @@
 ---
-id: "doc:index"
+id: index
 type: section
 title: SkySearch — Flight Search API
 links:
   - rel: contains
-    target: "doc:flights"
+    target: flights
   - rel: contains
-    target: "doc:airports"
+    target: airports
   - rel: contains
-    target: "doc:help"
+    target: help
 ---
 
 # SkySearch
@@ -17,9 +17,9 @@ SkySearch is a flight search API. You can search for flights between airports, v
 
 ## What you can do
 
-- **Search flights** — find one-way offers between any two airports. See [[doc:flights]] for available routes and [[doc:flights-search]] to run a search.
-- **Browse airports** — see which airports are supported in [[doc:airports]].
-- **Get help** — if you're not sure where to start, see [[doc:help]].
+- **Search flights** — find one-way offers between any two airports. See [available routes](/md/flights) and [search flights](/md/flights-search) to run a search.
+- **Browse airports** — see which airports are supported in the [airport reference](/md/airports).
+- **Get help** — if you're not sure where to start, see [getting started](/md/help).
 
 ## Routes available
 

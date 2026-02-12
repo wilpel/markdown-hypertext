@@ -6,10 +6,9 @@
 
 ## Abstract
 
-MDH defines a convention for agent-readable websites built from Markdown hyperdocuments connected by wikilinks, augmented by machine-readable indexes and action contracts. A conforming client needs only:
+MDH defines a convention for agent-readable websites built from Markdown documents connected by standard links, augmented by machine-readable indexes and action contracts. A conforming client needs only:
 
 - **webfetch** (HTTP GET) — to read Markdown and JSON resources
-- **curl** (HTTP) — to execute declared actions via GET/POST/PUT/PATCH/DELETE
 
 MDH requires no proprietary agent protocols, plugins, or tool schemas. It is web-native: stable URLs, plain text, predictable conventions.
 
@@ -25,22 +24,22 @@ The key words "MUST", "MUST NOT", "SHOULD", "SHOULD NOT", "MAY", and "OPTIONAL" 
 
 A **Node** is a document addressed by a stable identifier (`id`) and representable as Markdown. Nodes MAY additionally be served as JSON or HTML via content negotiation. A node MAY declare outgoing links and actions in its frontmatter.
 
-### 1.2 Wikilink
+### 1.2 Links
 
-A **Wikilink** is an inline reference of the form `[[target]]` used for navigation within Markdown body text. MDH defines three wikilink forms:
+Nodes link to each other using standard Markdown links with paths matching the node's `md_url`:
 
-| Form | Example | Resolution |
-|------|---------|------------|
-| ID link | `[[doc:flights-search]]` | Exact match on node `id` |
-| Alias link | `[[Flight search]]` | Resolved via `title` or `aliases` index |
-| URL link | `[[url:/md/flights/results?from=ARN]]` | Treated as a literal URL (escape hatch) |
+```markdown
+See [airports](/md/airports) for valid airport codes.
+```
+
+Links use regular HTTP paths. An agent can follow them with a standard GET request.
 
 ### 1.3 Graph
 
-The **Graph** is the set of all nodes and directed, typed edges derived from:
+The **Graph** is the set of all nodes and directed edges derived from:
 
 - **Explicit links** declared in node frontmatter (`links[]`)
-- **Inline wikilinks** extracted from Markdown body text
+- **Inline markdown links** extracted from body text
 
 ### 1.4 Action
 
@@ -115,7 +114,7 @@ Every node MUST begin with YAML frontmatter delimited by `---`.
 
 | Key | Type | Description |
 |-----|------|-------------|
-| `aliases` | string[] | Alternative names for wikilink resolution |
+| `aliases` | string[] | Alternative names for the node |
 | `tags` | string[] | Categorization tags |
 | `links` | Link[] | Typed outgoing edges (§5.2) |
 | `actions` | Action[] | Callable HTTP operations (§8) |
@@ -128,7 +127,7 @@ Every node MUST begin with YAML frontmatter delimited by `---`.
 ```yaml
 links:
   - rel: related_to
-    target: doc:flights-search
+    target: flights-search
   - rel: depends_on
     target: svc:pricing
 ```
@@ -142,14 +141,14 @@ links:
 
 ```markdown
 ---
-id: doc:flights-search
+id: flights-search
 type: page
 title: Flight search
 aliases: [Search flights]
 tags: [travel, flights]
 links:
   - rel: in_section
-    target: doc:flights
+    target: flights
 actions:
   - id: flights.search
     method: GET
@@ -179,24 +178,15 @@ Use IATA airport codes. Examples:
 
 ## 6. Link Resolution
 
-### 6.1 Resolution Order
+Inline links in node body text MUST use standard Markdown link syntax with the node's `md_url` as the href:
 
-Wikilinks MUST be resolved in the following order of precedence:
+```markdown
+See [airports](/md/airports) for valid airport codes.
+```
 
-1. **Exact match on `id`** — `[[doc:flights-search]]`
-2. **Exact match on `title`** (case-insensitive)
-3. **Match on any entry in `aliases[]`** (case-insensitive)
-4. **Literal URL** — if the form is `[[url:...]]`, the remainder is treated as a verbatim URL
+The link target is a relative URL path. Agents follow links with standard HTTP GET requests — no custom resolution needed.
 
-The first match wins. Resolution MUST stop at the first successful step.
-
-### 6.2 Ambiguity
-
-If multiple nodes match on `title` or `aliases`, the server SHOULD return a disambiguation node listing all candidates. Clients SHOULD prefer linking by `id` to avoid ambiguity.
-
-### 6.3 Unresolvable Links
-
-If no node matches a wikilink target, the server SHOULD return a 404 response. The server MUST NOT silently drop unresolvable links from rendered output — they SHOULD be rendered as dead links or annotated as unresolved.
+Frontmatter `links[]` use node IDs (matching the `id` field in `nodes.json`). The agent can look up the corresponding `md_url` in the node index to fetch the target.
 
 ---
 
@@ -208,7 +198,7 @@ An array of node metadata records. Each record MUST contain at minimum:
 
 ```json
 {
-  "id": "doc:flights-search",
+  "id": "flights-search",
   "type": "page",
   "title": "Flight search",
   "md_url": "/md/flights/search"
@@ -224,7 +214,7 @@ A flattened catalog of all actions declared across all nodes. This allows client
 ```json
 {
   "id": "flights.search",
-  "node_id": "doc:flights-search",
+  "node_id": "flights-search",
   "method": "GET",
   "url": "/api/flights/search",
   "accept": "application/json",
@@ -277,7 +267,7 @@ MDH does not mandate an authentication system; it describes how a client should 
 ```yaml
 auth:
   type: bearer
-  token_help: "Create a token at [[doc:tokens]]"
+  token_help: "Create a token at /md/tokens"
 ```
 
 The `token_help` field is OPTIONAL and provides a human/agent-readable hint for obtaining credentials.
@@ -403,7 +393,7 @@ An MDH 1.0 conforming site MUST:
 1. Serve `nodes.json` with `spec: "mdh/1.0"` and `actions.json`.
 2. Provide a Markdown representation for every node listed in `nodes.json`, accessible at its `md_url`.
 3. Include YAML frontmatter with `id`, `type`, and `title` in every node document.
-4. Ensure all wikilink targets in published Markdown are resolvable via `nodes.json`.
+4. Ensure all inline link targets in published Markdown resolve to valid `md_url` paths in `nodes.json`.
 
 A conforming site SHOULD additionally:
 

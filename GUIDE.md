@@ -14,11 +14,11 @@ Before writing any files, sketch out your nodes. Each page of content that an ag
 For the flight search example:
 
 ```
-doc:index (section)
-├── doc:flights (section)
-│   └── doc:flights-search (page)
-├── doc:airports (reference)
-└── doc:help (guide)
+index (section)
+├── flights (section)
+│   └── flights-search (page)
+├── airports (reference)
+└── help (guide)
 ```
 
 Five nodes. The index links to the three top-level sections. The flights section links to the search action page. Reference pages cross-link where useful.
@@ -33,14 +33,14 @@ Every node needs `id`, `type`, and `title`. Use `links` for typed outgoing edges
 
 ```yaml
 ---
-id: "doc:flights-search"
+id: flights-search
 type: page
 title: Search Flights
 links:
   - rel: in_section
-    target: "doc:flights"
+    target: flights
   - rel: related_to
-    target: "doc:airports"
+    target: airports
 actions:
   - id: flights.search
     method: GET
@@ -52,17 +52,17 @@ actions:
 ---
 ```
 
-The `id` uses the `doc:` prefix followed by a lowercase, hyphenated name. The `links` array declares typed edges — `rel` is the relationship type, `target` is the destination node ID. Actions are full HTTP operation contracts with method, URL, and parameter specs.
+The `id` is a lowercase, hyphenated name unique within the site. The `links` array declares typed edges — `rel` is the relationship type, `target` is the destination node ID. Actions are full HTTP operation contracts with method, URL, and parameter specs.
 
 ### Body content
 
-Write for an agent. Be specific. Include parameter tables, example requests, and response shapes. Wikilinks connect nodes:
+Write for an agent. Be specific. Include parameter tables, example requests, and response shapes. Use standard Markdown links to connect nodes:
 
 ```markdown
-See [[doc:airports]] for valid airport codes.
+See [airports](/md/airports) for valid airport codes.
 ```
 
-The wikilink target must be a valid node ID. Agents resolve `[[doc:airports]]` to the node's `md_url` from `nodes.json`.
+The link href matches the node's `md_url` from `nodes.json`. Agents follow these with plain HTTP GET requests — no custom resolution needed.
 
 Don't repeat information across nodes. If airport codes are listed in the airports node, link to it rather than duplicating the table.
 
@@ -79,7 +79,7 @@ List every node:
   "spec": "mdh/1.0",
   "nodes": [
     {
-      "id": "doc:flights-search",
+      "id": "flights-search",
       "type": "page",
       "title": "Search Flights",
       "md_url": "/md/flights-search"
@@ -100,7 +100,7 @@ Catalog every action an agent can call:
   "actions": [
     {
       "id": "flights.search",
-      "node_id": "doc:flights-search",
+      "node_id": "flights-search",
       "title": "Search Flights",
       "method": "GET",
       "url": "/api/flights/search",
@@ -160,15 +160,16 @@ The cursor is an opaque string. The agent passes it back as a query parameter to
 
 Document the `cursor` and `limit` parameters in both the action catalog and the action's markdown node.
 
-## Wikilink forms
+## Linking between nodes
 
-The spec defines three wikilink forms:
+Use standard Markdown links with the target node's `md_url` as the href:
 
-- `[[doc:flights-search]]` — ID link, exact match on node ID
-- `[[Flight search]]` — alias link, resolved via title or aliases
-- `[[url:/api/flights/search?from=ARN]]` — literal URL, escape hatch
+```markdown
+See [search flights](/md/flights-search) for the search action.
+Check [airports](/md/airports) for valid codes.
+```
 
-Prefer ID links. They're unambiguous and resolve in one step. Alias links work when you want the prose to read naturally, but they can be ambiguous if multiple nodes share a title.
+These are plain HTTP paths. Any agent with a GET request can follow them. The link text is whatever reads naturally in the prose.
 
 ## Node types
 
@@ -183,7 +184,7 @@ Types help agents decide which nodes to prioritize — an agent looking to do so
 
 ## Keeping things in sync
 
-The artifacts, the frontmatter, and the wikilinks should all agree. When you add a node:
+The artifacts, the frontmatter, and the inline links should all agree. When you add a node:
 
 1. Create the markdown file with frontmatter (`id`, `type`, `title`, `links`, `actions`)
 2. Add the node to `nodes.json` with its `md_url`

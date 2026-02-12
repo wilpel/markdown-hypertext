@@ -12,9 +12,9 @@ MDH takes a different approach: describe your site as a graph of Markdown docume
 
 ## How it works
 
-**Nodes** are Markdown files with YAML frontmatter. Each node has an ID (like `doc:flights-search`), a type, and links to other nodes via wikilinks (`[[doc:flights]]`). The body is the content — written for an agent to read and act on. Nodes can declare actions directly in their frontmatter.
+**Nodes** are Markdown files with YAML frontmatter. Each node has an ID (like `flights-search`), a type, and standard Markdown links to other nodes (`[flights](/md/flights)`). The body is the content — written for an agent to read and act on. Nodes can declare actions directly in their frontmatter.
 
-**Artifacts** are two JSON files that describe the site structure. `nodes.json` lists every node with its title, type, and `md_url`. `actions.json` catalogs the API endpoints an agent can call, with their parameters, auth requirements, and pagination contracts. Edges between nodes are declared in frontmatter and wikilinks — no separate edge index needed.
+**Artifacts** are two JSON files that describe the site structure. `nodes.json` lists every node with its title, type, and `md_url`. `actions.json` catalogs the API endpoints an agent can call, with their parameters, auth requirements, and pagination contracts. Edges between nodes are declared in frontmatter links — no separate edge index needed.
 
 The flow: read the root node → browse the node index → navigate to nodes of interest → find an action → call the API.
 
@@ -53,7 +53,7 @@ curl localhost:3000/api/flights/offers/off_arn_bcn_1
 |---|---------|--------------|---------|-----|
 | Content format | Markdown | HTML | JSON Schema | Protocol-specific |
 | Site structure | Explicit graph | Implicit in links | Not modeled | Not modeled |
-| Navigation | Wikilinks + frontmatter links | DOM parsing | Not supported | Not supported |
+| Navigation | Markdown links + frontmatter links | DOM parsing | Not supported | Not supported |
 | Actions | Declared in JSON | Reverse-engineered | Declared in YAML/JSON | Tool definitions |
 | Transport | HTTP GET | HTTP | HTTP | Custom protocol |
 | Server requirements | Static files | None | None | MCP server |

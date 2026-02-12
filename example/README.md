@@ -36,11 +36,13 @@ You can also book a flight and hotel together through `/package-book` and `/api/
 
 ## Content negotiation
 
-Every page responds differently based on the `Accept` header:
+Every page and API endpoint responds differently based on the `Accept` header:
 
-- No header or `text/markdown`: raw Markdown with YAML frontmatter
-- `application/json`: parsed frontmatter as structured JSON
-- `text/html`: simple HTML with clickable links
+- No header or `text/markdown`: raw Markdown (readable by any agent with `webfetch`)
+- `application/json`: structured JSON (useful when the agent needs to parse data or execute actions programmatically)
+- `text/html`: simple HTML with clickable links (for browsers)
+
+API endpoints like `/api/flights/search` return Markdown by default and JSON when the agent sends `Accept: application/json`. This means an agent can read search results as plain text or parse them as structured data depending on what it needs to do next.
 
 ## Pages
 
@@ -89,6 +91,7 @@ Search results change slightly depending on the requested date. Odd days (1st, 3
 │   └── api/             # search, booking, and lookup endpoints
 └── lib/
     ├── content.js       # reads markdown, parses frontmatter, renders HTML
+    ├── format.js        # markdown formatters for API responses
     └── bookings.js      # in-memory booking store
 ```
 

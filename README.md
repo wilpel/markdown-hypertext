@@ -54,7 +54,9 @@ Every page is just a GET request. The agent reads Markdown, follows links, and c
 
 ## Content negotiation
 
-Each page can return different formats based on the `Accept` header. With no header (or `text/markdown`) you get the raw Markdown. With `application/json` you get the parsed frontmatter as JSON, which is useful if the agent wants structured access to the actions and links without parsing YAML. With `text/html` you get a simple rendered version.
+Each page can return different formats based on the `Accept` header. The default is Markdown, which any agent can read with a plain GET request. With `Accept: application/json` you get the parsed frontmatter as structured JSON, which is useful when the agent needs to programmatically extract actions, parse parameters, or follow links without reading YAML. With `text/html` you get a rendered version for browsers.
+
+API endpoints support the same pattern. Search results, booking confirmations, and other responses come back as readable Markdown by default. When the agent needs to parse the data (to extract an `offer_id` for a booking, compare prices, or paginate through results), it requests JSON instead.
 
 ## Actions
 

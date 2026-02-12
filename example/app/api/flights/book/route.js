@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getFlightData } from "@/lib/content";
 import { createBooking } from "@/lib/bookings";
+import { wantsJson, mdResponse, formatBooking, formatError } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -15,8 +16,10 @@ export async function GET(request) {
 
   const offer_id = searchParams.get("offer_id");
   const passengerNames = searchParams.getAll("passenger");
+  const json = wantsJson(request);
 
   if (!offer_id) {
+    if (!json) return mdResponse(formatError("offer_id is required"), 400);
     return NextResponse.json(
       { error: "offer_id is required" },
       { status: 400, headers: NO_CACHE }
@@ -24,6 +27,7 @@ export async function GET(request) {
   }
 
   if (passengerNames.length === 0) {
+    if (!json) return mdResponse(formatError("At least one passenger is required (e.g. passenger=Alice+Lindqvist)"), 400);
     return NextResponse.json(
       { error: "At least one passenger is required (e.g. passenger=Alice+Lindqvist)" },
       { status: 400, headers: NO_CACHE }
@@ -37,6 +41,7 @@ export async function GET(request) {
 
   for (const p of passengers) {
     if (!p.first_name || !p.last_name) {
+      if (!json) return mdResponse(formatError("Each passenger must have a first and last name (e.g. passenger=Alice+Lindqvist)"), 400);
       return NextResponse.json(
         { error: "Each passenger must have a first and last name (e.g. passenger=Alice+Lindqvist)" },
         { status: 400, headers: NO_CACHE }
@@ -58,6 +63,7 @@ export async function GET(request) {
   }
 
   if (!offer) {
+    if (!json) return mdResponse(formatError(`Offer not found: ${offer_id}`), 404);
     return NextResponse.json(
       { error: `Offer not found: ${offer_id}` },
       { status: 404, headers: NO_CACHE }
@@ -86,5 +92,6 @@ export async function GET(request) {
     },
   });
 
+  if (!json) return mdResponse(formatBooking(booking));
   return NextResponse.json(booking, { headers: NO_CACHE });
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFlightData } from "@/lib/content";
+import { wantsJson, mdResponse, formatFlightResults, formatError } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -23,8 +24,10 @@ export async function GET(request) {
   const maxPrice = searchParams.get("max_price");
   const cursor = searchParams.get("cursor");
   const rawLimit = searchParams.get("limit");
+  const json = wantsJson(request);
 
   if (!from || !to) {
+    if (!json) return mdResponse(formatError("from and to are required query parameters"), 400);
     return NextResponse.json(
       { error: "from and to are required query parameters" },
       { status: 400, headers: NO_CACHE }
@@ -39,7 +42,7 @@ export async function GET(request) {
       route.from.toUpperCase() === from.toUpperCase() &&
       route.to.toUpperCase() === to.toUpperCase()
     ) {
-      offers = offers.concat(route.offers.map((o) => ({ ...o })));
+      offers = offers.concat(route.offers.map((o) => ({ ...o, route: { from: route.from, to: route.to } })));
     }
   }
 
@@ -49,18 +52,12 @@ export async function GET(request) {
     const day = parseInt(date.split("-")[2], 10);
     const isEven = day % 2 === 0;
 
-    // Shift timestamps to the requested date
-    const arrivalDate = offers.some((o) => o.arrival.split("T")[0] !== o.departure.split("T")[0])
-      ? null // mixed, compute per-offer
-      : date;
-
     offers = offers.map((o) => {
       const depDate = o.departure.split("T")[0];
       const arrDate = o.arrival.split("T")[0];
       const arrivalSpillover = depDate !== arrDate;
 
       const newDep = shiftDate(o.departure, date);
-      // If the arrival was the next day, keep that offset
       let newArr;
       if (arrivalSpillover) {
         const nextDay = new Date(date);
@@ -74,7 +71,7 @@ export async function GET(request) {
       return { ...o, departure: newDep, arrival: newArr };
     });
 
-    // On even days: bump prices by 15% and reverse sort order
+    // On even days: bump prices by 15%
     if (isEven) {
       offers = offers.map((o) => ({
         ...o,
@@ -128,5 +125,6 @@ export async function GET(request) {
     response.date = date;
   }
 
+  if (!json) return mdResponse(formatFlightResults(response));
   return NextResponse.json(response, { headers: NO_CACHE });
 }

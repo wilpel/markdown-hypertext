@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getHotelData } from "@/lib/content";
+import { wantsJson, mdResponse, formatHotelResults, formatError } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +20,10 @@ export async function GET(request) {
   const guests = searchParams.get("guests");
   const cursor = searchParams.get("cursor");
   const rawLimit = searchParams.get("limit");
+  const json = wantsJson(request);
 
   if (!city) {
+    if (!json) return mdResponse(formatError("city is a required query parameter"), 400);
     return NextResponse.json(
       { error: "city is a required query parameter" },
       { status: 400, headers: NO_CACHE }
@@ -110,5 +113,6 @@ export async function GET(request) {
     }
   }
 
+  if (!json) return mdResponse(formatHotelResults(response));
   return NextResponse.json(response, { headers: NO_CACHE });
 }

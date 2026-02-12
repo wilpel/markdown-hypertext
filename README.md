@@ -1,6 +1,6 @@
 # MDH (Markdown Hypertext)
 
-MDH is a way to build websites that AI agents can actually use. Instead of scraping HTML or needing custom protocols, the agent just reads Markdown pages and follows links. Each page has YAML frontmatter that describes what the page is, how it connects to other pages, and what API actions are available. The agent reads pages with plain HTTP GET requests, the same way it would fetch any URL.
+MDH is a way to build websites that AI agents can actually use. Instead of scraping HTML, building MCP servers, or needing custom protocols, the agent just reads Markdown pages and follows links. Each page has YAML frontmatter that describes what the page is, how it connects to other pages, and what API actions are available. The agent reads pages with plain HTTP GET requests, the same way it would fetch any URL. No tools to install, no schemas to register, no server to run alongside your app.
 
 ## What a page looks like
 
@@ -113,7 +113,7 @@ You can support both GET and POST on the same endpoint if you want. Start with G
 
 ## Authentication
 
-If your site requires auth, each action declares what kind in its frontmatter:
+Actions can declare what kind of auth they need:
 
 ```yaml
 action:
@@ -127,15 +127,17 @@ action:
     required: [product_id, name]
 ```
 
-The agent reads the `auth` field and knows it needs a bearer token. The `token_help` field tells it (or the user) where to get one.
+The `auth` field tells the agent what credentials are required. The `token_help` field points to where credentials can be obtained.
 
-The simplest approach is bearer tokens. The user gives the agent a token upfront (in the system prompt, an environment variable, or just by pasting it into the chat), and the agent sends it with every request as `Authorization: Bearer <token>`. The token works across all requests for that session. No login flow, no cookies, no state to manage.
+How agents actually manage credentials is still an open problem. Most agents today make stateless requests with no built-in way to store tokens or manage sessions between calls. But this is changing. Some directions this could go:
 
-API keys work the same way. The difference is where the key goes (a custom header like `X-API-Key`, or a query parameter like `?api_key=...`), but the idea is the same: the user provides it once, the agent reuses it.
+**Token-based auth** (bearer tokens, API keys) is the most compatible approach right now. The token is stateless, works across requests, and doesn't require the agent to manage any session state. The open question is how the agent gets the token in the first place and where it stores it during a session.
 
-Cookie-based auth is harder. The agent would need to call a login endpoint, store the session cookie, and send it with subsequent requests. Most agents today don't manage cookies, so this only works with agent frameworks that handle session storage. If you use cookies for state-changing requests, you also need CSRF protection.
+**Session-based auth** (cookies) requires the agent to log in, receive a session cookie, and include it in subsequent requests. This needs agents or agent frameworks that can persist state across requests. It also requires CSRF protection for state-changing actions. As agent frameworks mature, session handling will likely become a standard capability.
 
-For public sites or read-only endpoints, `auth.type: none` means no credentials needed. This is common for search and listing actions where the data is public anyway.
+**Scoped credentials** are worth thinking about regardless of the mechanism. A token that only allows read access is safer to hand to an agent than one with full write permissions. Sites that issue tokens could offer different scopes so the agent only gets access to what it actually needs.
+
+For public data, `auth.type: none` means no credentials needed.
 
 ## Security
 

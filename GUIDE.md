@@ -146,17 +146,11 @@ Types help agents decide which pages to prioritize. An agent looking to do somet
 
 ## Authentication
 
-If your site has user accounts or private data, you need auth on your actions. MDH supports several approaches, but the practical choice comes down to how agents handle credentials today.
+If your site has private data or user-specific actions, declare the auth requirements on each action so the agent knows what credentials it needs.
 
-### Bearer tokens
+### Declaring auth on actions
 
-The most straightforward option. Generate a token for the user (a personal access token, a JWT, whatever you use), and the user gives it to the agent. The agent sends it with every request:
-
-```
-Authorization: Bearer sk_live_abc123...
-```
-
-In your action frontmatter, declare it:
+Add an `auth` field to any action that requires credentials:
 
 ```yaml
 action:
@@ -170,43 +164,27 @@ action:
     required: [product_id, name]
 ```
 
-The `token_help` field tells the agent (or the user) where to get credentials. This could be a page on your site, a link to a developer portal, or just a short instruction.
+The `type` tells the agent what kind of credential to send. The `token_help` field points to where the credential can be obtained. This could be a page on your site, a developer portal, or just a short description.
 
-How the agent gets the token depends on the setup. Common patterns:
+MDH defines several auth types:
 
-- The user pastes the token into the chat and the agent uses it for subsequent requests
-- The token is set in the agent's environment or configuration before the session starts
-- The agent framework provides it through a credential store
+- `none` for public endpoints that don't need credentials
+- `bearer` for token-based auth sent as `Authorization: Bearer <token>`
+- `api_key` for keys sent via a header or query parameter
+- `cookie` for session-based auth
+- `oauth2` for OAuth2 token flows
 
-Bearer tokens are stateless. The agent doesn't need to manage sessions, handle cookies, or call a login endpoint. One token works for the whole session.
+For public sites, use `none` on everything. The example site does this since it's a demo with no real user data.
 
-### API keys
+### Where this is headed
 
-Same idea as bearer tokens, but sent in a different way. Typically a custom header (`X-API-Key: ...`) or a query parameter (`?api_key=...`). Declare it the same way:
+How agents actually obtain and manage credentials is still evolving. Most agents today make stateless HTTP requests with no built-in way to persist tokens or cookies between calls. This limits what auth patterns work in practice, but it's changing fast.
 
-```yaml
-auth:
-  type: api_key
-  token_help: "Get your API key from /developer"
-```
+**Tokens** (bearer, API key) are the most agent-friendly approach right now. They're stateless, the agent can include them in any request, and there's no session to manage. The main question is how the token gets to the agent in the first place. Some possibilities: the agent framework has a credential store, the agent reads it from its environment, or the agent follows the `token_help` link and goes through a self-service flow. None of this is standardized yet, but tokens are the path of least resistance.
 
-For GET-only sites, putting the key in a query parameter is convenient since the agent doesn't need to set custom headers. But keys in URLs can leak into logs and browser history, so headers are better when the agent supports them.
+**Sessions** (cookies) need more from the agent. The agent would call a login endpoint, store the session cookie, and attach it to subsequent requests. This requires the agent or its framework to handle state across requests. It also means CSRF protection for any state-changing actions (see the spec, §10.4). As agent frameworks add session management, this becomes more viable.
 
-### Cookie-based sessions
-
-This is the trickiest option for agents. The flow looks like: agent calls a login endpoint, gets a session cookie, stores it, and sends it with every request after that.
-
-Most agents today don't do this. They make stateless requests and don't manage cookies between calls. But some agent frameworks do handle session storage, and this approach works fine for those.
-
-If you use cookies for state-changing actions, you need CSRF protection. Include a CSRF token endpoint or document the mechanism on a page the agent can read. See the spec (§10.4) for requirements.
-
-### No auth
-
-For public sites or read-only data, just set `auth.type: none`. Search endpoints, reference data, and public listings don't need credentials. The example site uses `none` on everything since it's a demo with no real user data.
-
-### Scoping tokens
-
-If you issue tokens, consider scoping them. A read-only token for search and browsing, a write token for creating orders. This way the user can give the agent a limited token that only lets it do what they want. If the agent only needs to search, it doesn't need write access.
+**Scoped credentials** are worth supporting regardless of the mechanism. If you issue tokens, offer different permission levels. A read-only token for browsing and search, a write token for creating and modifying things. This lets the agent operate with just the access it needs for a given task.
 
 ## Keeping things in sync
 

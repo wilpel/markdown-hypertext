@@ -227,7 +227,7 @@ An action declares how to call an HTTP endpoint.
 
 ### 8.2 Auth
 
-MDH does not mandate an authentication system; it describes how a client should authenticate.
+MDH does not mandate an authentication system. The `auth` field on an action describes what kind of credential the endpoint expects, so agents know what they need to provide. How agents obtain and manage credentials is outside the scope of this spec and is expected to evolve as agent frameworks mature.
 
 **Supported `auth.type` values:**
 
@@ -247,7 +247,7 @@ auth:
   token_help: "Create a token at /tokens"
 ```
 
-The `token_help` field is OPTIONAL and provides a hint for obtaining credentials.
+The `token_help` field is OPTIONAL and provides a human-readable hint for obtaining credentials. It MAY be a URL path to a page on the site or a short instruction.
 
 ### 8.3 QuerySpec
 

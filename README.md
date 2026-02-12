@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="MDH" width="200">
+</p>
+
 # MDH (Markdown Hypertext)
 
 MDH is a way to build websites that AI agents can actually use. Instead of scraping HTML, building MCP servers, or needing custom protocols, the agent just reads Markdown pages and follows links. Each page has YAML frontmatter that describes what the page is, how it connects to other pages, and what API actions are available. The agent reads pages with plain HTTP GET requests, the same way it would fetch any URL. No tools to install, no schemas to register, no server to run alongside your app.

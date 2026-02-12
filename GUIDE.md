@@ -144,6 +144,70 @@ Types are server-defined. Use what makes sense for your content. Some common pat
 
 Types help agents decide which pages to prioritize. An agent looking to do something will gravitate toward pages with actions.
 
+## Authentication
+
+If your site has user accounts or private data, you need auth on your actions. MDH supports several approaches, but the practical choice comes down to how agents handle credentials today.
+
+### Bearer tokens
+
+The most straightforward option. Generate a token for the user (a personal access token, a JWT, whatever you use), and the user gives it to the agent. The agent sends it with every request:
+
+```
+Authorization: Bearer sk_live_abc123...
+```
+
+In your action frontmatter, declare it:
+
+```yaml
+action:
+  id: orders.create
+  method: GET
+  url: /api/orders/create
+  auth:
+    type: bearer
+    token_help: "Create a token at /settings/tokens"
+  query:
+    required: [product_id, name]
+```
+
+The `token_help` field tells the agent (or the user) where to get credentials. This could be a page on your site, a link to a developer portal, or just a short instruction.
+
+How the agent gets the token depends on the setup. Common patterns:
+
+- The user pastes the token into the chat and the agent uses it for subsequent requests
+- The token is set in the agent's environment or configuration before the session starts
+- The agent framework provides it through a credential store
+
+Bearer tokens are stateless. The agent doesn't need to manage sessions, handle cookies, or call a login endpoint. One token works for the whole session.
+
+### API keys
+
+Same idea as bearer tokens, but sent in a different way. Typically a custom header (`X-API-Key: ...`) or a query parameter (`?api_key=...`). Declare it the same way:
+
+```yaml
+auth:
+  type: api_key
+  token_help: "Get your API key from /developer"
+```
+
+For GET-only sites, putting the key in a query parameter is convenient since the agent doesn't need to set custom headers. But keys in URLs can leak into logs and browser history, so headers are better when the agent supports them.
+
+### Cookie-based sessions
+
+This is the trickiest option for agents. The flow looks like: agent calls a login endpoint, gets a session cookie, stores it, and sends it with every request after that.
+
+Most agents today don't do this. They make stateless requests and don't manage cookies between calls. But some agent frameworks do handle session storage, and this approach works fine for those.
+
+If you use cookies for state-changing actions, you need CSRF protection. Include a CSRF token endpoint or document the mechanism on a page the agent can read. See the spec (§10.4) for requirements.
+
+### No auth
+
+For public sites or read-only data, just set `auth.type: none`. Search endpoints, reference data, and public listings don't need credentials. The example site uses `none` on everything since it's a demo with no real user data.
+
+### Scoping tokens
+
+If you issue tokens, consider scoping them. A read-only token for search and browsing, a write token for creating orders. This way the user can give the agent a limited token that only lets it do what they want. If the agent only needs to search, it doesn't need write access.
+
 ## Keeping things in sync
 
 The frontmatter and the inline links should agree. When you add a page:

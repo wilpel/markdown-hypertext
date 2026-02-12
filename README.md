@@ -111,6 +111,32 @@ You can support both GET and POST on the same endpoint if you want. Start with G
 
 **Ask agents to confirm state changes.** For anything that creates, updates, or deletes something, tell the agent to show the user a summary and wait for confirmation before proceeding.
 
+## Authentication
+
+If your site requires auth, each action declares what kind in its frontmatter:
+
+```yaml
+action:
+  id: orders.create
+  method: GET
+  url: /api/orders/create
+  auth:
+    type: bearer
+    token_help: "Create a token at /settings/tokens"
+  query:
+    required: [product_id, name]
+```
+
+The agent reads the `auth` field and knows it needs a bearer token. The `token_help` field tells it (or the user) where to get one.
+
+The simplest approach is bearer tokens. The user gives the agent a token upfront (in the system prompt, an environment variable, or just by pasting it into the chat), and the agent sends it with every request as `Authorization: Bearer <token>`. The token works across all requests for that session. No login flow, no cookies, no state to manage.
+
+API keys work the same way. The difference is where the key goes (a custom header like `X-API-Key`, or a query parameter like `?api_key=...`), but the idea is the same: the user provides it once, the agent reuses it.
+
+Cookie-based auth is harder. The agent would need to call a login endpoint, store the session cookie, and send it with subsequent requests. Most agents today don't manage cookies, so this only works with agent frameworks that handle session storage. If you use cookies for state-changing requests, you also need CSRF protection.
+
+For public sites or read-only endpoints, `auth.type: none` means no credentials needed. This is common for search and listing actions where the data is public anyway.
+
 ## Security
 
 Most AI agents today can only do read-only `webfetch` calls. They can't freely send POST requests or run arbitrary HTTP calls. This is intentional.

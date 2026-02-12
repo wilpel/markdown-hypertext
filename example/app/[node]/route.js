@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readNode, parseFrontmatter } from "@/lib/content";
+import { readNode, parseFrontmatter, renderMarkdown } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +20,14 @@ export async function GET(request, { params }) {
       return NextResponse.json(parseFrontmatter(raw), { headers: NO_CACHE });
     }
 
+    if (accept.includes("text/html")) {
+      return new Response(renderMarkdown(raw), {
+        headers: { "Content-Type": "text/html; charset=utf-8", ...NO_CACHE },
+      });
+    }
+
     return new Response(raw, {
-      headers: {
-        "Content-Type": "text/markdown; charset=utf-8",
-        ...NO_CACHE,
-      },
+      headers: { "Content-Type": "text/markdown; charset=utf-8", ...NO_CACHE },
     });
   } catch {
     return NextResponse.json(

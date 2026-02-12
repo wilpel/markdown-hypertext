@@ -77,6 +77,39 @@ Agents discover pages by reading the root page (`/`) and following links. Each p
 
 Request any page with `Accept: application/json` to get the frontmatter as structured JSON. This is useful for agents that want typed access to actions and links without parsing YAML.
 
+## Actions as dynamic tools
+
+The action definitions in frontmatter have enough information for an agent framework to register them as callable tools at runtime. Each action specifies the method, URL, parameters (required and optional), auth requirements, and response type. That's everything you need to build a tool definition.
+
+Think about how this works in practice. The agent reads the products search page and finds:
+
+```yaml
+action:
+  id: products.search
+  method: GET
+  url: /api/products/search
+  query:
+    required: [q]
+    optional: [category, max_price, limit, cursor]
+    properties:
+      q:
+        type: string
+        description: Search keyword
+      category:
+        type: string
+        description: Filter by category
+```
+
+An agent framework could turn this into a tool with typed parameters: `q` is required, `category` is optional, both are strings. When the agent calls the tool, the framework builds the HTTP request from the action spec and returns the result.
+
+When writing your pages, keep this in mind:
+
+- **Use `properties` with types and descriptions** on your query parameters. The `required` and `optional` arrays tell the agent what's needed, but `properties` gives it enough to build proper tool signatures with parameter descriptions.
+- **One action per concern.** A search action and a booking action should be on separate pages. This way the agent only has the relevant tools loaded for what it's currently doing.
+- **Keep action IDs consistent and descriptive.** `products.search`, `orders.create`, `bookings.get`. These become the tool names the agent sees.
+
+The JSON representation (`Accept: application/json`) is particularly useful here since it gives the frontmatter as structured data that's straightforward to parse into tool definitions.
+
 ## Serving humans and agents
 
 An MDH site can serve both humans and agents from the same URLs. The simplest way is content negotiation based on the `Accept` header.

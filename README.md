@@ -52,6 +52,28 @@ GET /api/products/search?q=shoes  -> actual API call, returns JSON
 
 Every page is just a GET request. The agent reads Markdown, follows links, and calls APIs. No special protocols or client libraries needed.
 
+## Dynamic tool discovery
+
+With most agent tool systems (MCP, function calling, custom toolkits), you define the tools upfront before the agent starts. The agent gets a fixed set of tools and can only call what's been registered.
+
+MDH flips this around. The agent discovers tools as it navigates. When it reads a page, the frontmatter tells it exactly what actions are available on that page: the endpoint, the method, the parameters, what's required and what's optional. The agent can turn each action into a callable tool on the fly, scoped to just that page.
+
+```yaml
+action:
+  id: products.search
+  method: GET
+  url: /api/products/search
+  query:
+    required: [q]
+    optional: [category, max_price, limit, cursor]
+```
+
+An agent framework could parse this frontmatter and register `products.search` as a tool with typed parameters, then unregister it when the agent moves to a different page. The agent only ever sees the actions that are relevant to where it currently is in the site. No upfront tool catalog, no stale definitions, no tools for pages the agent hasn't visited.
+
+This also means the site controls what's available. Add a new action to a page's frontmatter and every agent that visits that page can use it immediately. No SDK update, no tool schema push, no client-side changes.
+
+For agent frameworks that support it, requesting the page as JSON (`Accept: application/json`) gives the frontmatter as structured data, which is easier to parse than YAML when you're building tool definitions programmatically.
+
 ## Serving humans and agents from the same URL
 
 A traditional website serves HTML for browsers. An API serves JSON for programs. MDH sites can do both from the same URL using content negotiation, so you don't need separate endpoints for humans and agents.

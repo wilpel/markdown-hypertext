@@ -33,4 +33,4 @@ Supported airports and their IATA codes.
 
 Use these codes as `from` and `to` values when searching flights. See [search flights](/md/flights-search) for the search action.
 
-Every city connects to every other city. Search any pair to see available offers.
+Every city connects to every other city for flights, and each city has hotels available. See [search flights](/md/flights-search) and [search hotels](/md/hotels-search).

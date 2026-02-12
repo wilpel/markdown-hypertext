@@ -1,0 +1,2829 @@
+{
+  "hotels": [
+    {
+      "hotel_id": "htl_arn_1",
+      "name": "Hotel Skeppsholmen",
+      "city": "Stockholm",
+      "city_code": "ARN",
+      "stars": 4,
+      "neighborhood": "Skeppsholmen",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_arn_2",
+      "name": "Scandic Grand Central",
+      "city": "Stockholm",
+      "city_code": "ARN",
+      "stars": 4,
+      "neighborhood": "Norrmalm",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 165,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 231,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 363,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_arn_3",
+      "name": "Downtown Camper by Scandic",
+      "city": "Stockholm",
+      "city_code": "ARN",
+      "stars": 4,
+      "neighborhood": "Norrmalm",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 180,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 252,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 396,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_arn_4",
+      "name": "Generator Stockholm",
+      "city": "Stockholm",
+      "city_code": "ARN",
+      "stars": 2,
+      "neighborhood": "Norrmalm",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 65,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_arn_5",
+      "name": "Grand Hotel Stockholm",
+      "city": "Stockholm",
+      "city_code": "ARN",
+      "stars": 5,
+      "neighborhood": "Blasieholmen",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 380,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 532,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 836,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_lhr_1",
+      "name": "The Savoy",
+      "city": "London",
+      "city_code": "LHR",
+      "stars": 5,
+      "neighborhood": "Strand",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 520,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 728,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 1144,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_lhr_2",
+      "name": "citizenM Tower of London",
+      "city": "London",
+      "city_code": "LHR",
+      "stars": 3,
+      "neighborhood": "City of London",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 145,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 203,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_lhr_3",
+      "name": "Premier Inn London City",
+      "city": "London",
+      "city_code": "LHR",
+      "stars": 3,
+      "neighborhood": "City of London",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 110,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 154,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_lhr_4",
+      "name": "The Hoxton Southwark",
+      "city": "London",
+      "city_code": "LHR",
+      "stars": 4,
+      "neighborhood": "Southwark",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 210,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 294,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 462,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_lhr_5",
+      "name": "Point A Shoreditch",
+      "city": "London",
+      "city_code": "LHR",
+      "stars": 2,
+      "neighborhood": "Shoreditch",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 75,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cdg_1",
+      "name": "Hotel Le Marais",
+      "city": "Paris",
+      "city_code": "CDG",
+      "stars": 3,
+      "neighborhood": "Le Marais",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 165,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 231,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cdg_2",
+      "name": "Hotel Fabric",
+      "city": "Paris",
+      "city_code": "CDG",
+      "stars": 4,
+      "neighborhood": "Oberkampf",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cdg_3",
+      "name": "Maison Souquet",
+      "city": "Paris",
+      "city_code": "CDG",
+      "stars": 5,
+      "neighborhood": "Pigalle",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 450,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 630,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 990,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cdg_4",
+      "name": "Generator Paris",
+      "city": "Paris",
+      "city_code": "CDG",
+      "stars": 2,
+      "neighborhood": "10th Arr.",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 55,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cdg_5",
+      "name": "Hotel des Grands Boulevards",
+      "city": "Paris",
+      "city_code": "CDG",
+      "stars": 4,
+      "neighborhood": "2nd Arr.",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 230,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 322,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 506,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ams_1",
+      "name": "Pulitzer Amsterdam",
+      "city": "Amsterdam",
+      "city_code": "AMS",
+      "stars": 5,
+      "neighborhood": "Jordaan",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 395,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 553,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 869,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ams_2",
+      "name": "Hotel V Nesplein",
+      "city": "Amsterdam",
+      "city_code": "AMS",
+      "stars": 4,
+      "neighborhood": "Centrum",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 185,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 259,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 407,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ams_3",
+      "name": "citizenM Amsterdam City",
+      "city": "Amsterdam",
+      "city_code": "AMS",
+      "stars": 3,
+      "neighborhood": "Centrum",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 135,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 189,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ams_4",
+      "name": "The Hoxton Amsterdam",
+      "city": "Amsterdam",
+      "city_code": "AMS",
+      "stars": 4,
+      "neighborhood": "Herengracht",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 220,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 308,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 484,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ams_5",
+      "name": "ClinkNOORD Hostel",
+      "city": "Amsterdam",
+      "city_code": "AMS",
+      "stars": 2,
+      "neighborhood": "Noord",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 45,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fra_1",
+      "name": "Roomers Frankfurt",
+      "city": "Frankfurt",
+      "city_code": "FRA",
+      "stars": 5,
+      "neighborhood": "Bahnhofsviertel",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 310,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 434,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 682,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fra_2",
+      "name": "Motel One Frankfurt-Römer",
+      "city": "Frankfurt",
+      "city_code": "FRA",
+      "stars": 3,
+      "neighborhood": "Altstadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 95,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 133,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fra_3",
+      "name": "Flemings Selection Frankfurt",
+      "city": "Frankfurt",
+      "city_code": "FRA",
+      "stars": 4,
+      "neighborhood": "Innenstadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fra_4",
+      "name": "25hours Hotel The Trip",
+      "city": "Frankfurt",
+      "city_code": "FRA",
+      "stars": 4,
+      "neighborhood": "Bahnhofsviertel",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 155,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 217,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 341,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fra_5",
+      "name": "Five Elements Hostel",
+      "city": "Frankfurt",
+      "city_code": "FRA",
+      "stars": 2,
+      "neighborhood": "Bahnhofsviertel",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 40,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_bcn_1",
+      "name": "Hotel Arts Barcelona",
+      "city": "Barcelona",
+      "city_code": "BCN",
+      "stars": 5,
+      "neighborhood": "Port Olimpic",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 410,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 574,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 902,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_bcn_2",
+      "name": "Casa Camper Barcelona",
+      "city": "Barcelona",
+      "city_code": "BCN",
+      "stars": 4,
+      "neighborhood": "El Raval",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 215,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 301,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 473,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_bcn_3",
+      "name": "Generator Barcelona",
+      "city": "Barcelona",
+      "city_code": "BCN",
+      "stars": 2,
+      "neighborhood": "Gracia",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 50,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_bcn_4",
+      "name": "Hotel Neri",
+      "city": "Barcelona",
+      "city_code": "BCN",
+      "stars": 4,
+      "neighborhood": "Gothic Quarter",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 250,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 350,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 550,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_bcn_5",
+      "name": "TOC Hostel Barcelona",
+      "city": "Barcelona",
+      "city_code": "BCN",
+      "stars": 2,
+      "neighborhood": "Eixample",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 35,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_mad_1",
+      "name": "Hotel Urban",
+      "city": "Madrid",
+      "city_code": "MAD",
+      "stars": 5,
+      "neighborhood": "Centro",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 290,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 406,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 638,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_mad_2",
+      "name": "Room Mate Oscar",
+      "city": "Madrid",
+      "city_code": "MAD",
+      "stars": 3,
+      "neighborhood": "Chueca",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 125,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 175,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_mad_3",
+      "name": "Only YOU Boutique Hotel",
+      "city": "Madrid",
+      "city_code": "MAD",
+      "stars": 4,
+      "neighborhood": "Chueca",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_mad_4",
+      "name": "Hat Madrid",
+      "city": "Madrid",
+      "city_code": "MAD",
+      "stars": 2,
+      "neighborhood": "Centro",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 55,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_mad_5",
+      "name": "VP Plaza España Design",
+      "city": "Madrid",
+      "city_code": "MAD",
+      "stars": 5,
+      "neighborhood": "Plaza de España",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 240,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 336,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 528,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fco_1",
+      "name": "Hotel de Russie",
+      "city": "Rome",
+      "city_code": "FCO",
+      "stars": 5,
+      "neighborhood": "Piazza del Popolo",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 520,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 728,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 1144,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fco_2",
+      "name": "Hotel Raphael",
+      "city": "Rome",
+      "city_code": "FCO",
+      "stars": 4,
+      "neighborhood": "Piazza Navona",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 275,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 385,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 605,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fco_3",
+      "name": "The Beehive",
+      "city": "Rome",
+      "city_code": "FCO",
+      "stars": 2,
+      "neighborhood": "Termini",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 65,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fco_4",
+      "name": "Hotel Artemide",
+      "city": "Rome",
+      "city_code": "FCO",
+      "stars": 4,
+      "neighborhood": "Via Nazionale",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_fco_5",
+      "name": "Generator Rome",
+      "city": "Rome",
+      "city_code": "FCO",
+      "stars": 2,
+      "neighborhood": "Termini",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 45,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ber_1",
+      "name": "Hotel Adlon Kempinski",
+      "city": "Berlin",
+      "city_code": "BER",
+      "stars": 5,
+      "neighborhood": "Mitte",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 380,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 532,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 836,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ber_2",
+      "name": "25hours Hotel Bikini Berlin",
+      "city": "Berlin",
+      "city_code": "BER",
+      "stars": 4,
+      "neighborhood": "Charlottenburg",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 155,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 217,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 341,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ber_3",
+      "name": "Motel One Berlin-Alexanderplatz",
+      "city": "Berlin",
+      "city_code": "BER",
+      "stars": 3,
+      "neighborhood": "Mitte",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 85,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 119,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ber_4",
+      "name": "The Circus Hotel",
+      "city": "Berlin",
+      "city_code": "BER",
+      "stars": 3,
+      "neighborhood": "Mitte",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 110,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 154,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_ber_5",
+      "name": "Generator Berlin Mitte",
+      "city": "Berlin",
+      "city_code": "BER",
+      "stars": 2,
+      "neighborhood": "Mitte",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 40,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cph_1",
+      "name": "Hotel Sanders",
+      "city": "Copenhagen",
+      "city_code": "CPH",
+      "stars": 5,
+      "neighborhood": "Indre By",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 365,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 511,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 803,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cph_2",
+      "name": "Absalon Hotel",
+      "city": "Copenhagen",
+      "city_code": "CPH",
+      "stars": 3,
+      "neighborhood": "Vesterbro",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 135,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 189,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cph_3",
+      "name": "Brochner Hotels - Hotel Herman K",
+      "city": "Copenhagen",
+      "city_code": "CPH",
+      "stars": 4,
+      "neighborhood": "Indre By",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 205,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 287,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 451,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cph_4",
+      "name": "Urban House Copenhagen",
+      "city": "Copenhagen",
+      "city_code": "CPH",
+      "stars": 2,
+      "neighborhood": "Vesterbro",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 55,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_cph_5",
+      "name": "Hotel SP34",
+      "city": "Copenhagen",
+      "city_code": "CPH",
+      "stars": 4,
+      "neighborhood": "Latin Quarter",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 185,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 259,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 407,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_osl_1",
+      "name": "The Thief",
+      "city": "Oslo",
+      "city_code": "OSL",
+      "stars": 5,
+      "neighborhood": "Tjuvholmen",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 340,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 476,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 748,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_osl_2",
+      "name": "Scandic Vulkan",
+      "city": "Oslo",
+      "city_code": "OSL",
+      "stars": 4,
+      "neighborhood": "Vulkan",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 175,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 245,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 385,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_osl_3",
+      "name": "Citybox Oslo",
+      "city": "Oslo",
+      "city_code": "OSL",
+      "stars": 2,
+      "neighborhood": "Sentrum",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 85,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_osl_4",
+      "name": "Hotel Christiania Teater",
+      "city": "Oslo",
+      "city_code": "OSL",
+      "stars": 4,
+      "neighborhood": "Sentrum",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_osl_5",
+      "name": "Anker Hostel",
+      "city": "Oslo",
+      "city_code": "OSL",
+      "stars": 2,
+      "neighborhood": "Grünerløkka",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 50,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_hel_1",
+      "name": "Hotel St. George",
+      "city": "Helsinki",
+      "city_code": "HEL",
+      "stars": 5,
+      "neighborhood": "Kamppi",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 295,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 413,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 649,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_hel_2",
+      "name": "Hotel F6",
+      "city": "Helsinki",
+      "city_code": "HEL",
+      "stars": 4,
+      "neighborhood": "Kamppi",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 185,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 259,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 407,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_hel_3",
+      "name": "Scandic Helsinki Hub",
+      "city": "Helsinki",
+      "city_code": "HEL",
+      "stars": 3,
+      "neighborhood": "Kluuvi",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 125,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 175,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_hel_4",
+      "name": "Hostel Domus Academica",
+      "city": "Helsinki",
+      "city_code": "HEL",
+      "stars": 2,
+      "neighborhood": "Kamppi",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 55,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_hel_5",
+      "name": "Hotel Kämp",
+      "city": "Helsinki",
+      "city_code": "HEL",
+      "stars": 5,
+      "neighborhood": "Esplanadi",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 350,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 490,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 770,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_vie_1",
+      "name": "Hotel Sacher Wien",
+      "city": "Vienna",
+      "city_code": "VIE",
+      "stars": 5,
+      "neighborhood": "Innere Stadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 450,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 630,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 990,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_vie_2",
+      "name": "25hours Hotel at MuseumsQuartier",
+      "city": "Vienna",
+      "city_code": "VIE",
+      "stars": 4,
+      "neighborhood": "Neubau",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 155,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 217,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 341,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_vie_3",
+      "name": "Ruby Lissi Hotel",
+      "city": "Vienna",
+      "city_code": "VIE",
+      "stars": 3,
+      "neighborhood": "Innere Stadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 130,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 182,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_vie_4",
+      "name": "Wombats City Hostel",
+      "city": "Vienna",
+      "city_code": "VIE",
+      "stars": 2,
+      "neighborhood": "Naschmarkt",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 40,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_vie_5",
+      "name": "Hotel Topazz",
+      "city": "Vienna",
+      "city_code": "VIE",
+      "stars": 4,
+      "neighborhood": "Innere Stadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 195,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 273,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 429,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_zrh_1",
+      "name": "Baur au Lac",
+      "city": "Zurich",
+      "city_code": "ZRH",
+      "stars": 5,
+      "neighborhood": "Seefeld",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 580,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 812,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 1276,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_zrh_2",
+      "name": "Marktgasse Hotel",
+      "city": "Zurich",
+      "city_code": "ZRH",
+      "stars": 4,
+      "neighborhood": "Altstadt",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 250,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 350,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 550,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_zrh_3",
+      "name": "citizenM Zurich",
+      "city": "Zurich",
+      "city_code": "ZRH",
+      "stars": 3,
+      "neighborhood": "Kreis 4",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 155,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 217,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_zrh_4",
+      "name": "Hotel Helvetia",
+      "city": "Zurich",
+      "city_code": "ZRH",
+      "stars": 3,
+      "neighborhood": "Langstrasse",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 175,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 245,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_zrh_5",
+      "name": "Zurich Youth Hostel",
+      "city": "Zurich",
+      "city_code": "ZRH",
+      "stars": 2,
+      "neighborhood": "Wollishofen",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 55,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_jfk_1",
+      "name": "The Standard High Line",
+      "city": "New York",
+      "city_code": "JFK",
+      "stars": 4,
+      "neighborhood": "Meatpacking District",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 325,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 455,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 715,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_jfk_2",
+      "name": "Pod 51",
+      "city": "New York",
+      "city_code": "JFK",
+      "stars": 3,
+      "neighborhood": "Midtown East",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 145,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 203,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_jfk_3",
+      "name": "The Bowery Hotel",
+      "city": "New York",
+      "city_code": "JFK",
+      "stars": 5,
+      "neighborhood": "East Village",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning",
+        "gym",
+        "bar",
+        "spa",
+        "restaurant",
+        "room_service",
+        "concierge"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 475,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 665,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        },
+        {
+          "type": "suite",
+          "price_per_night": {
+            "amount": 1045,
+            "currency": "EUR"
+          },
+          "max_guests": 3,
+          "beds": "1 king + sofa bed"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_jfk_4",
+      "name": "citizenM New York Bowery",
+      "city": "New York",
+      "city_code": "JFK",
+      "stars": 3,
+      "neighborhood": "Bowery",
+      "amenities": [
+        "wifi",
+        "breakfast",
+        "air_conditioning"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 175,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        },
+        {
+          "type": "superior",
+          "price_per_night": {
+            "amount": 245,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 king"
+        }
+      ]
+    },
+    {
+      "hotel_id": "htl_jfk_5",
+      "name": "HI NYC Hostel",
+      "city": "New York",
+      "city_code": "JFK",
+      "stars": 2,
+      "neighborhood": "Upper West Side",
+      "amenities": [
+        "wifi",
+        "luggage_storage"
+      ],
+      "rooms": [
+        {
+          "type": "standard",
+          "price_per_night": {
+            "amount": 60,
+            "currency": "EUR"
+          },
+          "max_guests": 2,
+          "beds": "1 queen"
+        }
+      ]
+    }
+  ]
+}

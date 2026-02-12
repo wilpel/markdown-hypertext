@@ -27,9 +27,45 @@
     {
       "id": "flights.get_offer",
       "node_id": "flights-search",
-      "title": "Get Offer",
+      "title": "Get Flight Offer",
       "method": "GET",
       "url": "/api/flights/offers/{id}",
+      "accept": "application/json",
+      "auth": { "type": "none" },
+      "query": {
+        "required": [],
+        "optional": []
+      }
+    },
+    {
+      "id": "hotels.search",
+      "node_id": "hotels-search",
+      "title": "Search Hotels",
+      "method": "GET",
+      "url": "/api/hotels/search",
+      "accept": "application/json",
+      "auth": { "type": "none" },
+      "query": {
+        "required": ["city"],
+        "optional": ["checkin", "checkout", "min_stars", "max_price", "guests", "limit", "cursor"]
+      },
+      "pagination": {
+        "type": "cursor",
+        "request": {
+          "cursor_param": "cursor",
+          "limit_param": "limit"
+        },
+        "response": {
+          "next_cursor_jsonpath": "$.next_cursor"
+        }
+      }
+    },
+    {
+      "id": "hotels.get",
+      "node_id": "hotels-search",
+      "title": "Get Hotel",
+      "method": "GET",
+      "url": "/api/hotels/{id}",
       "accept": "application/json",
       "auth": { "type": "none" },
       "query": {

@@ -1,88 +1,29 @@
 ---
 id: index
 type: section
-title: SkySearch — Flight Search API
+title: Wayfare — Travel Search API
 links:
   - rel: contains
     target: flights
   - rel: contains
+    target: hotels
+  - rel: contains
     target: airports
   - rel: contains
     target: help
-actions:
-  - id: flights.search
-    method: GET
-    url: /api/flights/search
-    accept: application/json
-    query:
-      required: [from, to]
-      optional: [date, cabin, max_price, limit, cursor]
-    pagination:
-      type: cursor
-      request:
-        cursor_param: cursor
-        limit_param: limit
-      response:
-        next_cursor_jsonpath: "$.next_cursor"
-  - id: flights.get_offer
-    method: GET
-    url: /api/flights/offers/{id}
-    accept: application/json
 ---
 
-# SkySearch
+# Wayfare
 
-SkySearch is a flight search interface built for AI agents. Search for flights between 15 cities, compare offers, and filter by cabin class or price — all through HTTP GET requests.
+Wayfare is a travel search interface built for AI agents. It exposes flight and hotel search as a set of Markdown documents and JSON APIs that agents can navigate and call using standard HTTP requests. No browser, no scraping, no custom protocols — just read the pages and call the endpoints.
 
-## Search flights
+## What you can do
 
-`GET /api/flights/search`
+- **Search flights** — find one-way flight offers between any two cities. See [flights](/md/flights) for available cities and [search flights](/md/flights-search) for the search action.
+- **Search hotels** — find hotels in any supported city. See [hotels](/md/hotels) for an overview and [search hotels](/md/hotels-search) for the search action.
+- **Browse airports** — see which airports are supported in the [airport reference](/md/airports).
+- **Get help** — if you're not sure where to start, see [getting started](/md/help).
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| from      | yes      | Departure airport IATA code |
-| to        | yes      | Arrival airport IATA code |
-| date      | no       | Date filter (YYYY-MM-DD) |
-| cabin     | no       | `economy` or `business` |
-| max_price | no       | Maximum price in EUR |
-| limit     | no       | Results per page (default 10, max 50) |
-| cursor    | no       | Pagination cursor from `next_cursor` in previous response |
+## Cities served
 
-Example: `GET /api/flights/search?from=ARN&to=BCN&cabin=economy`
-
-Each result includes airline, flight number, departure/arrival times, duration, stops, price, and cabin class. When `next_cursor` is not null, pass it as `cursor` to get the next page.
-
-## Look up an offer
-
-`GET /api/flights/offers/{id}`
-
-Returns a single offer by ID. Example: `GET /api/flights/offers/off_arn_bcn_1`
-
-## Airports
-
-| Code | City |
-|------|------|
-| ARN  | Stockholm |
-| LHR  | London |
-| CDG  | Paris |
-| AMS  | Amsterdam |
-| FRA  | Frankfurt |
-| BCN  | Barcelona |
-| MAD  | Madrid |
-| FCO  | Rome |
-| BER  | Berlin |
-| CPH  | Copenhagen |
-| OSL  | Oslo |
-| HEL  | Helsinki |
-| VIE  | Vienna |
-| ZRH  | Zurich |
-| JFK  | New York |
-
-Every city connects to every other city. Search any pair.
-
-## More pages
-
-- [Search flights](/md/flights-search) — full search action details
-- [Flights](/md/flights) — offer schema and route info
-- [Airports](/md/airports) — full airport names
-- [Getting started](/md/help) — how to navigate this site
+Wayfare covers 15 cities across Europe and North America. Every city has flights to every other city and a selection of hotels. See [airports](/md/airports) for the full list.

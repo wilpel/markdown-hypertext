@@ -1,0 +1,85 @@
+import { NextResponse } from "next/server";
+import { getHotelData } from "@/lib/content";
+
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  const city = searchParams.get("city");
+  const checkin = searchParams.get("checkin");
+  const checkout = searchParams.get("checkout");
+  const minStars = searchParams.get("min_stars");
+  const maxPrice = searchParams.get("max_price");
+  const guests = searchParams.get("guests");
+  const cursor = searchParams.get("cursor");
+  const rawLimit = searchParams.get("limit");
+
+  if (!city) {
+    return NextResponse.json(
+      { error: "city is a required query parameter" },
+      { status: 400 }
+    );
+  }
+
+  const hotelData = getHotelData();
+  let results = hotelData.hotels.filter(
+    (h) => h.city_code.toUpperCase() === city.toUpperCase()
+  );
+
+  if (minStars) {
+    const ms = parseInt(minStars);
+    if (!isNaN(ms)) {
+      results = results.filter((h) => h.stars >= ms);
+    }
+  }
+
+  if (maxPrice) {
+    const mp = parseFloat(maxPrice);
+    if (!isNaN(mp)) {
+      results = results.filter((h) =>
+        h.rooms.some((r) => r.price_per_night.amount <= mp)
+      );
+    }
+  }
+
+  if (guests) {
+    const g = parseInt(guests);
+    if (!isNaN(g)) {
+      results = results.filter((h) =>
+        h.rooms.some((r) => r.max_guests >= g)
+      );
+    }
+  }
+
+  results.sort((a, b) => b.stars - a.stars || a.rooms[0].price_per_night.amount - b.rooms[0].price_per_night.amount);
+
+  const pageSize = Math.min(parseInt(rawLimit) || 10, 50);
+  let startIdx = 0;
+
+  if (cursor) {
+    const idx = results.findIndex((h) => h.hotel_id === cursor);
+    if (idx !== -1) startIdx = idx + 1;
+  }
+
+  const page = results.slice(startIdx, startIdx + pageSize);
+  const hasMore = startIdx + pageSize < results.length;
+  const nextCursor = hasMore ? page[page.length - 1].hotel_id : null;
+
+  // Include date context in response if provided
+  const response = {
+    results: page,
+    total: results.length,
+    next_cursor: nextCursor,
+  };
+
+  if (checkin || checkout) {
+    response.dates = { checkin: checkin || null, checkout: checkout || null };
+    // Calculate nights
+    if (checkin && checkout) {
+      const nights = Math.round(
+        (new Date(checkout) - new Date(checkin)) / (1000 * 60 * 60 * 24)
+      );
+      response.dates.nights = nights > 0 ? nights : null;
+    }
+  }
+
+  return NextResponse.json(response);
+}

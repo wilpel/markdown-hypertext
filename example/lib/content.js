@@ -47,3 +47,7 @@ export function parseFrontmatter(raw) {
 export function getFlightData() {
   return JSON.parse(readFileSync(join(dataDir, "flights.json"), "utf8"));
 }
+
+export function getHotelData() {
+  return JSON.parse(readFileSync(join(dataDir, "hotels.json"), "utf8"));
+}

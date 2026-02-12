@@ -4,7 +4,7 @@
     {
       "id": "index",
       "type": "section",
-      "title": "SkySearch — Flight Search API",
+      "title": "Wayfare — Travel Search API",
       "md_url": "/md/index"
     },
     {
@@ -18,6 +18,18 @@
       "type": "page",
       "title": "Search Flights",
       "md_url": "/md/flights-search"
+    },
+    {
+      "id": "hotels",
+      "type": "section",
+      "title": "Hotels",
+      "md_url": "/md/hotels"
+    },
+    {
+      "id": "hotels-search",
+      "type": "page",
+      "title": "Search Hotels",
+      "md_url": "/md/hotels-search"
     },
     {
       "id": "airports",

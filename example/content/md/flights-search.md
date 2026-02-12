@@ -56,16 +56,18 @@ Response:
 }
 ```
 
-Each result is an offer object. See [flights](/md/flights) for the offer schema.
+Each result is a flight offer with an `offer_id`. Use the offer ID to get full details.
 
 Example — economy flights from Stockholm to Barcelona on March 10:
 
 `GET /api/flights/search?from=ARN&to=BCN&date=2026-03-10&cabin=economy`
 
-## Single offer lookup
+## Flight offer details
 
 `GET /api/flights/offers/{id}`
 
-Returns a single offer by its ID. Example: `GET /api/flights/offers/off_arn_bcn_1`
+Returns full details for a single flight offer by its `offer_id`. Each offer includes airline, flight number, departure and arrival times, duration, stops, price, and cabin class.
+
+Example: `GET /api/flights/offers/off_arn_bcn_1`
 
 See [airports](/md/airports) for valid airport codes.

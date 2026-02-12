@@ -19,7 +19,8 @@ function confirmationCode() {
 }
 
 export function createBooking(type, details) {
-  const prefix = type === "flight" ? "bkg_f_" : "bkg_h_";
+  const prefixes = { flight: "bkg_f_", hotel: "bkg_h_", package: "bkg_p_" };
+  const prefix = prefixes[type] || "bkg_";
   const booking_id = prefix + randomHex(8);
   const confirmation_code = confirmationCode();
   const booking = {

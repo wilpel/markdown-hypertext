@@ -76,4 +76,4 @@ Returns full details for a single hotel by its `hotel_id`, including all room ty
 
 Example: `GET /api/hotels/htl_cdg_1`
 
-See [airports](/md/airports) for valid city codes (use the same IATA codes).
+See [airports](/airports) for valid city codes (use the same IATA codes).

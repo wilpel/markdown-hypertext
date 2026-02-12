@@ -19,9 +19,9 @@ This section covers flight search across all supported cities.
 
 ## Searching
 
-Use the [search action](/md/flights-search) to find offers between two airports. You can filter by date, cabin class, and maximum price. Results are paginated with cursor-based pagination.
+Use the [search action](/flights-search) to find offers between two airports. You can filter by date, cabin class, and maximum price. Results are paginated with cursor-based pagination.
 
-Each search result includes an `offer_id`. Use it with `GET /api/flights/offers/{id}` to get full details for a specific flight. See [search flights](/md/flights-search) for the complete API reference.
+Each search result includes an `offer_id`. Use it with `GET /api/flights/offers/{id}` to get full details for a specific flight. See [search flights](/flights-search) for the complete API reference.
 
 ## Cities
 
@@ -53,6 +53,6 @@ Each offer includes: airline, flight number, departure and arrival times, durati
 
 ## Booking
 
-Once you've found a flight, you can book it. See [book flight](/md/flights-book) for the POST booking action. You'll need the `offer_id` from search results and passenger details.
+Once you've found a flight, you can book it. See [book flight](/flights-book) for the POST booking action. You'll need the `offer_id` from search results and passenger details.
 
-For the full list of airport codes and names, see [airports](/md/airports). Looking for hotels too? See [hotels](/md/hotels).
+For the full list of airport codes and names, see [airports](/airports). Looking for hotels too? See [hotels](/hotels).

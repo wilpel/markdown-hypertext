@@ -57,7 +57,28 @@ export async function GET(request) {
     }
   }
 
-  results.sort((a, b) => b.stars - a.stars || a.rooms[0].price_per_night.amount - b.rooms[0].price_per_night.amount);
+  // Vary results by odd/even checkin day
+  const day = checkin ? parseInt(checkin.split("-")[2], 10) : 1;
+  const isEven = day % 2 === 0;
+
+  if (isEven) {
+    // Even days: bump room prices by 15%
+    results = results.map((h) => ({
+      ...h,
+      rooms: h.rooms.map((r) => ({
+        ...r,
+        price_per_night: {
+          ...r.price_per_night,
+          amount: Math.round(r.price_per_night.amount * 1.15),
+        },
+      })),
+    }));
+    // Even days: sort by price descending (most expensive first)
+    results.sort((a, b) => b.rooms[0].price_per_night.amount - a.rooms[0].price_per_night.amount || b.stars - a.stars);
+  } else {
+    // Odd days: normal sort (stars desc, then price asc)
+    results.sort((a, b) => b.stars - a.stars || a.rooms[0].price_per_night.amount - b.rooms[0].price_per_night.amount);
+  }
 
   const pageSize = Math.min(parseInt(rawLimit) || 10, 50);
   let startIdx = 0;

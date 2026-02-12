@@ -31,6 +31,6 @@ Supported airports and their IATA codes.
 | ZRH  | Zurich | Zurich Airport |
 | JFK  | New York | John F. Kennedy |
 
-Use these codes as `from` and `to` values when searching flights. See [search flights](/md/flights-search) for the search action.
+Use these codes as `from` and `to` values when searching flights. See [search flights](/flights-search) for the search action.
 
-Every city connects to every other city for flights, and each city has hotels available. See [search flights](/md/flights-search) and [search hotels](/md/hotels-search).
+Every city connects to every other city for flights, and each city has hotels available. See [search flights](/flights-search) and [search hotels](/hotels-search).

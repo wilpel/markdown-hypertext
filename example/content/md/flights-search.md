@@ -70,4 +70,4 @@ Returns full details for a single flight offer by its `offer_id`. Each offer inc
 
 Example: `GET /api/flights/offers/off_arn_bcn_1`
 
-See [airports](/md/airports) for valid airport codes.
+See [airports](/airports) for valid airport codes.

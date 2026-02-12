@@ -12,11 +12,11 @@ MDH takes a different approach: describe your site as a graph of Markdown docume
 
 ## How it works
 
-**Nodes** are Markdown files with YAML frontmatter. Each node has an ID (like `flights-search`), a type, and standard Markdown links to other nodes (`[flights](/md/flights)`). The body is the content — written for an agent to read and act on. Nodes can declare actions directly in their frontmatter.
+**Nodes** are Markdown files with YAML frontmatter. Each node has an ID (like `flights-search`), a type, and standard Markdown links to other nodes (`[flights](/flights)`). The body is the content — written for an agent to read and act on. Nodes can declare actions directly in their frontmatter.
 
-**Artifacts** are two JSON files that describe the site structure. `nodes.json` lists every node with its title, type, and `md_url`. `actions.json` catalogs the API endpoints an agent can call, with their parameters, auth requirements, and pagination contracts. Edges between nodes are declared in frontmatter links — no separate edge index needed.
+Edges between nodes are declared in frontmatter links. Action definitions live in each page's YAML frontmatter — request any page with `Accept: application/json` to get structured metadata.
 
-The flow: read the root node → browse the node index → navigate to nodes of interest → find an action → call the API.
+The flow: read the root node → follow links to sections of interest → find an action → call the API.
 
 ## Quick start
 
@@ -32,19 +32,16 @@ Then try the discovery flow:
 
 ```bash
 # 1. Read the root node
-curl localhost:3000/
+curl <host>/
 
-# 2. Browse the node index
-curl localhost:3000/mdh/nodes.json
+# 2. Navigate to the search action
+curl <host>/flights-search
 
-# 3. Navigate to the search action
-curl localhost:3000/md/flights-search
+# 3. Execute a search
+curl "<host>/api/flights/search?from=ARN&to=BCN&date=2026-03-10"
 
-# 4. Execute a search
-curl "localhost:3000/api/flights/search?from=ARN&to=BCN&date=2026-03-10"
-
-# 5. Look up a specific offer
-curl localhost:3000/api/flights/offers/off_arn_bcn_1
+# 4. Look up a specific offer
+curl <host>/api/flights/offers/off_arn_bcn_1
 ```
 
 ## Comparison
@@ -52,7 +49,7 @@ curl localhost:3000/api/flights/offers/off_arn_bcn_1
 | | MDH | HTML scraping | OpenAPI | MCP |
 |---|---------|--------------|---------|-----|
 | Content format | Markdown | HTML | JSON Schema | Protocol-specific |
-| Site structure | Explicit graph | Implicit in links | Not modeled | Not modeled |
+| Site structure | Frontmatter links | Implicit in links | Not modeled | Not modeled |
 | Navigation | Markdown links + frontmatter links | DOM parsing | Not supported | Not supported |
 | Actions | Declared in JSON | Reverse-engineered | Declared in YAML/JSON | Tool definitions |
 | Transport | HTTP GET | HTTP | HTTP | Custom protocol |

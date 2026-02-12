@@ -59,68 +59,18 @@ The `id` is a lowercase, hyphenated name unique within the site. The `links` arr
 Write for an agent. Be specific. Include parameter tables, example requests, and response shapes. Use standard Markdown links to connect nodes:
 
 ```markdown
-See [airports](/md/airports) for valid airport codes.
+See [airports](/airports) for valid airport codes.
 ```
 
-The link href matches the node's `md_url` from `nodes.json`. Agents follow these with plain HTTP GET requests — no custom resolution needed.
+The link href is the node's URL path. Agents follow these with plain HTTP GET requests — no custom resolution needed.
 
 Don't repeat information across nodes. If airport codes are listed in the airports node, link to it rather than duplicating the table.
 
-## Setting up artifacts
+## Discovery
 
-You need two JSON files. Put them wherever you want — `/mdh/` is the conventional path.
+Agents discover pages by reading the root node (`/`) and following links. Each page's YAML frontmatter declares its relationships to other pages via `links[]`, and any callable actions via `actions[]` or `action`.
 
-### nodes.json
-
-List every node:
-
-```json
-{
-  "spec": "mdh/1.0",
-  "nodes": [
-    {
-      "id": "flights-search",
-      "type": "page",
-      "title": "Search Flights",
-      "md_url": "/md/flights-search"
-    }
-  ]
-}
-```
-
-The `md_url` is the HTTP path where the agent fetches the node's Markdown content. It must match your server's routing.
-
-### actions.json
-
-Catalog every action an agent can call:
-
-```json
-{
-  "spec": "mdh/1.0",
-  "actions": [
-    {
-      "id": "flights.search",
-      "node_id": "flights-search",
-      "title": "Search Flights",
-      "method": "GET",
-      "url": "/api/flights/search",
-      "accept": "application/json",
-      "auth": { "type": "none" },
-      "query": {
-        "required": ["from", "to"],
-        "optional": ["date", "cabin", "max_price", "limit", "cursor"]
-      },
-      "pagination": {
-        "type": "cursor",
-        "request": { "cursor_param": "cursor", "limit_param": "limit" },
-        "response": { "next_cursor_jsonpath": "$.next_cursor" }
-      }
-    }
-  ]
-}
-```
-
-The `node_id` links back to the markdown node that documents this action in detail. The action catalog gives agents enough to call the API; the node gives them context about what it does and how to use it. The `auth` field tells agents how to authenticate. The `pagination` block describes how to page through results.
+Request any page with `Accept: application/json` to get the frontmatter as structured JSON — useful for agents that want typed access to actions and links without parsing YAML.
 
 ## Serving content
 
@@ -129,7 +79,7 @@ The simplest approach: serve the markdown files and JSON artifacts as static fil
 For markdown nodes, support content negotiation. If the agent sends `Accept: application/json`, return the frontmatter as a structured JSON object and the body as a string. Otherwise return raw markdown.
 
 ```js
-app.get("/md/:node", (req, res) => {
+app.get("/:node", (req, res) => {
   const mdPath = path.join(__dirname, "content", "md", req.params.node + ".md");
   const raw = fs.readFileSync(mdPath, "utf8");
 
@@ -165,8 +115,8 @@ Document the `cursor` and `limit` parameters in both the action catalog and the 
 Use standard Markdown links with the target node's `md_url` as the href:
 
 ```markdown
-See [search flights](/md/flights-search) for the search action.
-Check [airports](/md/airports) for valid codes.
+See [search flights](/flights-search) for the search action.
+Check [airports](/airports) for valid codes.
 ```
 
 These are plain HTTP paths. Any agent with a GET request can follow them. The link text is whatever reads naturally in the prose.
@@ -187,10 +137,8 @@ Types help agents decide which nodes to prioritize — an agent looking to do so
 The artifacts, the frontmatter, and the inline links should all agree. When you add a node:
 
 1. Create the markdown file with frontmatter (`id`, `type`, `title`, `links`, `actions`)
-2. Add the node to `nodes.json` with its `md_url`
-3. If it declares actions, add them to `actions.json` with the `node_id`
-
-If you automate this, generate the artifacts from the markdown files. The frontmatter has everything you need.
+2. Link to it from a parent or related node
+3. Add a route to serve it (or use a dynamic `[node]` route)
 
 ## Static vs dynamic
 

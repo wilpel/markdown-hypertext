@@ -25,36 +25,34 @@ This site is an MDH-enabled travel search API. Here's how to navigate it.
 
 ## Discovery
 
-Start at `/` or `/md/index` to read this site's root page.
-
-- **nodes.json** — lists every page on this site with its ID, title, and type (`/mdh/nodes.json`)
+Start at `/` or `/index` to read this site's root page. It lists all available sections and links to them.
 
 Action definitions live in each page's YAML frontmatter. Request any page with `Accept: application/json` to get structured metadata including actions.
 
 ## Navigation
 
-Each page is a Markdown document at `/md/{name}`. Pages link to each other using standard markdown links. Follow the links to navigate between pages.
+Each page is a Markdown document at `/{name}`. Pages link to each other using standard markdown links. Follow the links to navigate between pages.
 
 Read the frontmatter at the top of each page to see its `id`, `type`, and `links` (connections to other pages).
 
 ## Doing things
 
-The [search flights](/md/flights-search) page describes the flight search action. The [search hotels](/md/hotels-search) page describes the hotel search action. Both are GET requests — build the URL with query parameters and fetch it.
+The [search flights](/flights-search) page describes the flight search action. The [search hotels](/hotels-search) page describes the hotel search action. Both are GET requests — build the URL with query parameters and fetch it.
 
 Each search result includes an ID (`offer_id` for flights, `hotel_id` for hotels). Use the ID with the detail endpoint to get the full record.
 
-To book, use the POST actions described in [book flight](/md/flights-book) and [book hotel](/md/hotels-book). After booking, retrieve confirmations via [bookings](/md/bookings).
+To book, use the POST actions described in [book flight](/flights-book) and [book hotel](/hotels-book). After booking, retrieve confirmations via [bookings](/bookings).
 
 ## Typical flow
 
-1. Read `/` or `/md/index` for an overview
-2. Read `/mdh/nodes.json` to see all pages
-3. Navigate to [search flights](/md/flights-search) or [search hotels](/md/hotels-search) to learn the parameters
+1. Read `/` or `/index` for an overview
+2. Follow the links to navigate to sections of interest
+3. Navigate to [search flights](/flights-search) or [search hotels](/hotels-search) to learn the parameters
 4. Call `GET /api/flights/search?from=ARN&to=BCN` to search flights
 5. Call `GET /api/flights/offers/off_arn_bcn_1` to get flight details
-6. Call `POST /api/flights/book` with `offer_id` and passengers to book — see [book flight](/md/flights-book)
+6. Call `POST /api/flights/book` with `offer_id` and passengers to book — see [book flight](/flights-book)
 7. Call `GET /api/hotels/search?city=BCN` to find hotels at the destination
-8. Call `POST /api/hotels/book` with hotel details and guests to book — see [book hotel](/md/hotels-book)
+8. Call `POST /api/hotels/book` with hotel details and guests to book — see [book hotel](/hotels-book)
 9. Call `GET /api/bookings/{booking_id}` to retrieve a booking confirmation
 
-See [airports](/md/airports) for valid city/airport codes.
+See [airports](/airports) for valid city/airport codes.

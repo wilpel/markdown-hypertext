@@ -62,7 +62,7 @@ Content-Type: `application/json`
 ## Example request
 
 ```bash
-curl -X POST http://localhost:3000/api/flights/book \
+curl -X POST http://<host>/api/flights/book \
   -H "Content-Type: application/json" \
   -d '{
     "offer_id": "off_arn_bcn_1",
@@ -104,10 +104,10 @@ Returns a booking receipt with status `201 Created`:
 
 ## Flow
 
-1. Search for flights with [search flights](/md/flights-search)
+1. Search for flights with [search flights](/flights-search)
 2. Pick an offer from the results
 3. POST to this endpoint with the `offer_id` and passenger list
 4. Save the `booking_id` from the response
-5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/md/bookings)
+5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings)
 
 Total price is calculated as `per_passenger × number of passengers`.

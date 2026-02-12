@@ -10,11 +10,6 @@ export function readNode(name) {
   return readFileSync(filePath, "utf8");
 }
 
-export function readArtifact(name) {
-  const filePath = join(contentDir, "mdh", name);
-  return readFileSync(filePath, "utf8");
-}
-
 export function parseFrontmatter(raw) {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!match) return { body: raw };

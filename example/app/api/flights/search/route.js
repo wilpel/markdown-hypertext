@@ -9,6 +9,11 @@ const NO_CACHE = {
   Expires: "0",
 };
 
+function shiftDate(datetime, targetDate) {
+  const time = datetime.split("T")[1];
+  return `${targetDate}T${time}`;
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const from = searchParams.get("from");
@@ -34,12 +39,51 @@ export async function GET(request) {
       route.from.toUpperCase() === from.toUpperCase() &&
       route.to.toUpperCase() === to.toUpperCase()
     ) {
-      offers = offers.concat(route.offers);
+      offers = offers.concat(route.offers.map((o) => ({ ...o })));
     }
   }
 
+  // If a date is provided, shift all departure/arrival times to that date
+  // and vary results by odd/even day
   if (date) {
-    offers = offers.filter((o) => o.departure.startsWith(date));
+    const day = parseInt(date.split("-")[2], 10);
+    const isEven = day % 2 === 0;
+
+    // Shift timestamps to the requested date
+    const arrivalDate = offers.some((o) => o.arrival.split("T")[0] !== o.departure.split("T")[0])
+      ? null // mixed, compute per-offer
+      : date;
+
+    offers = offers.map((o) => {
+      const depDate = o.departure.split("T")[0];
+      const arrDate = o.arrival.split("T")[0];
+      const arrivalSpillover = depDate !== arrDate;
+
+      const newDep = shiftDate(o.departure, date);
+      // If the arrival was the next day, keep that offset
+      let newArr;
+      if (arrivalSpillover) {
+        const nextDay = new Date(date);
+        nextDay.setDate(nextDay.getDate() + 1);
+        const nextDateStr = nextDay.toISOString().split("T")[0];
+        newArr = shiftDate(o.arrival, nextDateStr);
+      } else {
+        newArr = shiftDate(o.arrival, date);
+      }
+
+      return { ...o, departure: newDep, arrival: newArr };
+    });
+
+    // On even days: bump prices by 15% and reverse sort order
+    if (isEven) {
+      offers = offers.map((o) => ({
+        ...o,
+        price: {
+          ...o.price,
+          amount: Math.round(o.price.amount * 1.15),
+        },
+      }));
+    }
   }
 
   if (cabin) {
@@ -53,7 +97,14 @@ export async function GET(request) {
     }
   }
 
-  offers.sort((a, b) => a.departure.localeCompare(b.departure));
+  // On even days reverse sort, on odd days normal sort
+  const day = date ? parseInt(date.split("-")[2], 10) : 1;
+  const isEven = day % 2 === 0;
+  if (isEven) {
+    offers.sort((a, b) => b.departure.localeCompare(a.departure));
+  } else {
+    offers.sort((a, b) => a.departure.localeCompare(b.departure));
+  }
 
   const pageSize = Math.min(parseInt(rawLimit) || 10, 50);
   let startIdx = 0;
@@ -67,8 +118,15 @@ export async function GET(request) {
   const hasMore = startIdx + pageSize < offers.length;
   const nextCursor = hasMore ? page[page.length - 1].offer_id : null;
 
-  return NextResponse.json(
-    { results: page, total: offers.length, next_cursor: nextCursor },
-    { headers: NO_CACHE }
-  );
+  const response = {
+    results: page,
+    total: offers.length,
+    next_cursor: nextCursor,
+  };
+
+  if (date) {
+    response.date = date;
+  }
+
+  return NextResponse.json(response, { headers: NO_CACHE });
 }

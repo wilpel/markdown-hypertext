@@ -29,7 +29,7 @@ A **Node** is a document addressed by a stable identifier (`id`) and representab
 Nodes link to each other using standard Markdown links with paths matching the node's `md_url`:
 
 ```markdown
-See [airports](/md/airports) for valid airport codes.
+See [airports](/airports) for valid airport codes.
 ```
 
 Links use regular HTTP paths. An agent can follow them with a standard GET request.
@@ -60,25 +60,14 @@ An **Action** is a callable HTTP operation described in a node's frontmatter. Ac
 
 ## 3. Protocol Surface
 
-### 3.1 Artifact Indexes
-
-```
-GET /mdh/nodes.json
-GET /mdh/actions.json
-```
-
-These files allow a client to understand the full site structure without crawling individual Markdown pages. Their schemas are defined in §7.
-
-Sites SHOULD serve these at `/mdh/nodes.json` and `/mdh/actions.json`. Implementations MAY choose other paths.
-
-### 3.2 Markdown Node Rendering
+### 3.1 Markdown Node Rendering
 
 Each node MUST have a canonical Markdown representation at a stable URL. Implementations MAY choose any URL layout. Recommended patterns:
 
-- `GET /md/<path>` — dedicated Markdown path
+- `GET /<path>` — dedicated path per node
 - `GET /node/<id>` — with content negotiation (§4)
 
-The chosen URL MUST be recorded in the node's `md_url` field in `nodes.json`.
+Agents discover pages by reading the root node and following links declared in frontmatter and body text.
 
 ---
 
@@ -92,7 +81,7 @@ Servers SHOULD support the following `Accept` header values:
 | `application/json` | Structured JSON representation of the node |
 | (default / browser) | HTML rendering (OPTIONAL) |
 
-If content negotiation is not implemented, the server MUST still expose Markdown at stable URLs (i.e., the `md_url` for each node MUST resolve to a Markdown document).
+If content negotiation is not implemented, the server MUST still expose Markdown at stable URLs.
 
 ---
 
@@ -181,49 +170,18 @@ Use IATA airport codes. Examples:
 Inline links in node body text MUST use standard Markdown link syntax with the node's `md_url` as the href:
 
 ```markdown
-See [airports](/md/airports) for valid airport codes.
+See [airports](/airports) for valid airport codes.
 ```
 
 The link target is a relative URL path. Agents follow links with standard HTTP GET requests — no custom resolution needed.
 
-Frontmatter `links[]` use node IDs (matching the `id` field in `nodes.json`). The agent can look up the corresponding `md_url` in the node index to fetch the target.
+Frontmatter `links[]` use node IDs. The agent follows inline Markdown links to navigate between pages.
 
 ---
 
 ## 7. Graph Artifacts
 
-### 7.1 `nodes.json`
-
-An array of node metadata records. Each record MUST contain at minimum:
-
-```json
-{
-  "id": "flights-search",
-  "type": "page",
-  "title": "Flight search",
-  "md_url": "/md/flights/search"
-}
-```
-
-**Optional fields:** `aliases`, `tags`, `canonical_url`, `updated`, `summary`.
-
-### 7.2 `actions.json`
-
-A flattened catalog of all actions declared across all nodes. This allows clients to discover and execute actions without fetching individual node documents.
-
-```json
-{
-  "id": "flights.search",
-  "node_id": "flights-search",
-  "method": "GET",
-  "url": "/api/flights/search",
-  "accept": "application/json",
-  "auth": { "type": "none" }
-}
-```
-
-**Required fields:** `id`, `node_id`, `method`, `url`.
-**Optional fields:** `title`, `accept`, `content_type`, `auth`, `query`, `body_schema`, `response_schema`, `pagination`, `examples`.
+Actions are declared in node frontmatter (§8). Agents discover actions by navigating to pages and reading their frontmatter. Request any page with `Accept: application/json` to get the frontmatter as structured JSON.
 
 ---
 
@@ -267,7 +225,7 @@ MDH does not mandate an authentication system; it describes how a client should 
 ```yaml
 auth:
   type: bearer
-  token_help: "Create a token at /md/tokens"
+  token_help: "Create a token at /tokens"
 ```
 
 The `token_help` field is OPTIONAL and provides a human/agent-readable hint for obtaining credentials.
@@ -377,29 +335,19 @@ If an action uses `auth.type: cookie`, then state-changing requests (POST/PUT/PA
 
 ---
 
-## 11. Versioning
-
-- `nodes.json` MUST include `"spec": "mdh/1.0"`.
-- Backward-compatible additions (new optional fields, new artifact files) MAY be introduced in minor versions (e.g., `mdh/1.1`).
-- Backward-incompatible changes REQUIRE a new major version (e.g., `mdh/2.0`).
-- Clients SHOULD ignore unrecognized fields to ensure forward compatibility.
-
----
-
-## 12. Conformance
+## 11. Conformance
 
 An MDH 1.0 conforming site MUST:
 
-1. Serve `nodes.json` with `spec: "mdh/1.0"` and `actions.json`.
-2. Provide a Markdown representation for every node listed in `nodes.json`, accessible at its `md_url`.
-3. Include YAML frontmatter with `id`, `type`, and `title` in every node document.
-4. Ensure all inline link targets in published Markdown resolve to valid `md_url` paths in `nodes.json`.
+1. Provide a Markdown representation for every node at a stable URL.
+2. Include YAML frontmatter with `id`, `type`, and `title` in every node document.
+3. Ensure all inline link targets in published Markdown resolve to valid node URLs.
+4. Declare actions in node frontmatter with at minimum `id`, `method`, and `url`.
 
 A conforming site SHOULD additionally:
 
 5. Support content negotiation (§4) for node URLs.
-6. Include `updated` timestamps in `nodes.json` records.
-7. Declare `auth` on all actions in `actions.json`.
+6. Declare `auth` on all actions.
 
 ---
 

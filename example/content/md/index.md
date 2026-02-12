@@ -21,23 +21,24 @@ Wayfare is a travel search interface built for AI agents. It exposes flight and 
 
 ## What you can do
 
-- **Search flights** — find one-way flight offers between any two cities. See [flights](/md/flights) for available cities and [search flights](/md/flights-search) for the search action.
-- **Book flights** — reserve a flight offer for one or more passengers. See [book flight](/md/flights-book).
-- **Search hotels** — find hotels in any supported city. See [hotels](/md/hotels) for an overview and [search hotels](/md/hotels-search) for the search action.
-- **Book hotels** — reserve a hotel room for specific dates and guests. See [book hotel](/md/hotels-book).
-- **Manage bookings** — retrieve booking confirmations by ID. See [bookings](/md/bookings).
-- **Browse airports** — see which airports are supported in the [airport reference](/md/airports).
-- **Get help** — if you're not sure where to start, see [getting started](/md/help).
+- **Search flights** — find one-way flight offers between any two cities. See [flights](/flights) for available cities and [search flights](/flights-search) for the search action.
+- **Book flights** — reserve a flight offer for one or more passengers. See [book flight](/flights-book).
+- **Search hotels** — find hotels in any supported city. See [hotels](/hotels) for an overview and [search hotels](/hotels-search) for the search action.
+- **Book hotels** — reserve a hotel room for specific dates and guests. See [book hotel](/hotels-book).
+- **Book a package** — reserve a flight and hotel together in one booking. See [book package](/package-book).
+- **Manage bookings** — retrieve booking confirmations by ID. See [bookings](/bookings).
+- **Browse airports** — see which airports are supported in the [airport reference](/airports).
+- **Get help** — if you're not sure where to start, see [getting started](/help).
 
 ## For AI agents
 
 You are reading an MDH site. Here's how to work with it.
 
-**Discovery.** Start by fetching `/mdh/nodes.json` to see every page on this site. Use the `md_url` field to navigate to any page. Each page with an API action includes the action definition in its frontmatter.
+**Discovery.** Start by reading this page (`/` or `/index`) to see what's available. Follow the links to navigate to any page. Each page with an API action includes the action definition in its frontmatter. Request any page with `Accept: application/json` to get structured metadata.
 
-**Navigation.** Each page is Markdown with YAML frontmatter. Follow the `[links](/md/...)` in the text to move between pages. Read the frontmatter `links` array for typed relationships between pages. Request any page with `Accept: application/json` to get structured frontmatter including full action definitions.
+**Navigation.** Each page is Markdown with YAML frontmatter. Follow the `[links](/...)` in the text to move between pages. Read the frontmatter `links` array for typed relationships between pages.
 
-**Actions.** When you find an action you want to execute, read its page for parameter details, then construct the HTTP request as described. Search actions use GET with query parameters. Booking actions use POST with a JSON body — see [bookings](/md/bookings) for the full flow.
+**Actions.** When you find an action you want to execute, read its page for parameter details, then construct the HTTP request as described. Search actions use GET with query parameters. Booking actions use POST with a JSON body — see [bookings](/bookings) for the full flow.
 
 **What to ask the human.** You should ask the user to clarify:
 - **Where and when** — origin, destination, dates, and any preferences (cabin class, star rating, budget) before searching
@@ -48,4 +49,4 @@ You are reading an MDH site. Here's how to work with it.
 
 ## Cities served
 
-Wayfare covers 15 cities across Europe and North America. Every city has flights to every other city and a selection of hotels. See [airports](/md/airports) for the full list.
+Wayfare covers 15 cities across Europe and North America. Every city has flights to every other city and a selection of hotels. See [airports](/airports) for the full list.

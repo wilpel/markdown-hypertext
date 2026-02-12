@@ -19,7 +19,7 @@ This section covers hotel search across all supported cities.
 
 ## Searching
 
-Use the [search action](/md/hotels-search) to find hotels in a city. You can filter by star rating, maximum price per night, and number of guests. Results are paginated with cursor-based pagination.
+Use the [search action](/hotels-search) to find hotels in a city. You can filter by star rating, maximum price per night, and number of guests. Results are paginated with cursor-based pagination.
 
 ## Cities
 
@@ -51,6 +51,6 @@ Room types vary by hotel — budget hotels offer standard rooms, while higher-ra
 
 ## Booking
 
-Once you've found a hotel, you can book a room. See [book hotel](/md/hotels-book) for the POST booking action. You'll need the `hotel_id`, room type, dates, and guest details.
+Once you've found a hotel, you can book a room. See [book hotel](/hotels-book) for the POST booking action. You'll need the `hotel_id`, room type, dates, and guest details.
 
-See [search hotels](/md/hotels-search) for the full API reference.
+See [search hotels](/hotels-search) for the full API reference.

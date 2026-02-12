@@ -83,7 +83,7 @@ Content-Type: `application/json`
 ## Example request
 
 ```bash
-curl -X POST http://localhost:3000/api/hotels/book \
+curl -X POST http://<host>/api/hotels/book \
   -H "Content-Type: application/json" \
   -d '{
     "hotel_id": "htl_cdg_1",
@@ -137,10 +137,10 @@ Returns a booking receipt with status `201 Created`:
 
 ## Flow
 
-1. Search for hotels with [search hotels](/md/hotels-search)
+1. Search for hotels with [search hotels](/hotels-search)
 2. Pick a hotel and room type from the results
 3. POST to this endpoint with hotel ID, room type, dates, and guests
 4. Save the `booking_id` from the response
-5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/md/bookings)
+5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings)
 
 Total price is calculated as `per_night × number of nights`.

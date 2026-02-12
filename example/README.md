@@ -85,7 +85,7 @@ Search results change slightly depending on the requested date. Odd days (1st, 3
 ├── data/                # flights.json, hotels.json
 ├── app/                 # Next.js route handlers
 │   ├── route.js         # root page
-│   ├── [node]/route.js  # dynamic page handler
+│   ├── [page]/route.js  # dynamic page handler
 │   └── api/             # search, booking, and lookup endpoints
 └── lib/
     ├── content.js       # reads markdown, parses frontmatter, renders HTML

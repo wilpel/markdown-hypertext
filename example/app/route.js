@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readNode, parseFrontmatter, renderMarkdown } from "@/lib/content";
+import { readPage, parseFrontmatter, renderMarkdown } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +10,7 @@ const NO_CACHE = {
 };
 
 export async function GET(request) {
-  const raw = readNode("index");
+  const raw = readPage("index");
   const accept = request.headers.get("accept") || "";
 
   if (accept.includes("application/json")) {

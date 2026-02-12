@@ -47,11 +47,11 @@ action:
 
 # Book Hotel
 
-Reserve a hotel room for specific dates. You'll need a `hotel_id` and room type from a hotel search — see [search hotels](/hotels-search) to find one.
+Reserve a hotel room for specific dates. You'll need a `hotel_id` and room type from a hotel search. See [search hotels](/hotels-search) to find one.
 
 ## Important: confirm with the user first
 
-Before making this booking request, always show the user a summary of what will be booked — the hotel name, star rating, room type, check-in and checkout dates, number of nights, nightly rate, total price, and guest names. Only proceed after the user confirms.
+Before making this booking request, always show the user a summary of what will be booked: the hotel name, star rating, room type, check-in and checkout dates, number of nights, nightly rate, total price, and guest names. Only proceed after the user confirms.
 
 ## How to book
 
@@ -69,7 +69,7 @@ The checkout date must be after checkin. The number of guests must fit the room'
 
 A confirmed booking with a `booking_id` and `confirmation_code`. The response includes hotel details, room info, stay dates, guest list, and full price breakdown.
 
-You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}`. See [bookings](/bookings).
 
 ## Steps
 

@@ -1,7 +1,7 @@
 ---
 id: index
 type: section
-title: Wayfare — Travel Search
+title: Wayfare - Travel Search
 links:
   - rel: contains
     target: flights
@@ -43,7 +43,7 @@ actions:
 
 Wayfare is a travel search site that covers 15 cities across Europe and North America. You can search for flights between any two cities, browse hotels at your destination, and book everything in one place.
 
-This site is built with MDH (Markdown Hypertext) — every page is a Markdown document that you can read and navigate using standard links. The search and booking features work through simple HTTP requests described on each page.
+This site is built with MDH (Markdown Hypertext). Every page is a Markdown document that you can read and navigate using standard links. The search and booking features work through simple HTTP requests described on each page.
 
 ## Flights
 
@@ -67,7 +67,7 @@ Read more on the [hotels](/hotels) page, or go straight to [searching hotels](/h
 
 ## Booking
 
-Once you've found a flight and hotel you like, you can book them — individually or together as a package. See the [bookings](/bookings) page for details on how booking works.
+Once you've found a flight and hotel you like, you can book them, individually or together as a package. See the [bookings](/bookings) page for details on how booking works.
 
 ## Airport codes
 
@@ -85,6 +85,6 @@ See the [full airport reference](/airports) for airport names and details.
 
 ## For AI agents
 
-**Searching** is free — call GET endpoints directly without asking the user. Present results clearly and let the user choose.
+**Searching** is free. Call GET endpoints directly without asking the user. Present results clearly and let the user choose.
 
 **Booking** requires confirmation. Before making any booking request, show the user a summary of what will be booked (flight details, hotel, dates, total price, traveler names) and get their approval before proceeding.

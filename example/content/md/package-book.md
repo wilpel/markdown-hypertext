@@ -55,7 +55,7 @@ action:
         description: "Passenger full name (e.g. Alice Lindqvist). Repeat for multiple passengers."
       guest:
         type: string
-        description: "Hotel guest full name. Optional — defaults to passengers if omitted. Repeat for multiple guests."
+        description: "Hotel guest full name. Optional, defaults to passengers if omitted. Repeat for multiple guests."
 ---
 
 # Book Package
@@ -66,7 +66,7 @@ This is a convenient alternative to booking separately with [book flight](/fligh
 
 ## Important: confirm with the user first
 
-Before making this booking request, always show the user a complete summary — the flight (airline, route, times, cabin, price), the hotel (name, stars, room type, dates, nightly rate), the total combined price, and the traveler names. Only proceed after the user confirms.
+Before making this booking request, always show the user a complete summary: the flight (airline, route, times, cabin, price), the hotel (name, stars, room type, dates, nightly rate), the total combined price, and the traveler names. Only proceed after the user confirms.
 
 ## How to book
 
@@ -74,7 +74,7 @@ Fetch `/api/bookings/package` with the flight offer, hotel details, dates, and t
 
 `GET /api/bookings/package?offer_id=off_arn_lhr_1&hotel_id=htl_lhr_1&room_type=standard&checkin=2026-03-10&checkout=2026-03-14&passenger=Alice+Lindqvist`
 
-The `guest` parameter is optional — if omitted, the passengers are used as the hotel guests too. To specify different hotel guests, add `guest` parameters:
+The `guest` parameter is optional. If omitted, the passengers are used as the hotel guests too. To specify different hotel guests, add `guest` parameters:
 
 `GET /api/bookings/package?offer_id=off_arn_lhr_1&hotel_id=htl_lhr_1&room_type=standard&checkin=2026-03-10&checkout=2026-03-14&passenger=Alice+Lindqvist&guest=Alice+Lindqvist&guest=Bob+Smith`
 
@@ -82,7 +82,7 @@ The `guest` parameter is optional — if omitted, the passengers are used as the
 
 A confirmed booking with flight details, hotel details, stay info, and a combined price breakdown showing the flight cost, hotel cost, and grand total.
 
-You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}`. See [bookings](/bookings).
 
 ## Steps
 

@@ -25,7 +25,7 @@ Every city in the Wayfare network has a selection of hotels, from affordable hos
 
 Go to [search hotels](/hotels-search) to browse what's available. You just need a city code. You can also filter by check-in/checkout dates, star rating, nightly budget, and number of guests.
 
-Here's a quick example — hotels in London:
+Here's a quick example, hotels in London:
 
 `GET /api/hotels/search?city=LHR`
 
@@ -37,7 +37,7 @@ Or 4+ star hotels in Paris for specific dates:
 
 Each hotel listing includes the name, star rating, neighborhood, amenities (wifi, breakfast, gym, etc.), and a list of room types with prices per night in EUR.
 
-Room types vary by property — budget hotels offer standard rooms, while higher-rated hotels also have superior rooms and suites. Each room type shows the price per night, bed configuration, and maximum guest capacity.
+Room types vary by property. Budget hotels offer standard rooms, while higher-rated hotels also have superior rooms and suites. Each room type shows the price per night, bed configuration, and maximum guest capacity.
 
 Every hotel has a unique `hotel_id`. Use it to get full details:
 
@@ -45,4 +45,4 @@ Every hotel has a unique `hotel_id`. Use it to get full details:
 
 ## Ready to book?
 
-Found a hotel you like? Reserve a room on the [book hotel](/hotels-book) page. You can also book a flight and hotel together — see [bookings](/bookings).
+Found a hotel you like? Reserve a room on the [book hotel](/hotels-book) page. You can also book a flight and hotel together. See [bookings](/bookings).

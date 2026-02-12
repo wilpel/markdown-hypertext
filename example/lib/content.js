@@ -5,7 +5,7 @@ import yaml from "js-yaml";
 const contentDir = join(process.cwd(), "content");
 const dataDir = join(process.cwd(), "data");
 
-export function readNode(name) {
+export function readPage(name) {
   const filePath = join(contentDir, "md", name + ".md");
   return readFileSync(filePath, "utf8");
 }

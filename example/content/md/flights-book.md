@@ -35,11 +35,11 @@ action:
 
 # Book Flight
 
-Reserve a flight for one or more passengers. You'll need an `offer_id` from a flight search — see [search flights](/flights-search) to find one.
+Reserve a flight for one or more passengers. You'll need an `offer_id` from a flight search. See [search flights](/flights-search) to find one.
 
 ## Important: confirm with the user first
 
-Before making this booking request, always show the user a summary of what will be booked — the flight details (airline, route, times, cabin class), the price per passenger, the total price, and the passenger names. Only proceed after the user confirms.
+Before making this booking request, always show the user a summary of what will be booked: the flight details (airline, route, times, cabin class), the price per passenger, the total price, and the passenger names. Only proceed after the user confirms.
 
 ## How to book
 
@@ -57,7 +57,7 @@ The total price is calculated as the per-passenger price multiplied by the numbe
 
 A confirmed booking with a `booking_id` and `confirmation_code`. The response includes the full flight details, passenger list, and price breakdown.
 
-You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}`. See [bookings](/bookings).
 
 ## Steps
 

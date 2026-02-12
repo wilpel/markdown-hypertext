@@ -26,7 +26,7 @@ Welcome to Wayfare, a travel search site covering 15 cities across Europe and No
 
 ## Start here
 
-The [home page](/) gives you an overview of everything available — flight search, hotel search, booking, and airport codes. It also includes the main search endpoints so you can get started quickly.
+The [home page](/) gives you an overview of everything available: flight search, hotel search, booking, and airport codes. It also includes the main search endpoints so you can get started quickly.
 
 ## Searching
 
@@ -42,9 +42,9 @@ To find hotels, go to [search hotels](/hotels-search). You need a city code. You
 
 Once you've found what you want, you can book:
 
-- A flight — see [book flight](/flights-book)
-- A hotel — see [book hotel](/hotels-book)
-- Both together — see [book package](/package-book)
+- A flight: see [book flight](/flights-book)
+- A hotel: see [book hotel](/hotels-book)
+- Both together: see [book package](/package-book)
 
 After booking, look up your reservation anytime at [bookings](/bookings).
 

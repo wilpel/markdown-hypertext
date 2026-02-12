@@ -50,7 +50,7 @@ Make a GET request to `/api/flights/search` with your departure and arrival airp
 | `limit` | no | Results per page (default 10, max 50) |
 | `cursor` | no | Pagination cursor from a previous response |
 
-Results are sorted by departure time. If there are more results than fit on one page, the response includes a `next_cursor` value — pass it as `cursor` in your next request to get the next page.
+Results are sorted by departure time. If there are more results than fit on one page, the response includes a `next_cursor` value. Pass it as `cursor` in your next request to get the next page.
 
 ## What's in each result
 

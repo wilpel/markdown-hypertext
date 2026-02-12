@@ -65,4 +65,4 @@ To see everything about a specific hotel, request it by ID:
 
 This returns the complete hotel record including all room options.
 
-See [airports](/airports) for valid city codes — they use the same IATA codes. Ready to book? See [book hotel](/hotels-book).
+See [airports](/airports) for valid city codes, which use the same IATA codes. Ready to book? See [book hotel](/hotels-book).

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readNode, parseFrontmatter, renderMarkdown } from "@/lib/content";
+import { readPage, parseFrontmatter, renderMarkdown } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -10,10 +10,10 @@ const NO_CACHE = {
 };
 
 export async function GET(request, { params }) {
-  const { node } = await params;
+  const { page } = await params;
 
   try {
-    const raw = readNode(node);
+    const raw = readPage(page);
     const accept = request.headers.get("accept") || "";
 
     if (accept.includes("application/json")) {
@@ -31,7 +31,7 @@ export async function GET(request, { params }) {
     });
   } catch {
     return NextResponse.json(
-      { error: "node not found" },
+      { error: "page not found" },
       { status: 404, headers: NO_CACHE }
     );
   }

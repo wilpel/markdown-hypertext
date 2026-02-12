@@ -12,41 +12,7 @@ MDH does something simpler: describe your site as a graph of Markdown documents.
 
 Each page is a Markdown file. The frontmatter at the top declares the page's identity, how it connects to other pages, and what API calls are available. The body is prose that explains what the page is about.
 
-```mermaid
-graph TD
-    root["/ (root page)"]
-    root --> section_a["Section A"]
-    root --> section_b["Section B"]
-    root --> ref["Reference"]
-    section_a --> search["Search"]
-    section_a --> create["Create"]
-    section_b --> browse["Browse"]
-    section_b --> update["Update"]
-
-    style root fill:#e8f4f8,stroke:#333
-    style section_a fill:#f0f0f0,stroke:#333
-    style section_b fill:#f0f0f0,stroke:#333
-    style ref fill:#f0f0f0,stroke:#333
-    style search fill:#fff,stroke:#333
-    style create fill:#fff,stroke:#333
-    style browse fill:#fff,stroke:#333
-    style update fill:#fff,stroke:#333
-```
-
 An agent reads the root page, follows links to the section it cares about, finds an action, and calls the API.
-
-```mermaid
-sequenceDiagram
-    participant Agent
-    participant Site
-
-    Agent->>Site: GET / (read root page)
-    Site-->>Agent: Markdown with links + actions
-    Agent->>Site: GET /products (follow link)
-    Site-->>Agent: Markdown with search action
-    Agent->>Site: GET /api/products/search?q=shoes (execute action)
-    Site-->>Agent: JSON results
-```
 
 ## Page structure
 
@@ -307,14 +273,7 @@ actions:
 
 ### Following links
 
-Each page links to related pages through Markdown links in the body and typed edges in the frontmatter:
-
-```mermaid
-graph LR
-    A["Agent reads /"] -->|follows link| B["Agent reads /products"]
-    B -->|follows link| C["Agent reads /products-search"]
-    C -->|executes action| D["GET /api/products/search?q=shoes"]
-```
+Each page links to related pages through Markdown links in the body and typed edges in the frontmatter.
 
 ### Link relationships
 

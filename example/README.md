@@ -76,40 +76,6 @@ curl -H "Accept: application/json" http://localhost:3000/flights-search
 curl -H "Accept: text/html" http://localhost:3000/flights-search
 ```
 
-## Site graph
-
-```mermaid
-graph TD
-    index["/ (root)"]
-    index --> flights["Flights"]
-    index --> hotels["Hotels"]
-    index --> bookings["Bookings"]
-    index --> airports["Airports"]
-    index --> help["Help"]
-
-    flights --> flights_search["Search Flights"]
-    flights --> flights_book["Book Flight"]
-
-    hotels --> hotels_search["Search Hotels"]
-    hotels --> hotels_book["Book Hotel"]
-
-    bookings --> flights_book
-    bookings --> hotels_book
-    bookings --> package_book["Book Package"]
-
-    flights_search -.-> airports
-    hotels_search -.-> airports
-
-    style index fill:#e8f4f8,stroke:#333
-    style flights fill:#f0f0f0,stroke:#333
-    style hotels fill:#f0f0f0,stroke:#333
-    style bookings fill:#f0f0f0,stroke:#333
-    style airports fill:#f9f9f9,stroke:#333
-    style help fill:#f9f9f9,stroke:#333
-```
-
-Solid lines are `contains`/`in_section` relationships. Dotted lines are `related_to`.
-
 ## Pages
 
 | Page | Type | What it covers |

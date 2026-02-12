@@ -5,12 +5,16 @@ title: Flights
 links:
   - rel: in_section
     target: index
+    href: /
   - rel: related_to
     target: flights-search
+    href: /flights-search
   - rel: related_to
     target: flights-book
+    href: /flights-book
   - rel: related_to
     target: airports
+    href: /airports
 ---
 
 # Flights

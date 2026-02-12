@@ -5,14 +5,19 @@ title: Wayfare — Travel Search
 links:
   - rel: contains
     target: flights
+    href: /flights
   - rel: contains
     target: hotels
+    href: /hotels
   - rel: contains
     target: bookings
+    href: /bookings
   - rel: contains
     target: airports
+    href: /airports
   - rel: contains
     target: help
+    href: /help
 actions:
   - id: flights.search
     method: GET

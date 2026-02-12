@@ -5,10 +5,13 @@ title: Book Hotel
 links:
   - rel: in_section
     target: hotels
+    href: /hotels
   - rel: related_to
     target: hotels-search
+    href: /hotels-search
   - rel: related_to
     target: bookings
+    href: /bookings
 action:
   id: hotels.book
   title: Book Hotel

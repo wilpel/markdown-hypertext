@@ -5,12 +5,16 @@ title: Bookings
 links:
   - rel: in_section
     target: index
+    href: /
   - rel: related_to
     target: flights-book
+    href: /flights-book
   - rel: related_to
     target: hotels-book
+    href: /hotels-book
   - rel: related_to
     target: package-book
+    href: /package-book
 action:
   id: bookings.get
   title: Get Booking

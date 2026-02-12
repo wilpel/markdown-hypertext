@@ -5,12 +5,16 @@ title: Hotels
 links:
   - rel: in_section
     target: index
+    href: /
   - rel: related_to
     target: hotels-search
+    href: /hotels-search
   - rel: related_to
     target: hotels-book
+    href: /hotels-book
   - rel: related_to
     target: airports
+    href: /airports
 ---
 
 # Hotels

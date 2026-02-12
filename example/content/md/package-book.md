@@ -5,14 +5,19 @@ title: Book Package
 links:
   - rel: in_section
     target: bookings
+    href: /bookings
   - rel: related_to
     target: flights-search
+    href: /flights-search
   - rel: related_to
     target: hotels-search
+    href: /hotels-search
   - rel: related_to
     target: flights-book
+    href: /flights-book
   - rel: related_to
     target: hotels-book
+    href: /hotels-book
 action:
   id: bookings.book_package
   title: Book Package

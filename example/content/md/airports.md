@@ -5,8 +5,10 @@ title: Airports
 links:
   - rel: related_to
     target: flights-search
+    href: /flights-search
   - rel: related_to
     target: flights
+    href: /flights
 ---
 
 # Airports

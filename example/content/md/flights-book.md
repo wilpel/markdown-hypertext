@@ -5,10 +5,13 @@ title: Book Flight
 links:
   - rel: in_section
     target: flights
+    href: /flights
   - rel: related_to
     target: flights-search
+    href: /flights-search
   - rel: related_to
     target: bookings
+    href: /bookings
 action:
   id: flights.book
   title: Book Flight

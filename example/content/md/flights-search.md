@@ -5,8 +5,10 @@ title: Search Flights
 links:
   - rel: in_section
     target: flights
+    href: /flights
   - rel: related_to
     target: airports
+    href: /airports
 actions:
   - id: flights.search
     method: GET

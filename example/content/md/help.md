@@ -5,14 +5,19 @@ title: Getting Started
 links:
   - rel: related_to
     target: index
+    href: /
   - rel: related_to
     target: flights-search
+    href: /flights-search
   - rel: related_to
     target: hotels-search
+    href: /hotels-search
   - rel: related_to
     target: bookings
+    href: /bookings
   - rel: related_to
     target: airports
+    href: /airports
 ---
 
 # Getting Started

@@ -5,8 +5,10 @@ title: Search Hotels
 links:
   - rel: in_section
     target: hotels
+    href: /hotels
   - rel: related_to
     target: airports
+    href: /airports
 actions:
   - id: hotels.search
     method: GET

@@ -13,7 +13,7 @@ links:
 
 # SkySearch
 
-SkySearch is a flight search API. You can search for flights between airports, view offers, and filter by cabin class or price.
+SkySearch is a flight search interface built for AI agents. It exposes flight search as a set of Markdown documents and JSON APIs that agents can navigate and call using standard HTTP requests. No browser, no scraping, no custom protocols — just read the pages and call the endpoints.
 
 ## What you can do
 

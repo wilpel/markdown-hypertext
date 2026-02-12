@@ -106,6 +106,13 @@ Example: `GET /api/hotels/search?city=JFK&checkin=2026-03-10&checkout=2026-03-14
 | CPH | Copenhagen | OSL | Oslo | HEL | Helsinki |
 | VIE | Vienna | ZRH | Zurich | JFK | New York |
 
+## Agent guidelines
+
+- **Search actions (GET) can be called freely** — go ahead and fetch results without asking.
+- **Booking actions (POST) must be confirmed with the user first.** Before executing any booking request, show the user a summary of what will be booked (flight details, hotel, dates, price, passenger names) and the exact curl command or request body you intend to send. Only proceed after the user confirms.
+- Present search results clearly — show price, times, airline, hotel stars, etc. Let the user pick.
+- If a search returns many results, highlight the best options and ask what the user prefers.
+
 ## Detailed docs
 
 For full parameter details, response shapes, and examples, see the individual pages:

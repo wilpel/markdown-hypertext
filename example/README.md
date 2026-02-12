@@ -1,26 +1,26 @@
-# Wayfare — Example MDH Site
+# Wayfare (Example MDH Site)
 
-Wayfare is a travel search site built with [MDH (Markdown Hypertext)](../README.md). It covers 15 cities across Europe and North America with flight search, hotel search, and booking — all navigable by AI agents using plain HTTP GET requests.
+A travel search site built with [MDH](../README.md). 15 cities across Europe and North America. Flights, hotels, and bookings, all through GET requests.
 
-Live demo: [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app)
+Live: [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app)
 
-## GET-only approach
+## Why GET-only
 
-This example uses GET requests exclusively — including for booking actions that would traditionally use POST. This is a deliberate choice to demonstrate maximum compatibility with current AI agents, most of which only have access to `webfetch` or equivalent GET-only tools.
+Every endpoint in this example uses GET, including bookings. Normally you'd use POST for state-changing operations, but most AI agents today only have `webfetch` or similar read-only tools. Using GET everywhere means any agent can use every feature on the site without needing special HTTP capabilities.
 
-Booking parameters like passenger names are passed as query parameters:
+Passenger and guest names go in query parameters:
 
 ```
 GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist
 ```
 
-For multiple values, repeat the parameter:
+Multiple values use repeated parameters:
 
 ```
 GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist&passenger=Bob+Smith
 ```
 
-See the main README's [GET vs POST section](../README.md#get-vs-post-choosing-an-approach) for the trade-offs of this approach.
+See the main README's [GET vs POST section](../README.md#get-vs-post-choosing-an-approach) for trade-offs.
 
 ## Running locally
 
@@ -29,50 +29,50 @@ npm install
 npm run dev
 ```
 
-The site starts at `http://localhost:3000`.
+Starts at `http://localhost:3000`.
 
-## Discovery flow
+## Try the discovery flow
 
-Walk through how an agent would navigate the site:
+This is how an agent would work through the site:
 
 ```bash
-# 1. Read the root page — see what's available
+# Read the root page
 curl http://localhost:3000/
 
-# 2. Navigate to the flights section
+# Go to the flights section
 curl http://localhost:3000/flights
 
-# 3. Read the search page — learn how to search
+# Read the search docs
 curl http://localhost:3000/flights-search
 
-# 4. Search for flights from Stockholm to London
+# Search Stockholm to London
 curl "http://localhost:3000/api/flights/search?from=ARN&to=LHR"
 
-# 5. Search with a specific date
+# Same search, specific date
 curl "http://localhost:3000/api/flights/search?from=ARN&to=LHR&date=2026-03-10"
 
-# 6. Get details on a specific offer
+# Look at one offer
 curl http://localhost:3000/api/flights/offers/off_arn_lhr_1
 
-# 7. Book a flight
+# Book it
 curl "http://localhost:3000/api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist"
 
-# 8. Look up the booking
+# Check the booking
 curl http://localhost:3000/api/bookings/bkg_f_1
 ```
 
 ## Content negotiation
 
-Every page supports three response formats:
+Every page responds differently based on the `Accept` header:
 
 ```bash
-# Raw markdown with YAML frontmatter (default)
+# Markdown (default)
 curl http://localhost:3000/flights-search
 
-# Structured JSON — parsed frontmatter + body
+# JSON with parsed frontmatter
 curl -H "Accept: application/json" http://localhost:3000/flights-search
 
-# Lightweight HTML — raw markdown with clickable links
+# HTML with clickable links
 curl -H "Accept: text/html" http://localhost:3000/flights-search
 ```
 
@@ -108,47 +108,45 @@ graph TD
     style help fill:#f9f9f9,stroke:#333
 ```
 
-Solid lines = `contains` / `in_section` relationships. Dotted lines = `related_to`.
+Solid lines are `contains`/`in_section` relationships. Dotted lines are `related_to`.
 
 ## Pages
 
-| Page | Type | Description |
-|------|------|-------------|
-| `/` | section | Root page — site overview, key actions, airport codes |
-| `/flights` | section | Flights overview with routes and example searches |
-| `/flights-search` | page | How to search flights — parameters, pagination, examples |
-| `/flights-book` | page | How to book a flight — requires user confirmation |
-| `/hotels` | section | Hotels overview with search examples |
-| `/hotels-search` | page | How to search hotels — parameters, filters, examples |
-| `/hotels-book` | page | How to book a hotel — requires user confirmation |
-| `/bookings` | section | Bookings overview — types, lookup, booking flow |
-| `/package-book` | page | Book flight + hotel together — requires user confirmation |
-| `/airports` | reference | All 15 airport codes and city names |
+| Page | Type | What it covers |
+|------|------|----------------|
+| `/` | section | Site overview, key actions, airport codes |
+| `/flights` | section | Flights overview, routes, examples |
+| `/flights-search` | page | Flight search parameters, pagination |
+| `/flights-book` | page | Booking a flight (asks agent to confirm with user) |
+| `/hotels` | section | Hotels overview, search examples |
+| `/hotels-search` | page | Hotel search parameters, filters |
+| `/hotels-book` | page | Booking a hotel (asks agent to confirm with user) |
+| `/bookings` | section | Booking types, lookup, flow |
+| `/package-book` | page | Flight + hotel in one booking (asks agent to confirm) |
+| `/airports` | reference | All 15 airport codes |
 | `/help` | guide | Getting started walkthrough |
 
 ## API endpoints
 
 ### Search
 
-| Endpoint | Description |
+| Endpoint | What it does |
 |----------|-------------|
 | `GET /api/flights/search?from=ARN&to=LHR` | Search flights between two cities |
 | `GET /api/hotels/search?city=LHR` | Search hotels in a city |
-| `GET /api/flights/offers/{offer_id}` | Get full details of a flight offer |
-| `GET /api/hotels/{hotel_id}` | Get full details of a hotel |
+| `GET /api/flights/offers/{offer_id}` | Full details of a flight offer |
+| `GET /api/hotels/{hotel_id}` | Full details of a hotel |
 
 ### Booking
 
-| Endpoint | Description |
+| Endpoint | What it does |
 |----------|-------------|
 | `GET /api/flights/book?offer_id=...&passenger=...` | Book a flight |
 | `GET /api/hotels/book?hotel_id=...&room_type=...&checkin=...&checkout=...&guest=...` | Book a hotel |
 | `GET /api/bookings/package?offer_id=...&hotel_id=...&room_type=...&checkin=...&checkout=...&passenger=...` | Book flight + hotel together |
 | `GET /api/bookings/{booking_id}` | Look up a booking |
 
-### Search parameters
-
-**Flights:**
+### Flight search parameters
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
@@ -160,14 +158,14 @@ Solid lines = `contains` / `in_section` relationships. Dotted lines = `related_t
 | `limit` | no | Results per page (default 10, max 50) |
 | `cursor` | no | Pagination cursor |
 
-**Hotels:**
+### Hotel search parameters
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
 | `city` | yes | City airport code (e.g. LHR) |
 | `checkin` | no | Check-in date (YYYY-MM-DD) |
 | `checkout` | no | Check-out date (YYYY-MM-DD) |
-| `min_stars` | no | Minimum star rating (2–5) |
+| `min_stars` | no | Minimum star rating (2-5) |
 | `max_price` | no | Max price per night in EUR |
 | `guests` | no | Number of guests |
 | `limit` | no | Results per page (default 10, max 50) |
@@ -185,24 +183,24 @@ Solid lines = `contains` / `in_section` relationships. Dotted lines = `related_t
 
 ## Date behavior
 
-Search results vary slightly based on the requested date:
+Search results change slightly depending on the date you request:
 
-- **Odd days** (1st, 3rd, 5th...): original prices, normal sort order
-- **Even days** (2nd, 4th, 6th...): 15% price increase, reversed sort order
+- Odd days (1st, 3rd, 5th...): original prices, normal sort
+- Even days (2nd, 4th, 6th...): 15% price bump, reversed sort
 
-This simulates real-world price variation without needing a live pricing engine.
+This fakes price variation without a live pricing engine.
 
 ## Project structure
 
 ```
 ├── content/md/          # Markdown pages (11 files)
-├── data/                # Static data
-│   ├── flights.json     # Flight offers (all routes)
-│   └── hotels.json      # Hotel listings (all cities)
-├── app/                 # Next.js route handlers
+├── data/
+│   ├── flights.json     # Flight offers for all routes
+│   └── hotels.json      # Hotel listings for all cities
+├── app/
 │   ├── route.js         # Root page (/)
 │   ├── [node]/route.js  # Dynamic page handler
-│   └── api/             # API endpoints
+│   └── api/
 │       ├── flights/search/route.js
 │       ├── flights/book/route.js
 │       ├── flights/offers/[id]/route.js
@@ -212,13 +210,13 @@ This simulates real-world price variation without needing a live pricing engine.
 │       ├── bookings/[id]/route.js
 │       └── bookings/package/route.js
 └── lib/
-    ├── content.js       # Markdown reading, frontmatter parsing, HTML rendering
+    ├── content.js       # Reads markdown, parses frontmatter, renders HTML
     └── bookings.js      # In-memory booking store
 ```
 
 ## Notes
 
-- Bookings are stored in memory and reset when the server restarts.
-- All prices are in EUR.
-- Every city connects to every other city for flights.
-- Each city has 5 hotels with varying star ratings and room types.
+- Bookings live in memory and reset on server restart
+- All prices are in EUR
+- Every city connects to every other city for flights
+- Each city has 5 hotels across different star ratings

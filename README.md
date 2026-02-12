@@ -1,20 +1,16 @@
-# MDH — Markdown Hypertext
+# MDH (Markdown Hypertext)
 
-MDH is a specification for building websites that AI agents can read, navigate, and interact with — using nothing but Markdown, YAML frontmatter, and plain HTTP.
+A spec for building websites that AI agents can read and use. Markdown pages, YAML frontmatter, plain HTTP.
 
 ## The problem
 
-Agents interacting with the web today have bad options:
+Agents interacting with the web today don't have great options. HTML scraping is fragile (DOM structures change, content is buried in layout markup). OpenAPI specs describe endpoints but don't model site structure or help an agent figure out what to do. MCP requires every site to run a protocol-specific server and every agent to implement a custom client.
 
-- **HTML scraping** is fragile. DOM structures change, CSS selectors break, and meaningful content is buried under layout markup.
-- **OpenAPI specs** describe endpoints but not how to navigate a site, understand its content, or decide what to do next.
-- **MCP** requires every site to run a protocol-specific server and every agent to implement a custom client.
-
-MDH takes a different approach: describe your site as a graph of Markdown documents with YAML frontmatter that declares links, actions, and metadata. Agents navigate with standard HTTP GET requests and read plain text. No custom protocols, no DOM parsing, no tool schemas.
+MDH does something simpler: describe your site as a graph of Markdown documents. Each document has YAML frontmatter that declares links, actions, and metadata. Agents read pages and follow links with plain HTTP GET requests. No custom protocols, no DOM parsing, no tool schemas.
 
 ## How it works
 
-Every page on an MDH site is a Markdown document with YAML frontmatter at the top. The frontmatter declares the page's identity, its relationships to other pages, and any actions (API calls) it describes. The body is natural Markdown prose — written for an agent to read and act on.
+Each page is a Markdown file. The frontmatter at the top declares the page's identity, how it connects to other pages, and what API calls are available. The body is prose that explains what the page is about.
 
 ```mermaid
 graph TD
@@ -37,7 +33,7 @@ graph TD
     style update fill:#fff,stroke:#333
 ```
 
-The flow: read the root page → follow links to sections of interest → find an action → call the API.
+An agent reads the root page, follows links to the section it cares about, finds an action, and calls the API.
 
 ```mermaid
 sequenceDiagram
@@ -54,11 +50,11 @@ sequenceDiagram
 
 ## Page structure
 
-Every MDH page has two parts: **frontmatter** (structured metadata) and **body** (Markdown prose).
+Each page has two parts: **frontmatter** (structured metadata in YAML) and **body** (Markdown).
 
 ### Frontmatter
 
-The frontmatter is YAML between `---` delimiters. It declares who the page is, what it links to, and what actions are available:
+YAML between `---` delimiters. Contains the page ID, links to other pages, and action definitions:
 
 ```yaml
 ---
@@ -88,56 +84,56 @@ actions:
 | Field | Description |
 |-------|-------------|
 | `id` | Unique identifier for this page (e.g. `products-search`) |
-| `type` | Page type — `section`, `page`, `reference`, `guide`, etc. |
+| `type` | Page type: `section`, `page`, `reference`, `guide`, etc. |
 | `title` | Human-readable title |
 
-**Links** declare relationships to other pages. Each link has:
+**Links** connect pages to each other:
 
 | Field | Description |
 |-------|-------------|
-| `rel` | Relationship type — `contains`, `in_section`, `related_to`, etc. |
+| `rel` | Relationship type: `contains`, `in_section`, `related_to`, etc. |
 | `target` | The target page's `id` |
-| `href` | The URL path to the target page |
+| `href` | URL path to the target page |
 
 **Actions** declare callable HTTP endpoints. See [Actions](#actions) below.
 
 ### Body
 
-The body is standard Markdown. Write it like you're explaining the page to someone who needs to understand it and do something with it. Use natural prose, include examples, and link to other pages with standard Markdown links:
+Standard Markdown. Write it so an agent knows what to do. Include the actual endpoint, the parameters, and an example:
 
 ```markdown
 # Search Products
 
-Find products by keyword. You can filter by category and price range —
-see [categories](/categories) for the full list.
+Find products by keyword. Filter by category and price range.
+See [categories](/categories) for the full list.
 
 `GET /api/products/search?q=shoes&category=footwear&max_price=100`
 ```
 
-The body and frontmatter work together. The frontmatter gives agents structured, parseable metadata. The body gives context, explanations, and examples that help agents understand *how* and *when* to use the actions.
+The frontmatter gives agents structured data they can parse. The body gives context and explanations that help them understand when and how to use the actions.
 
 ## Content negotiation
 
-MDH pages support multiple response formats based on the `Accept` header:
+Pages return different formats depending on the `Accept` header:
 
-| Accept header | Response format |
-|---------------|-----------------|
+| Accept header | Response |
+|---------------|----------|
 | `text/markdown` (or no header) | Raw Markdown with YAML frontmatter |
 | `application/json` | Structured JSON with parsed frontmatter |
-| `text/html` | Lightweight HTML rendering |
+| `text/html` | HTML rendering |
 
 ```bash
 # Raw markdown (default)
 curl https://example.com/products-search
 
-# Structured JSON — useful for agents that want typed access to actions and links
+# Structured JSON, useful when agents want typed access to actions and links
 curl -H "Accept: application/json" https://example.com/products-search
 
-# HTML — for humans clicking around in a browser
+# HTML for humans
 curl -H "Accept: text/html" https://example.com/products-search
 ```
 
-The JSON format returns the parsed frontmatter as structured data, making it easy for agents to extract actions, links, and metadata without parsing YAML:
+The JSON response looks like this:
 
 ```json
 {
@@ -163,11 +159,11 @@ The JSON format returns the parsed frontmatter as structured data, making it eas
 
 ## Actions
 
-Actions are HTTP endpoints declared in a page's frontmatter. They tell agents exactly how to call an API — what method to use, what parameters are required, and what to expect back.
+Actions are HTTP endpoints declared in frontmatter. They tell agents what to call, what parameters are needed, and what format to expect back.
 
 ### GET-only actions (recommended for most agents)
 
-The simplest and most compatible approach. All parameters go in the query string:
+All parameters go in the query string:
 
 ```yaml
 action:
@@ -188,13 +184,11 @@ action:
         description: "Customer full name (e.g. Alice Lindqvist)"
 ```
 
-The agent calls it with a simple GET request:
-
 ```
 GET /api/orders/create?product_id=prod_123&name=Alice+Lindqvist
 ```
 
-This works with any agent that can make HTTP GET requests — which is all of them. For parameters that accept multiple values, the parameter is repeated:
+This works with any agent that can do GET requests, which is all of them. For multiple values, repeat the parameter:
 
 ```
 GET /api/orders/create?product_id=prod_123&name=Alice+Lindqvist&name=Bob+Smith
@@ -202,7 +196,7 @@ GET /api/orders/create?product_id=prod_123&name=Alice+Lindqvist&name=Bob+Smith
 
 ### POST actions with request bodies
 
-For more complex operations, actions can use POST with a JSON request body:
+Actions can also use POST with a JSON body:
 
 ```yaml
 action:
@@ -230,8 +224,6 @@ action:
             type: string
 ```
 
-The agent sends a POST with a JSON body:
-
 ```bash
 curl -X POST https://example.com/api/orders \
   -H "Content-Type: application/json" \
@@ -245,24 +237,24 @@ curl -X POST https://example.com/api/orders \
   }'
 ```
 
-POST is the more natural fit for state-changing operations — it follows HTTP semantics correctly (GET should be safe and idempotent), supports structured request bodies, and handles complex nested data cleanly.
+POST is more correct for state-changing operations (GET is supposed to be safe and idempotent), handles nested data properly, and signals to intermediaries that the request has side effects.
 
 ### GET vs POST: choosing an approach
 
 | | GET-only | POST |
 |---|----------|------|
-| **Agent compatibility** | Works with all agents (webfetch, curl, any HTTP client) | Requires agents that can send request bodies |
-| **Simplicity** | Parameters in URL, easy to construct | Needs JSON body construction |
-| **Complex data** | Flat key-value pairs only; arrays via repeated params | Full JSON — nested objects, arrays of objects |
-| **HTTP correctness** | Technically wrong for state-changing operations | Follows HTTP semantics properly |
-| **Caching/safety** | GET requests may be cached or retried by intermediaries | POST signals "this changes state" |
-| **Current agent support** | All agents today can do GET | Not all agents can send POST with custom bodies |
+| **Agent compatibility** | Works with all agents | Requires agents that can send request bodies |
+| **Simplicity** | Parameters in URL | Needs JSON body construction |
+| **Complex data** | Flat key-value pairs, arrays via repeated params | Full JSON with nesting |
+| **HTTP correctness** | Wrong for state-changing operations | Correct |
+| **Caching/safety** | GET may be cached or retried by proxies | POST signals side effects |
+| **Current agent support** | Universal | Partial |
 
-**Our recommendation:** Start with GET-only. Most AI agents today navigate the web using tools like `webfetch` that only support GET requests. Even agents with full HTTP access (like those using `curl`) find GET simpler to construct. You can always add POST support later when agent capabilities catch up.
+**Start with GET-only.** Most AI agents today only have `webfetch` or similar GET-only tools. Even agents with curl access find GET easier to work with. You can add POST later.
 
 ### Supporting both
 
-You can support GET and POST on the same endpoint. Declare both in the frontmatter and document both in the page body:
+You can support GET and POST on the same endpoint:
 
 ```yaml
 action:
@@ -280,15 +272,13 @@ action:
         required: [product_id, customer]
 ```
 
-This lets agents use whichever approach they support.
-
 ## Navigation and discovery
 
-Agents discover your site by starting at the root page and following links. There's no sitemap to fetch or index to crawl — just follow the links.
+Agents discover your site by starting at the root page and following links. No sitemap, no crawling.
 
 ### The root page
 
-The root page (`/`) is the entry point. It should give agents an overview of everything available and surface the most common actions directly:
+The root page (`/`) is the entry point. Put your most common actions here so agents can start immediately without clicking deeper:
 
 ```yaml
 ---
@@ -315,11 +305,9 @@ actions:
 ---
 ```
 
-Putting the most common actions on the root page means agents can start searching immediately without navigating deeper. The links point to section pages with more detail.
-
 ### Following links
 
-Every page links to related pages using standard Markdown links in the body and typed edges in the frontmatter. An agent reads a page, decides what it needs, and follows the relevant link:
+Each page links to related pages through Markdown links in the body and typed edges in the frontmatter:
 
 ```mermaid
 graph LR
@@ -330,25 +318,21 @@ graph LR
 
 ### Link relationships
 
-The `rel` field on frontmatter links helps agents understand the graph structure:
-
 | Relationship | Meaning |
 |-------------|---------|
-| `contains` | Parent → child (section contains sub-pages) |
-| `in_section` | Child → parent (page belongs to section) |
-| `related_to` | Lateral connection (see also) |
+| `contains` | Parent to child (section contains pages) |
+| `in_section` | Child to parent (page belongs to section) |
+| `related_to` | Lateral connection |
 
 ## Best practices
 
-### Write for agents, not humans
-
-Your page body is what the agent reads to decide what to do. Be specific and concrete:
+**Write for agents.** The page body is what the agent reads to figure out what to do. Be specific. Show the exact endpoint, exact parameters, and a concrete example. Don't be vague.
 
 ```markdown
 # Search Products
 
-Find products by keyword. Filter by category or price range —
-see [categories](/categories) for all available categories.
+Find products by keyword. Filter by category or price range.
+See [categories](/categories) for all available categories.
 
 `GET /api/products/search?q=shoes&max_price=100`
 
@@ -359,50 +343,27 @@ see [categories](/categories) for all available categories.
 | max_price | no       | Maximum price in USD |
 ```
 
-Don't be vague. Show the exact endpoint, the exact parameters, and an example. The agent needs to construct a request — give it everything it needs on the page.
+**Surface actions on the root page.** Don't make agents dig through three levels of pages to find a search endpoint.
 
-### Surface actions early
+**Keep pages focused.** One topic or action per page. Don't combine product search and order creation on the same page.
 
-Put the most important actions on the root page. An agent shouldn't have to navigate through three levels of pages to find a search endpoint. The root page should include inline action definitions for the primary workflows.
+**Link when you mention something.** If you reference another page's topic, link to it. That's how agents get around.
 
-### Use the root page as a landing page
-
-The root page should explain what the site is and what you can do on it. Think of it as a homepage that orients the agent:
-
-- What is this site?
-- What are the main sections?
-- What are the key actions and how do I call them?
-- What reference data is available?
-
-### Keep pages focused
-
-Each page should cover one topic or one action. Don't put product search and order creation on the same page. Split them so agents can navigate to exactly what they need.
-
-### Link generously
-
-When you mention another page's topic, link to it. This is how agents navigate — they follow links to find what they need. A page about creating an order should link to the product search, the categories reference, and the orders overview.
-
-### Include agent guidelines for sensitive actions
-
-For actions that change state (orders, payments, account changes), include explicit guidance for the agent:
+**Tell agents when to ask the user.** For state-changing actions (orders, payments), include a note telling the agent to confirm with the user first:
 
 ```markdown
-## Important: confirm with the user first
+## Confirm with the user first
 
-Before placing this order, always show the user a summary of what will
-be ordered — the product, quantity, price, and shipping address. Only
-proceed after the user confirms.
+Before placing this order, show the user a summary of what will be
+ordered (product, quantity, price, shipping address). Only proceed
+after the user confirms.
 ```
 
-This sets behavioral expectations that well-built agents will follow.
-
-### Don't duplicate content
-
-If categories are listed on the categories page, link to it rather than copying the list onto every other page. Keep information in one place and link to it.
+**Don't repeat yourself.** If categories are on the categories page, link there instead of copying the list onto every page.
 
 ## Pagination
 
-For endpoints that return lists, use cursor-based pagination. Declare the pagination contract in the action's frontmatter:
+For list endpoints, use cursor-based pagination. Declare it in the action frontmatter:
 
 ```yaml
 actions:
@@ -428,35 +389,41 @@ Responses include a cursor for the next page:
 }
 ```
 
-When `next_cursor` is `null`, there are no more results. The agent passes the cursor value back as a query parameter to get the next page.
+`next_cursor` is `null` when there are no more results.
 
 ## Security
 
-A key reason most AI agents today are limited to read-only `webfetch` tools — and can't freely run `curl`, send POST requests, or execute arbitrary HTTP calls — is security.
+Most AI agents today are limited to read-only `webfetch` tools. They can't freely run curl, send POST requests, or make arbitrary HTTP calls. This is intentional.
 
-### Why agents can't just curl anything
+### Why agents are restricted
 
-Giving an agent unrestricted HTTP access opens the door to serious risks:
+Unrestricted HTTP access creates real problems:
 
-- **Prompt injection.** A malicious website could embed instructions in its content that trick the agent into making unintended requests — sending data to attacker-controlled servers, calling APIs with harmful parameters, or leaking sensitive information from the conversation context.
-- **Data exfiltration.** An agent with full HTTP access could be manipulated into sending private data (API keys, user details, conversation contents) to external endpoints via query parameters or request bodies.
-- **Unintended side effects.** POST, PUT, and DELETE requests change state. An agent that misinterprets a page — or gets tricked by injected instructions — could create orders, modify accounts, delete data, or trigger payments without the user's intent.
-- **SSRF (Server-Side Request Forgery).** If an agent runs in a server environment, unrestricted HTTP access could let it probe internal networks, access metadata endpoints, or reach services that should never be publicly accessible.
+**Prompt injection.** A malicious website can embed instructions in its content that trick the agent into making requests it shouldn't. Send data to an attacker's server, call APIs with harmful parameters, leak information from the conversation.
 
-This is why agent frameworks restrict HTTP tools to GET-only, require user confirmation for state-changing actions, or sandbox network access entirely. The restrictions aren't a temporary limitation — they're a deliberate security boundary.
+**Data exfiltration.** An agent with full HTTP access can be manipulated into sending private data (API keys, user info, conversation contents) to external endpoints.
 
-### How MDH works within these constraints
+**Unintended side effects.** POST/PUT/DELETE requests change state. An agent that misreads a page, or gets tricked by injected instructions, could create orders, delete data, or trigger payments the user never asked for.
 
-MDH is designed with this reality in mind:
+**SSRF.** If an agent runs server-side, unrestricted HTTP lets it probe internal networks, hit metadata endpoints, or reach services that shouldn't be publicly accessible.
 
-- **Navigation is read-only.** All page discovery and content reading uses plain GET requests. An agent with nothing but `webfetch` can fully navigate an MDH site, read every page, understand the graph structure, and discover all available actions.
-- **Actions are explicit.** Rather than hoping agents will figure out how to interact with a site, MDH declares actions in structured frontmatter. The agent knows exactly what endpoint to call, what parameters are needed, and what the action does — reducing the chance of misinterpreting content or following injected instructions.
-- **Confirmation guidance is embedded.** MDH pages can include explicit behavioral guidance ("confirm with the user before ordering"). Well-built agents follow these instructions, keeping the human in the loop for anything that changes state.
-- **GET-only actions are a pragmatic option.** For sites that want maximum agent compatibility today, actions can be exposed as GET endpoints with query parameters. This lets agents execute actions using only their existing `webfetch` tool, while the page content and confirmation guidance provide the safety layer.
+Agent frameworks restrict HTTP tools to GET-only, require user confirmation for state-changing actions, or sandbox network access entirely. These aren't temporary limitations. They're deliberate security boundaries.
 
-### Looking ahead
+### How MDH works within this
 
-As agent security models mature — with better sandboxing, permission scoping, and prompt injection defenses — more agents will gain the ability to make POST requests and send custom headers safely. When that happens, MDH sites can adopt POST for state-changing actions (which is the correct HTTP approach) without changing anything about how navigation and discovery work. The spec supports both today.
+MDH is built around these constraints:
+
+**Navigation is read-only.** All page discovery and reading is GET. An agent with just `webfetch` can read every page on the site, understand the structure, and find all available actions.
+
+**Actions are declared explicitly.** Instead of the agent guessing how to interact with a site, actions are spelled out in structured frontmatter. The endpoint, parameters, and purpose are all right there, which reduces the chance of misinterpreting content or following injected instructions.
+
+**Confirmation guidance is part of the content.** Pages can tell the agent to confirm with the user before doing anything that changes state. Good agents follow these instructions.
+
+**GET-only actions are a practical option.** Sites that want to work with every agent today can expose actions as GET endpoints. The page content and confirmation guidance provide the safety layer.
+
+### Going forward
+
+As agent security gets better (sandboxing, permission scoping, prompt injection defenses), more agents will be able to safely make POST requests and send custom headers. MDH sites can switch to POST for state-changing actions at that point without changing how navigation or discovery works. The spec already supports both.
 
 ## Comparison
 
@@ -465,18 +432,18 @@ As agent security models mature — with better sandboxing, permission scoping, 
 | Content format | Markdown | HTML | JSON Schema | Protocol-specific |
 | Site structure | Frontmatter links | Implicit in DOM | Not modeled | Not modeled |
 | Navigation | Follow Markdown links | Parse HTML, guess | Not supported | Not supported |
-| Actions | Declared in YAML frontmatter | Reverse-engineered | Declared in YAML/JSON | Tool definitions |
-| Content | Natural prose for agents | Markup for humans | Parameter descriptions | Tool descriptions |
+| Actions | YAML frontmatter | Reverse-engineered | YAML/JSON | Tool definitions |
+| Content | Prose for agents | Markup for humans | Parameter descriptions | Tool descriptions |
 | Transport | Plain HTTP | HTTP | HTTP | Custom protocol |
-| Server requirements | Serve Markdown files | None | None | MCP server |
-| Agent requirements | HTTP GET + read text | Parse HTML + heuristics | Parse OpenAPI schema | MCP client |
+| Server needs | Serve Markdown files | None | None | MCP server |
+| Agent needs | HTTP GET + read text | Parse HTML + heuristics | Parse OpenAPI | MCP client |
 
 ## Example
 
-See the [example/](example/) directory for a complete working MDH site — a travel search app with flights, hotels, and bookings. It includes 11 Markdown pages, search and booking APIs, content negotiation, and pagination. A live demo is at [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app).
+The [example/](example/) directory has a complete working MDH site: a travel search app with 11 pages, search and booking APIs, content negotiation, and pagination. Live at [markdown-hypertext-example.vercel.app](https://markdown-hypertext-example.vercel.app).
 
 ## Project
 
-- [Specification](SPEC.md) — the full MDH 1.0 spec
-- [Implementation guide](GUIDE.md) — how to build an MDH site
-- [Example site](example/) — working travel search site with MDH
+- [Specification](SPEC.md) - the MDH 1.0 spec
+- [Implementation guide](GUIDE.md) - how to build an MDH site
+- [Example site](example/) - working travel search site

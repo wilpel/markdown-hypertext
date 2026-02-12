@@ -9,18 +9,80 @@ links:
     target: airports
   - rel: contains
     target: help
+actions:
+  - id: flights.search
+    method: GET
+    url: /api/flights/search
+    accept: application/json
+    query:
+      required: [from, to]
+      optional: [date, cabin, max_price, limit, cursor]
+    pagination:
+      type: cursor
+      request:
+        cursor_param: cursor
+        limit_param: limit
+      response:
+        next_cursor_jsonpath: "$.next_cursor"
+  - id: flights.get_offer
+    method: GET
+    url: /api/flights/offers/{id}
+    accept: application/json
 ---
 
 # SkySearch
 
-SkySearch is a flight search interface built for AI agents. It exposes flight search as a set of Markdown documents and JSON APIs that agents can navigate and call using standard HTTP requests. No browser, no scraping, no custom protocols — just read the pages and call the endpoints.
+SkySearch is a flight search interface built for AI agents. Search for flights between 15 cities, compare offers, and filter by cabin class or price — all through HTTP GET requests.
 
-## What you can do
+## Search flights
 
-- **Search flights** — find one-way offers between any two airports. See [available routes](/md/flights) and [search flights](/md/flights-search) to run a search.
-- **Browse airports** — see which airports are supported in the [airport reference](/md/airports).
-- **Get help** — if you're not sure where to start, see [getting started](/md/help).
+`GET /api/flights/search`
 
-## Cities served
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| from      | yes      | Departure airport IATA code |
+| to        | yes      | Arrival airport IATA code |
+| date      | no       | Date filter (YYYY-MM-DD) |
+| cabin     | no       | `economy` or `business` |
+| max_price | no       | Maximum price in EUR |
+| limit     | no       | Results per page (default 10, max 50) |
+| cursor    | no       | Pagination cursor from `next_cursor` in previous response |
 
-SkySearch covers 15 cities across Europe and North America. Every city connects to every other city. See [airports](/md/airports) for the full list of airport codes.
+Example: `GET /api/flights/search?from=ARN&to=BCN&cabin=economy`
+
+Each result includes airline, flight number, departure/arrival times, duration, stops, price, and cabin class. When `next_cursor` is not null, pass it as `cursor` to get the next page.
+
+## Look up an offer
+
+`GET /api/flights/offers/{id}`
+
+Returns a single offer by ID. Example: `GET /api/flights/offers/off_arn_bcn_1`
+
+## Airports
+
+| Code | City |
+|------|------|
+| ARN  | Stockholm |
+| LHR  | London |
+| CDG  | Paris |
+| AMS  | Amsterdam |
+| FRA  | Frankfurt |
+| BCN  | Barcelona |
+| MAD  | Madrid |
+| FCO  | Rome |
+| BER  | Berlin |
+| CPH  | Copenhagen |
+| OSL  | Oslo |
+| HEL  | Helsinki |
+| VIE  | Vienna |
+| ZRH  | Zurich |
+| JFK  | New York |
+
+Every city connects to every other city. Search any pair.
+
+## More pages
+
+- [Search flights](/md/flights-search) — full search action details
+- [Flights](/md/flights) — offer schema and route info
+- [Airports](/md/airports) — full airport names
+- [Getting started](/md/help) — how to navigate this site

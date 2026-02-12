@@ -1,4 +1,4 @@
-<img src="mdh_logo.png" alt="MDH" width="350">
+<img src="logo_mdh.png" alt="MDH" width="350">
 
 # MDH (Markdown Hypertext)
 

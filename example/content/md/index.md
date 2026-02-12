@@ -4,49 +4,113 @@ type: section
 title: Wayfare — Travel Search API
 links:
   - rel: contains
-    target: flights
+    target: flights-search
   - rel: contains
-    target: hotels
+    target: hotels-search
   - rel: contains
-    target: airports
+    target: flights-book
+  - rel: contains
+    target: hotels-book
+  - rel: contains
+    target: package-book
   - rel: contains
     target: bookings
   - rel: contains
-    target: help
+    target: airports
+actions:
+  - id: flights.search
+    method: GET
+    url: /api/flights/search
+    accept: application/json
+    query:
+      required: [from, to]
+      optional: [date, cabin, max_price, limit, cursor]
+  - id: hotels.search
+    method: GET
+    url: /api/hotels/search
+    accept: application/json
+    query:
+      required: [city]
+      optional: [checkin, checkout, min_stars, max_price, guests, limit, cursor]
+  - id: flights.book
+    method: POST
+    url: /api/flights/book
+    content_type: application/json
+  - id: hotels.book
+    method: POST
+    url: /api/hotels/book
+    content_type: application/json
+  - id: bookings.book_package
+    method: POST
+    url: /api/bookings/package
+    content_type: application/json
+  - id: bookings.get
+    method: GET
+    url: /api/bookings/{id}
+    accept: application/json
 ---
 
-# Wayfare
+# Wayfare — Travel Search API
 
-Wayfare is a travel search interface built for AI agents. It exposes flight and hotel search as a set of Markdown documents and JSON APIs that agents can navigate and call using standard HTTP requests. No browser, no scraping, no custom protocols — just read the pages and call the endpoints.
+Search and book flights and hotels. 15 cities across Europe and North America.
 
-## What you can do
+## API endpoints
 
-- **Search flights** — find one-way flight offers between any two cities. See [flights](/flights) for available cities and [search flights](/flights-search) for the search action.
-- **Book flights** — reserve a flight offer for one or more passengers. See [book flight](/flights-book).
-- **Search hotels** — find hotels in any supported city. See [hotels](/hotels) for an overview and [search hotels](/hotels-search) for the search action.
-- **Book hotels** — reserve a hotel room for specific dates and guests. See [book hotel](/hotels-book).
-- **Book a package** — reserve a flight and hotel together in one booking. See [book package](/package-book).
-- **Manage bookings** — retrieve booking confirmations by ID. See [bookings](/bookings).
-- **Browse airports** — see which airports are supported in the [airport reference](/airports).
-- **Get help** — if you're not sure where to start, see [getting started](/help).
+### Search flights
 
-## For AI agents
+`GET /api/flights/search?from={IATA}&to={IATA}&date={YYYY-MM-DD}&cabin={economy|business}&max_price={EUR}`
 
-You are reading an MDH site. Here's how to work with it.
+Required: `from`, `to`. Optional: `date`, `cabin`, `max_price`, `limit`, `cursor`.
 
-**Discovery.** Start by reading this page (`/` or `/index`) to see what's available. Follow the links to navigate to any page. Each page with an API action includes the action definition in its frontmatter. Request any page with `Accept: application/json` to get structured metadata.
+Example: `GET /api/flights/search?from=ARN&to=JFK&date=2026-03-10&cabin=economy`
 
-**Navigation.** Each page is Markdown with YAML frontmatter. Follow the `[links](/...)` in the text to move between pages. Read the frontmatter `links` array for typed relationships between pages.
+### Search hotels
 
-**Actions.** When you find an action you want to execute, read its page for parameter details, then construct the HTTP request as described. Search actions use GET with query parameters. Booking actions use POST with a JSON body — see [bookings](/bookings) for the full flow.
+`GET /api/hotels/search?city={IATA}&checkin={YYYY-MM-DD}&checkout={YYYY-MM-DD}&min_stars={2-5}&max_price={EUR}&guests={n}`
 
-**What to ask the human.** You should ask the user to clarify:
-- **Where and when** — origin, destination, dates, and any preferences (cabin class, star rating, budget) before searching
-- **Which result** — when a search returns multiple options, present them and let the user choose rather than picking for them
-- **Next steps** — after showing results, ask if the user wants to refine the search, see more details on a specific result, or search for something else (e.g., hotels at the destination after booking a flight)
+Required: `city`. Optional: `checkin`, `checkout`, `min_stars`, `max_price`, `guests`, `limit`, `cursor`.
 
-**What not to ask.** You don't need to ask the user how to navigate this site, how to call the APIs, or what parameters are required — that information is all in the pages. Read the docs, then act.
+Example: `GET /api/hotels/search?city=JFK&checkin=2026-03-10&checkout=2026-03-14&min_stars=4`
 
-## Cities served
+### Get flight offer details
 
-Wayfare covers 15 cities across Europe and North America. Every city has flights to every other city and a selection of hotels. See [airports](/airports) for the full list.
+`GET /api/flights/offers/{offer_id}`
+
+### Get hotel details
+
+`GET /api/hotels/{hotel_id}`
+
+### Book a flight
+
+`POST /api/flights/book` with JSON body: `{ "offer_id": "...", "passengers": [{ "first_name": "...", "last_name": "..." }] }`
+
+### Book a hotel
+
+`POST /api/hotels/book` with JSON body: `{ "hotel_id": "...", "room_type": "...", "checkin": "YYYY-MM-DD", "checkout": "YYYY-MM-DD", "guests": [{ "first_name": "...", "last_name": "..." }] }`
+
+### Book a package (flight + hotel)
+
+`POST /api/bookings/package` with JSON body: `{ "offer_id": "...", "hotel_id": "...", "room_type": "...", "checkin": "YYYY-MM-DD", "checkout": "YYYY-MM-DD", "passengers": [{ "first_name": "...", "last_name": "..." }] }`
+
+### Retrieve a booking
+
+`GET /api/bookings/{booking_id}`
+
+## Airport codes
+
+| Code | City | Code | City | Code | City |
+|------|------|------|------|------|------|
+| ARN | Stockholm | LHR | London | CDG | Paris |
+| AMS | Amsterdam | FRA | Frankfurt | BCN | Barcelona |
+| MAD | Madrid | FCO | Rome | BER | Berlin |
+| CPH | Copenhagen | OSL | Oslo | HEL | Helsinki |
+| VIE | Vienna | ZRH | Zurich | JFK | New York |
+
+## Detailed docs
+
+For full parameter details, response shapes, and examples, see the individual pages:
+
+- [Search flights](/flights-search) · [Book flight](/flights-book)
+- [Search hotels](/hotels-search) · [Book hotel](/hotels-book)
+- [Book package](/package-book) · [Bookings](/bookings)
+- [Airports](/airports) · [Help](/help)

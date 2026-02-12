@@ -52,11 +52,27 @@ GET /api/products/search?q=shoes  -> actual API call, returns JSON
 
 Every page is just a GET request. The agent reads Markdown, follows links, and calls APIs. No special protocols or client libraries needed.
 
-## Content negotiation
+## Serving humans and agents from the same URL
 
-Each page can return different formats based on the `Accept` header. The default is Markdown, which any agent can read with a plain GET request. With `Accept: application/json` you get the parsed frontmatter as structured JSON, which is useful when the agent needs to programmatically extract actions, parse parameters, or follow links without reading YAML. With `text/html` you get a rendered version for browsers.
+A traditional website serves HTML for browsers. An API serves JSON for programs. MDH sites can do both from the same URL using content negotiation, so you don't need separate endpoints for humans and agents.
 
-API endpoints support the same pattern. Search results, booking confirmations, and other responses come back as readable Markdown by default. When the agent needs to parse the data (to extract an `offer_id` for a booking, compare prices, or paginate through results), it requests JSON instead.
+When an agent requests a page, it gets Markdown with YAML frontmatter. The agent reads the body to understand what the page is about and parses the frontmatter to discover actions and links. When a browser requests the same URL, it gets rendered HTML. Same content, same URL, different format.
+
+This works through the `Accept` header:
+
+- **No header or `text/markdown`** returns raw Markdown. This is what most agents get by default when they use `webfetch` or similar tools.
+- **`application/json`** returns the frontmatter as structured JSON. Useful when the agent needs to programmatically extract action definitions, parse parameters, or follow links without reading YAML. Also useful for API responses where the agent needs to pull out specific values like an `offer_id` or compare prices.
+- **`text/html`** returns a rendered page for browsers. You can make this as simple or as polished as you want. A basic implementation just renders the Markdown. A production site might serve a full UI with navigation, styling, and interactive elements.
+
+The same pattern works for API endpoints. A flight search can return readable Markdown by default (the agent sees a list of flights it can present to the user) or structured JSON when the agent needs to parse the data (to extract an offer ID for booking, paginate through results, or do price comparisons).
+
+You can also go further than content negotiation. Some approaches:
+
+- Serve a rich single-page app for browsers at the same URL, with the MDH Markdown available at a subpath like `/md/products-search` or via the Accept header
+- Use User-Agent detection to serve different HTML layouts for humans vs agents (though Accept headers are more reliable)
+- Keep the MDH pages at their own paths entirely separate from the human-facing site, linked from a shared root
+
+The key idea is that your site can be fully usable by both humans and agents without maintaining two separate systems. The structured frontmatter and Markdown body serve double duty: the frontmatter drives agent behavior, and the body is readable by both.
 
 ## Actions
 

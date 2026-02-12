@@ -77,25 +77,45 @@ Agents discover pages by reading the root page (`/`) and following links. Each p
 
 Request any page with `Accept: application/json` to get the frontmatter as structured JSON. This is useful for agents that want typed access to actions and links without parsing YAML.
 
-## Serving content
+## Serving humans and agents
 
-Each page needs a stable URL that returns its Markdown content. Support content negotiation if you can: if the client sends `Accept: application/json`, return the parsed frontmatter as JSON. Otherwise return the raw Markdown.
+An MDH site can serve both humans and agents from the same URLs. The simplest way is content negotiation based on the `Accept` header.
 
-A simple dynamic route handler looks like this:
+A basic route handler:
 
 ```js
 // Given a request for /:page
 const raw = readFile(`content/md/${page}.md`);
+const accept = request.headers.get("accept") || "";
 
-if (acceptsJson(request)) {
-  const parsed = parseFrontmatter(raw);
-  return jsonResponse(parsed);
+if (accept.includes("application/json")) {
+  return jsonResponse(parseFrontmatter(raw));
+}
+
+if (accept.includes("text/html")) {
+  return htmlResponse(renderToHtml(raw));
 }
 
 return markdownResponse(raw);
 ```
 
-The JSON format is convenient for agents that want structured access to frontmatter without parsing YAML themselves. You can also return HTML for browser users.
+What each format is for:
+
+- **Markdown** (default) is what agents read. The body explains what the page is about in plain text. The frontmatter gives the agent structured data about actions and links. Most agents get this by default when they use `webfetch`.
+- **JSON** is for when the agent needs to programmatically work with the page data. Extracting action definitions, reading link targets, pulling parameter specs. Also useful for API responses where the agent needs to parse values out of the result.
+- **HTML** is for humans in browsers. This can be as simple as rendering the Markdown, or as rich as a full UI with navigation and styling.
+
+For API endpoints (search results, bookings, etc.), the same pattern works. Return readable Markdown by default so any agent can understand the response. Return JSON when the agent sends `Accept: application/json` and needs to parse specific fields.
+
+### Other approaches
+
+Content negotiation isn't the only way to serve both audiences. Depending on your setup, you might:
+
+- Serve a full web app for browsers at your main URLs, and make MDH pages available at a subpath like `/md/products-search` or via Accept headers
+- Run the human site and agent site as separate deployments sharing the same data
+- Start with MDH pages only and add a human-facing layer later
+
+The MDH pages are the source of truth for what the site does. The human UI can be built on top of the same data without duplicating the content or action definitions.
 
 ## Handling pagination
 

@@ -15,19 +15,18 @@ links:
 action:
   id: hotels.book
   title: Book Hotel
-  method: POST
+  method: GET
   url: /api/hotels/book
-  content_type: application/json
   accept: application/json
   auth:
     type: none
-  body_schema:
+  query:
     required:
       - hotel_id
       - room_type
       - checkin
       - checkout
-      - guests
+      - guest
     properties:
       hotel_id:
         type: string
@@ -41,18 +40,9 @@ action:
       checkout:
         type: string
         description: Check-out date (YYYY-MM-DD)
-      guests:
-        type: array
-        description: List of guest objects
-        items:
-          required:
-            - first_name
-            - last_name
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
+      guest:
+        type: string
+        description: "Guest full name (e.g. Alice Lindqvist). Repeat for multiple guests."
 ---
 
 # Book Hotel
@@ -65,19 +55,13 @@ Before making this booking request, always show the user a summary of what will 
 
 ## How to book
 
-Send a POST request to `/api/hotels/book` with the hotel ID, room type, dates, and guest details:
+Fetch `/api/hotels/book` with the hotel ID, room type, dates, and guest names:
 
-```json
-{
-  "hotel_id": "htl_lhr_1",
-  "room_type": "standard",
-  "checkin": "2026-03-10",
-  "checkout": "2026-03-14",
-  "guests": [
-    { "first_name": "Alice", "last_name": "Lindqvist" }
-  ]
-}
-```
+`GET /api/hotels/book?hotel_id=htl_lhr_1&room_type=standard&checkin=2026-03-10&checkout=2026-03-14&guest=Alice+Lindqvist`
+
+For multiple guests, repeat the `guest` parameter:
+
+`GET /api/hotels/book?hotel_id=htl_lhr_1&room_type=standard&checkin=2026-03-10&checkout=2026-03-14&guest=Alice+Lindqvist&guest=Bob+Smith`
 
 The checkout date must be after checkin. The number of guests must fit the room's capacity. The total price is the nightly rate multiplied by the number of nights.
 
@@ -91,5 +75,5 @@ You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — s
 
 1. [Search for hotels](/hotels-search) and pick a hotel and room type
 2. Show the user a summary and get confirmation
-3. POST to `/api/hotels/book` with hotel ID, room type, dates, and guests
+3. Fetch `/api/hotels/book` with hotel ID, room type, dates, and guests
 4. Save the `booking_id` from the response

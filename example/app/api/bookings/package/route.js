@@ -10,18 +10,16 @@ const NO_CACHE = {
   Expires: "0",
 };
 
-export async function POST(request) {
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      { error: "Invalid JSON body" },
-      { status: 400, headers: NO_CACHE }
-    );
-  }
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
 
-  const { offer_id, hotel_id, room_type, checkin, checkout, passengers, guests } = body;
+  const offer_id = searchParams.get("offer_id");
+  const hotel_id = searchParams.get("hotel_id");
+  const room_type = searchParams.get("room_type");
+  const checkin = searchParams.get("checkin");
+  const checkout = searchParams.get("checkout");
+  const passengerNames = searchParams.getAll("passenger");
+  const guestNames = searchParams.getAll("guest");
 
   // --- Validate flight fields ---
   if (!offer_id) {
@@ -31,17 +29,22 @@ export async function POST(request) {
     );
   }
 
-  if (!passengers || !Array.isArray(passengers) || passengers.length === 0) {
+  if (passengerNames.length === 0) {
     return NextResponse.json(
-      { error: "passengers must be a non-empty array" },
+      { error: "At least one passenger is required (e.g. passenger=Alice+Lindqvist)" },
       { status: 400, headers: NO_CACHE }
     );
   }
 
+  const passengers = passengerNames.map((name) => {
+    const parts = name.trim().split(/\s+/);
+    return { first_name: parts[0] || "", last_name: parts.slice(1).join(" ") || "" };
+  });
+
   for (const p of passengers) {
     if (!p.first_name || !p.last_name) {
       return NextResponse.json(
-        { error: "Each passenger must have first_name and last_name" },
+        { error: "Each passenger must have a first and last name (e.g. passenger=Alice+Lindqvist)" },
         { status: 400, headers: NO_CACHE }
       );
     }
@@ -67,11 +70,18 @@ export async function POST(request) {
     );
   }
 
-  const guestList = guests || passengers;
+  // Use guests if provided, otherwise fall back to passengers
+  const guestList = guestNames.length > 0
+    ? guestNames.map((name) => {
+        const parts = name.trim().split(/\s+/);
+        return { first_name: parts[0] || "", last_name: parts.slice(1).join(" ") || "" };
+      })
+    : passengers;
+
   for (const g of guestList) {
     if (!g.first_name || !g.last_name) {
       return NextResponse.json(
-        { error: "Each guest must have first_name and last_name" },
+        { error: "Each guest must have a first and last name (e.g. guest=Alice+Lindqvist)" },
         { status: 400, headers: NO_CACHE }
       );
     }
@@ -196,5 +206,5 @@ export async function POST(request) {
     },
   });
 
-  return NextResponse.json(booking, { status: 201, headers: NO_CACHE });
+  return NextResponse.json(booking, { headers: NO_CACHE });
 }

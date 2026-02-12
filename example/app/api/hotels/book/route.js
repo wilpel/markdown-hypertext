@@ -10,18 +10,14 @@ const NO_CACHE = {
   Expires: "0",
 };
 
-export async function POST(request) {
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      { error: "Invalid JSON body" },
-      { status: 400, headers: NO_CACHE }
-    );
-  }
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
 
-  const { hotel_id, room_type, checkin, checkout, guests } = body;
+  const hotel_id = searchParams.get("hotel_id");
+  const room_type = searchParams.get("room_type");
+  const checkin = searchParams.get("checkin");
+  const checkout = searchParams.get("checkout");
+  const guestNames = searchParams.getAll("guest");
 
   if (!hotel_id) {
     return NextResponse.json(
@@ -41,17 +37,22 @@ export async function POST(request) {
       { status: 400, headers: NO_CACHE }
     );
   }
-  if (!guests || !Array.isArray(guests) || guests.length === 0) {
+  if (guestNames.length === 0) {
     return NextResponse.json(
-      { error: "guests must be a non-empty array" },
+      { error: "At least one guest is required (e.g. guest=Alice+Lindqvist)" },
       { status: 400, headers: NO_CACHE }
     );
   }
 
+  const guests = guestNames.map((name) => {
+    const parts = name.trim().split(/\s+/);
+    return { first_name: parts[0] || "", last_name: parts.slice(1).join(" ") || "" };
+  });
+
   for (const g of guests) {
     if (!g.first_name || !g.last_name) {
       return NextResponse.json(
-        { error: "Each guest must have first_name and last_name" },
+        { error: "Each guest must have a first and last name (e.g. guest=Alice+Lindqvist)" },
         { status: 400, headers: NO_CACHE }
       );
     }
@@ -131,5 +132,5 @@ export async function POST(request) {
     },
   });
 
-  return NextResponse.json(booking, { status: 201, headers: NO_CACHE });
+  return NextResponse.json(booking, { headers: NO_CACHE });
 }

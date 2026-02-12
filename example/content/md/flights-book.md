@@ -15,32 +15,22 @@ links:
 action:
   id: flights.book
   title: Book Flight
-  method: POST
+  method: GET
   url: /api/flights/book
-  content_type: application/json
   accept: application/json
   auth:
     type: none
-  body_schema:
+  query:
     required:
       - offer_id
-      - passengers
+      - passenger
     properties:
       offer_id:
         type: string
         description: The offer_id from a flight search result
-      passengers:
-        type: array
-        description: List of passenger objects
-        items:
-          required:
-            - first_name
-            - last_name
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
+      passenger:
+        type: string
+        description: "Passenger full name (e.g. Alice Lindqvist). Repeat for multiple passengers."
 ---
 
 # Book Flight
@@ -53,16 +43,13 @@ Before making this booking request, always show the user a summary of what will 
 
 ## How to book
 
-Send a POST request to `/api/flights/book` with the offer ID and passenger details:
+Fetch `/api/flights/book` with the offer ID and passenger names:
 
-```json
-{
-  "offer_id": "off_arn_lhr_1",
-  "passengers": [
-    { "first_name": "Alice", "last_name": "Lindqvist" }
-  ]
-}
-```
+`GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist`
+
+For multiple passengers, repeat the `passenger` parameter:
+
+`GET /api/flights/book?offer_id=off_arn_lhr_1&passenger=Alice+Lindqvist&passenger=Bob+Smith`
 
 The total price is calculated as the per-passenger price multiplied by the number of passengers.
 
@@ -76,5 +63,5 @@ You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — s
 
 1. [Search for flights](/flights-search) and pick an offer
 2. Show the user a summary and get confirmation
-3. POST to `/api/flights/book` with the `offer_id` and passengers
+3. Fetch `/api/flights/book` with the `offer_id` and passengers
 4. Save the `booking_id` from the response

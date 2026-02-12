@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="MDH" width="500">
+  <img src="mdh.png" alt="MDH" width="500">
 </p>
 
 # MDH (Markdown Hypertext)

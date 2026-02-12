@@ -30,44 +30,36 @@ actions:
 
 # Search Flights
 
-Search for flight offers between two airports.
+Find available flight offers between any two cities in the Wayfare network. All 15 cities connect to each other, so you can search any origin-destination pair.
 
-## Search endpoint
+## How to search
 
-`GET /api/flights/search`
+Make a GET request to `/api/flights/search` with your departure and arrival airports. You can optionally filter by date, cabin class, and maximum price.
+
+`GET /api/flights/search?from=ARN&to=LHR&date=2026-03-10&cabin=economy`
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| from      | yes      | Departure airport IATA code (e.g. ARN) |
-| to        | yes      | Arrival airport IATA code (e.g. BCN) |
-| date      | no       | Date filter in YYYY-MM-DD format |
-| cabin     | no       | Cabin class: `economy` or `business` |
-| max_price | no       | Maximum price in EUR |
-| cursor    | no       | Offer ID to paginate from (returned as `next_cursor`) |
-| limit     | no       | Results per page, default 10, max 50 |
+| `from` | yes | Departure airport IATA code (e.g. ARN) |
+| `to` | yes | Arrival airport IATA code (e.g. LHR) |
+| `date` | no | Travel date in YYYY-MM-DD format |
+| `cabin` | no | `economy` or `business` |
+| `max_price` | no | Maximum price in EUR |
+| `limit` | no | Results per page (default 10, max 50) |
+| `cursor` | no | Pagination cursor from a previous response |
 
-Response:
+Results are sorted by departure time. If there are more results than fit on one page, the response includes a `next_cursor` value — pass it as `cursor` in your next request to get the next page.
 
-```json
-{
-  "results": [ ... ],
-  "total": 3,
-  "next_cursor": null
-}
-```
+## What's in each result
 
-Each result is a flight offer with an `offer_id`. Use the offer ID to get full details.
+Each flight offer includes the airline, flight number, departure and arrival times, flight duration, number of stops, price, and cabin class. Every offer has a unique `offer_id`.
 
-Example — economy flights from Stockholm to Barcelona on March 10:
+## Getting full details
 
-`GET /api/flights/search?from=ARN&to=BCN&date=2026-03-10&cabin=economy`
+To see everything about a specific offer, request it by ID:
 
-## Flight offer details
+`GET /api/flights/offers/{offer_id}`
 
-`GET /api/flights/offers/{id}`
+This returns the complete offer record.
 
-Returns full details for a single flight offer by its `offer_id`. Each offer includes airline, flight number, departure and arrival times, duration, stops, price, and cabin class.
-
-Example: `GET /api/flights/offers/off_arn_bcn_1`
-
-See [airports](/airports) for valid airport codes.
+See [airports](/airports) for valid airport codes. Ready to book? See [book flight](/flights-book).

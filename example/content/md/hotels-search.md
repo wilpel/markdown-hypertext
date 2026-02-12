@@ -30,50 +30,37 @@ actions:
 
 # Search Hotels
 
-Search for hotels in a city.
+Browse hotels in any of Wayfare's 15 cities. Each city has a mix of properties across star ratings and price ranges.
 
-## Search endpoint
+## How to search
 
-`GET /api/hotels/search`
+Make a GET request to `/api/hotels/search` with a city code. You can optionally filter by dates, star rating, nightly budget, and guest count.
+
+`GET /api/hotels/search?city=LHR&checkin=2026-03-10&checkout=2026-03-14&min_stars=4`
 
 | Parameter | Required | Description |
 |-----------|----------|-------------|
-| city      | yes      | City airport code (e.g. ARN, CDG, JFK) |
-| checkin   | no       | Check-in date in YYYY-MM-DD format |
-| checkout  | no       | Check-out date in YYYY-MM-DD format |
-| min_stars | no       | Minimum star rating (2-5) |
-| max_price | no       | Maximum price per night in EUR |
-| guests    | no       | Number of guests (filters to rooms that fit) |
-| cursor    | no       | Hotel ID to paginate from (returned as `next_cursor`) |
-| limit     | no       | Results per page, default 10, max 50 |
+| `city` | yes | City airport code (e.g. LHR, CDG, JFK) |
+| `checkin` | no | Check-in date in YYYY-MM-DD format |
+| `checkout` | no | Check-out date in YYYY-MM-DD format |
+| `min_stars` | no | Minimum star rating (2–5) |
+| `max_price` | no | Maximum price per night in EUR |
+| `guests` | no | Number of guests (filters to rooms that fit) |
+| `limit` | no | Results per page (default 10, max 50) |
+| `cursor` | no | Pagination cursor from a previous response |
 
-Response:
+When you include `checkin` and `checkout`, the response calculates the number of nights for you.
 
-```json
-{
-  "results": [ ... ],
-  "total": 5,
-  "next_cursor": null,
-  "dates": { "checkin": "2026-03-10", "checkout": "2026-03-13", "nights": 3 }
-}
-```
+## What's in each result
 
-Each result is a hotel with a `hotel_id`. Use the hotel ID to get full details.
+Each hotel listing includes the name, city, star rating, neighborhood, amenities, and all available room types. Room types show the price per night, bed configuration, and maximum guests. Every hotel has a unique `hotel_id`.
 
-Example — 4+ star hotels in Paris:
+## Getting full details
 
-`GET /api/hotels/search?city=CDG&min_stars=4`
+To see everything about a specific hotel, request it by ID:
 
-Example — hotels in Barcelona under 100 EUR/night:
+`GET /api/hotels/{hotel_id}`
 
-`GET /api/hotels/search?city=BCN&max_price=100`
+This returns the complete hotel record including all room options.
 
-## Hotel details
-
-`GET /api/hotels/{id}`
-
-Returns full details for a single hotel by its `hotel_id`, including all room types, prices, amenities, and neighborhood.
-
-Example: `GET /api/hotels/htl_cdg_1`
-
-See [airports](/airports) for valid city codes (use the same IATA codes).
+See [airports](/airports) for valid city codes — they use the same IATA codes. Ready to book? See [book hotel](/hotels-book).

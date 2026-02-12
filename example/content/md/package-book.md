@@ -1,7 +1,7 @@
 ---
 id: package-book
 type: page
-title: Book Package (Flight + Hotel)
+title: Book Package
 links:
   - rel: in_section
     target: bookings
@@ -72,121 +72,45 @@ action:
               type: string
 ---
 
-# Book Package (Flight + Hotel)
+# Book Package
 
-Book a flight and hotel together in a single request. This creates one combined booking with a single `booking_id` and `confirmation_code`.
+Book a flight and hotel together in one request. This creates a single booking with one `booking_id` and `confirmation_code` covering both the flight and the hotel stay.
 
-## Endpoint
+This is a convenient alternative to booking separately with [book flight](/flights-book) and [book hotel](/hotels-book).
 
-`POST /api/bookings/package`
+## Important: confirm with the user first
 
-Content-Type: `application/json`
+Before making this booking request, always show the user a complete summary — the flight (airline, route, times, cabin, price), the hotel (name, stars, room type, dates, nightly rate), the total combined price, and the traveler names. Only proceed after the user confirms.
 
-## Parameters
+## How to book
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `offer_id` | string | yes | The `offer_id` from a flight search result |
-| `hotel_id` | string | yes | The `hotel_id` from a hotel search result |
-| `room_type` | string | yes | Room type (e.g. `standard`, `superior`, `suite`) |
-| `checkin` | string | yes | Check-in date in `YYYY-MM-DD` format |
-| `checkout` | string | yes | Check-out date in `YYYY-MM-DD` format |
-| `passengers` | array | yes | List of passengers for the flight |
-| `passengers[].first_name` | string | yes | Passenger first name |
-| `passengers[].last_name` | string | yes | Passenger last name |
-| `guests` | array | no | List of hotel guests. Defaults to `passengers` if omitted. |
-| `guests[].first_name` | string | yes | Guest first name |
-| `guests[].last_name` | string | yes | Guest last name |
-
-## Validation
-
-- `checkout` must be after `checkin`
-- Number of guests must not exceed the room's `max_guests` capacity
-- `room_type` must be one of the types offered by the hotel
-- Both `offer_id` and `hotel_id` must exist
-
-## Example request
-
-```bash
-curl -X POST http://<host>/api/bookings/package \
-  -H "Content-Type: application/json" \
-  -d '{
-    "offer_id": "off_arn_bcn_1",
-    "hotel_id": "htl_bcn_1",
-    "room_type": "standard",
-    "checkin": "2026-03-10",
-    "checkout": "2026-03-13",
-    "passengers": [
-      { "first_name": "Alice", "last_name": "Lindqvist" }
-    ]
-  }'
-```
-
-## Response
-
-Returns a booking receipt with status `201 Created`:
+Send a POST request to `/api/bookings/package` with the flight offer, hotel details, dates, and traveler info:
 
 ```json
 {
-  "booking_id": "bkg_p_a1b2c3d4",
-  "confirmation_code": "X7K9P2",
-  "type": "package",
-  "status": "confirmed",
-  "created_at": "2026-03-01T12:00:00.000Z",
-  "flight": {
-    "offer_id": "off_arn_bcn_1",
-    "airline": "SAS",
-    "flight_number": "SK1001",
-    "departure": "2026-03-10T07:15:00",
-    "arrival": "2026-03-10T10:45:00",
-    "route": { "from": "ARN", "to": "BCN" }
-  },
+  "offer_id": "off_arn_lhr_1",
+  "hotel_id": "htl_lhr_1",
+  "room_type": "standard",
+  "checkin": "2026-03-10",
+  "checkout": "2026-03-14",
   "passengers": [
     { "first_name": "Alice", "last_name": "Lindqvist" }
-  ],
-  "hotel": {
-    "hotel_id": "htl_bcn_1",
-    "name": "Hotel Arts Barcelona",
-    "city": "Barcelona",
-    "city_code": "BCN",
-    "stars": 5
-  },
-  "room": {
-    "type": "standard",
-    "beds": "1 queen"
-  },
-  "stay": {
-    "checkin": "2026-03-10",
-    "checkout": "2026-03-13",
-    "nights": 3
-  },
-  "guests": [
-    { "first_name": "Alice", "last_name": "Lindqvist" }
-  ],
-  "price": {
-    "flight": {
-      "per_passenger": { "amount": 189, "currency": "EUR" },
-      "total": { "amount": 189, "currency": "EUR" },
-      "passenger_count": 1
-    },
-    "hotel": {
-      "per_night": { "amount": 185, "currency": "EUR" },
-      "nights": 3,
-      "total": { "amount": 555, "currency": "EUR" },
-      "guest_count": 1
-    },
-    "total": { "amount": 744, "currency": "EUR" }
-  }
+  ]
 }
 ```
 
-## Flow
+The `guests` field is optional — if omitted, the passengers are used as the hotel guests too.
 
-1. Search for flights with [search flights](/flights-search)
-2. Search for hotels with [search hotels](/hotels-search)
-3. Pick a flight offer and a hotel + room type
-4. POST to this endpoint with both selections, dates, and traveler info
+## What you'll get back
+
+A confirmed booking with flight details, hotel details, stay info, and a combined price breakdown showing the flight cost, hotel cost, and grand total.
+
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+
+## Steps
+
+1. [Search for flights](/flights-search) and pick an offer
+2. [Search for hotels](/hotels-search) and pick a hotel and room type
+3. Show the user a full summary and get confirmation
+4. POST to `/api/bookings/package` with both selections, dates, and traveler info
 5. Save the `booking_id` from the response
-6. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings)
-
-Total price is `(flight per_passenger × passengers) + (hotel per_night × nights)`.

@@ -42,72 +42,36 @@ action:
 
 # Book Flight
 
-Book a flight by submitting a POST request with an offer ID and passenger details.
+Reserve a flight for one or more passengers. You'll need an `offer_id` from a flight search — see [search flights](/flights-search) to find one.
 
-## Endpoint
+## Important: confirm with the user first
 
-`POST /api/flights/book`
+Before making this booking request, always show the user a summary of what will be booked — the flight details (airline, route, times, cabin class), the price per passenger, the total price, and the passenger names. Only proceed after the user confirms.
 
-Content-Type: `application/json`
+## How to book
 
-## Parameters
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `offer_id` | string | yes | The `offer_id` from a flight search result |
-| `passengers` | array | yes | List of passengers |
-| `passengers[].first_name` | string | yes | Passenger first name |
-| `passengers[].last_name` | string | yes | Passenger last name |
-
-## Example request
-
-```bash
-curl -X POST http://<host>/api/flights/book \
-  -H "Content-Type: application/json" \
-  -d '{
-    "offer_id": "off_arn_bcn_1",
-    "passengers": [
-      { "first_name": "Alice", "last_name": "Lindqvist" }
-    ]
-  }'
-```
-
-## Response
-
-Returns a booking receipt with status `201 Created`:
+Send a POST request to `/api/flights/book` with the offer ID and passenger details:
 
 ```json
 {
-  "booking_id": "bkg_f_a1b2c3d4",
-  "confirmation_code": "X7K9P2",
-  "type": "flight",
-  "status": "confirmed",
-  "created_at": "2026-03-01T12:00:00.000Z",
-  "flight": {
-    "offer_id": "off_arn_bcn_1",
-    "airline": "SAS",
-    "flight_number": "SK1001",
-    "departure": "2026-03-10T07:15:00",
-    "arrival": "2026-03-10T10:45:00",
-    "route": { "from": "ARN", "to": "BCN" }
-  },
+  "offer_id": "off_arn_lhr_1",
   "passengers": [
     { "first_name": "Alice", "last_name": "Lindqvist" }
-  ],
-  "price": {
-    "per_passenger": { "amount": 189, "currency": "EUR" },
-    "total": { "amount": 189, "currency": "EUR" },
-    "passenger_count": 1
-  }
+  ]
 }
 ```
 
-## Flow
+The total price is calculated as the per-passenger price multiplied by the number of passengers.
 
-1. Search for flights with [search flights](/flights-search)
-2. Pick an offer from the results
-3. POST to this endpoint with the `offer_id` and passenger list
+## What you'll get back
+
+A confirmed booking with a `booking_id` and `confirmation_code`. The response includes the full flight details, passenger list, and price breakdown.
+
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+
+## Steps
+
+1. [Search for flights](/flights-search) and pick an offer
+2. Show the user a summary and get confirmation
+3. POST to `/api/flights/book` with the `offer_id` and passengers
 4. Save the `booking_id` from the response
-5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings)
-
-Total price is calculated as `per_passenger × number of passengers`.

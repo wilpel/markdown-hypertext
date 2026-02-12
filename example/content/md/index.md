@@ -4,19 +4,15 @@ type: section
 title: Wayfare — Travel Search
 links:
   - rel: contains
-    target: flights-search
+    target: flights
   - rel: contains
-    target: hotels-search
-  - rel: contains
-    target: flights-book
-  - rel: contains
-    target: hotels-book
-  - rel: contains
-    target: package-book
+    target: hotels
   - rel: contains
     target: bookings
   - rel: contains
     target: airports
+  - rel: contains
+    target: help
 actions:
   - id: flights.search
     method: GET
@@ -32,71 +28,45 @@ actions:
     query:
       required: [city]
       optional: [checkin, checkout, min_stars, max_price, guests, limit, cursor]
-  - id: flights.book
-    method: POST
-    url: /api/flights/book
-    content_type: application/json
-  - id: hotels.book
-    method: POST
-    url: /api/hotels/book
-    content_type: application/json
-  - id: bookings.book_package
-    method: POST
-    url: /api/bookings/package
-    content_type: application/json
   - id: bookings.get
     method: GET
     url: /api/bookings/{id}
     accept: application/json
 ---
 
-# Wayfare — Travel Search
+# Wayfare
 
-Wayfare is a mock travel search site built to demonstrate MDH (Markdown Hypertext). It lets AI agents search and book flights and hotels across 15 cities in Europe and North America using standard HTTP requests. The content is served as Markdown with YAML frontmatter — agents read the pages, follow the links, and call the endpoints described below.
+Wayfare is a travel search site that covers 15 cities across Europe and North America. You can search for flights between any two cities, browse hotels at your destination, and book everything in one place.
 
-## API endpoints
+This site is built with MDH (Markdown Hypertext) — every page is a Markdown document that you can read and navigate using standard links. The search and booking features work through simple HTTP requests described on each page.
 
-### Search flights
+## Flights
 
-`GET /api/flights/search?from={IATA}&to={IATA}&date={YYYY-MM-DD}&cabin={economy|business}&max_price={EUR}`
+Find one-way flights between any two of our 15 cities. Filter by travel date, cabin class (economy or business), and budget. Every city connects to every other city.
 
-Required: `from`, `to`. Optional: `date`, `cabin`, `max_price`, `limit`, `cursor`.
+To search flights, use `GET /api/flights/search` with the departure and arrival airport codes:
 
-Example: `GET /api/flights/search?from=ARN&to=JFK&date=2026-03-10&cabin=economy`
+`GET /api/flights/search?from=ARN&to=LHR&date=2026-03-10`
 
-### Search hotels
+Read more about flights and see all available routes on the [flights](/flights) page, or go straight to [searching flights](/flights-search).
 
-`GET /api/hotels/search?city={IATA}&checkin={YYYY-MM-DD}&checkout={YYYY-MM-DD}&min_stars={2-5}&max_price={EUR}&guests={n}`
+## Hotels
 
-Required: `city`. Optional: `checkin`, `checkout`, `min_stars`, `max_price`, `guests`, `limit`, `cursor`.
+Browse hotels in any of our supported cities. Each city has a selection of properties ranging from budget-friendly hostels to luxury 5-star hotels. Filter by star rating, price, or number of guests.
 
-Example: `GET /api/hotels/search?city=JFK&checkin=2026-03-10&checkout=2026-03-14&min_stars=4`
+To search hotels, use `GET /api/hotels/search` with the city code:
 
-### Get flight offer details
+`GET /api/hotels/search?city=LHR&checkin=2026-03-10&checkout=2026-03-14`
 
-`GET /api/flights/offers/{offer_id}`
+Read more on the [hotels](/hotels) page, or go straight to [searching hotels](/hotels-search).
 
-### Get hotel details
+## Booking
 
-`GET /api/hotels/{hotel_id}`
-
-### Book a flight
-
-`POST /api/flights/book` with JSON body: `{ "offer_id": "...", "passengers": [{ "first_name": "...", "last_name": "..." }] }`
-
-### Book a hotel
-
-`POST /api/hotels/book` with JSON body: `{ "hotel_id": "...", "room_type": "...", "checkin": "YYYY-MM-DD", "checkout": "YYYY-MM-DD", "guests": [{ "first_name": "...", "last_name": "..." }] }`
-
-### Book a package (flight + hotel)
-
-`POST /api/bookings/package` with JSON body: `{ "offer_id": "...", "hotel_id": "...", "room_type": "...", "checkin": "YYYY-MM-DD", "checkout": "YYYY-MM-DD", "passengers": [{ "first_name": "...", "last_name": "..." }] }`
-
-### Retrieve a booking
-
-`GET /api/bookings/{booking_id}`
+Once you've found a flight and hotel you like, you can book them — individually or together as a package. See the [bookings](/bookings) page for details on how booking works.
 
 ## Airport codes
+
+Every city is identified by its IATA airport code. Use these codes when searching for flights and hotels.
 
 | Code | City | Code | City | Code | City |
 |------|------|------|------|------|------|
@@ -106,18 +76,10 @@ Example: `GET /api/hotels/search?city=JFK&checkin=2026-03-10&checkout=2026-03-14
 | CPH | Copenhagen | OSL | Oslo | HEL | Helsinki |
 | VIE | Vienna | ZRH | Zurich | JFK | New York |
 
-## Agent guidelines
+See the [full airport reference](/airports) for airport names and details.
 
-- **Search actions (GET) can be called freely** — go ahead and fetch results without asking.
-- **Booking actions (POST) must be confirmed with the user first.** Before executing any booking request, show the user a summary of what will be booked (flight details, hotel, dates, price, passenger names) and the exact curl command or request body you intend to send. Only proceed after the user confirms.
-- Present search results clearly — show price, times, airline, hotel stars, etc. Let the user pick.
-- If a search returns many results, highlight the best options and ask what the user prefers.
+## For AI agents
 
-## Detailed docs
+**Searching** is free — call GET endpoints directly without asking the user. Present results clearly and let the user choose.
 
-For full parameter details, response shapes, and examples, see the individual pages:
-
-- [Search flights](/flights-search) · [Book flight](/flights-book)
-- [Search hotels](/hotels-search) · [Book hotel](/hotels-book)
-- [Book package](/package-book) · [Bookings](/bookings)
-- [Airports](/airports) · [Help](/help)
+**Booking** requires confirmation. Before making any booking request, show the user a summary of what will be booked (flight details, hotel, dates, total price, traveler names) and get their approval before proceeding.

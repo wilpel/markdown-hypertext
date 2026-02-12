@@ -15,42 +15,30 @@ links:
 
 # Hotels
 
-This section covers hotel search across all supported cities.
+Every city in the Wayfare network has a selection of hotels, from affordable hostels to luxury 5-star properties. There are 5 hotels per city, 75 in total.
 
-## Searching
+## How to search
 
-Use the [search action](/hotels-search) to find hotels in a city. You can filter by star rating, maximum price per night, and number of guests. Results are paginated with cursor-based pagination.
+Go to [search hotels](/hotels-search) to browse what's available. You just need a city code. You can also filter by check-in/checkout dates, star rating, nightly budget, and number of guests.
 
-## Cities
+Here's a quick example — hotels in London:
 
-Hotels are available in all 15 cities, with 5 hotels per city ranging from budget hostels to luxury properties.
+`GET /api/hotels/search?city=LHR`
 
-| City | Code | Hotels |
-|------|------|--------|
-| Stockholm | ARN | 5 |
-| London | LHR | 5 |
-| Paris | CDG | 5 |
-| Amsterdam | AMS | 5 |
-| Frankfurt | FRA | 5 |
-| Barcelona | BCN | 5 |
-| Madrid | MAD | 5 |
-| Rome | FCO | 5 |
-| Berlin | BER | 5 |
-| Copenhagen | CPH | 5 |
-| Oslo | OSL | 5 |
-| Helsinki | HEL | 5 |
-| Vienna | VIE | 5 |
-| Zurich | ZRH | 5 |
-| New York | JFK | 5 |
+Or 4+ star hotels in Paris for specific dates:
 
-## Hotel data
+`GET /api/hotels/search?city=CDG&checkin=2026-03-10&checkout=2026-03-14&min_stars=4`
 
-Each hotel includes: name, city, star rating, neighborhood, amenities, and room types with prices per night in EUR.
+## What you'll get
 
-Room types vary by hotel — budget hotels offer standard rooms, while higher-rated hotels also have superior rooms and suites.
+Each hotel listing includes the name, star rating, neighborhood, amenities (wifi, breakfast, gym, etc.), and a list of room types with prices per night in EUR.
 
-## Booking
+Room types vary by property — budget hotels offer standard rooms, while higher-rated hotels also have superior rooms and suites. Each room type shows the price per night, bed configuration, and maximum guest capacity.
 
-Once you've found a hotel, you can book a room. See [book hotel](/hotels-book) for the POST booking action. You'll need the `hotel_id`, room type, dates, and guest details.
+Every hotel has a unique `hotel_id`. Use it to get full details:
 
-See [search hotels](/hotels-search) for the full API reference.
+`GET /api/hotels/{hotel_id}`
+
+## Ready to book?
+
+Found a hotel you like? Reserve a room on the [book hotel](/hotels-book) page. You can also book a flight and hotel together — see [bookings](/bookings).

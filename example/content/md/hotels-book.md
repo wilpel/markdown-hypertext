@@ -54,93 +54,39 @@ action:
 
 # Book Hotel
 
-Book a hotel room by submitting a POST request with hotel details, dates, and guest information.
+Reserve a hotel room for specific dates. You'll need a `hotel_id` and room type from a hotel search — see [search hotels](/hotels-search) to find one.
 
-## Endpoint
+## Important: confirm with the user first
 
-`POST /api/hotels/book`
+Before making this booking request, always show the user a summary of what will be booked — the hotel name, star rating, room type, check-in and checkout dates, number of nights, nightly rate, total price, and guest names. Only proceed after the user confirms.
 
-Content-Type: `application/json`
+## How to book
 
-## Parameters
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `hotel_id` | string | yes | The `hotel_id` from a hotel search result |
-| `room_type` | string | yes | Room type (e.g. `standard`, `superior`, `suite`) |
-| `checkin` | string | yes | Check-in date in `YYYY-MM-DD` format |
-| `checkout` | string | yes | Check-out date in `YYYY-MM-DD` format |
-| `guests` | array | yes | List of guests |
-| `guests[].first_name` | string | yes | Guest first name |
-| `guests[].last_name` | string | yes | Guest last name |
-
-## Validation
-
-- `checkout` must be after `checkin`
-- Number of guests must not exceed the room's `max_guests` capacity
-- `room_type` must be one of the types offered by that hotel
-
-## Example request
-
-```bash
-curl -X POST http://<host>/api/hotels/book \
-  -H "Content-Type: application/json" \
-  -d '{
-    "hotel_id": "htl_cdg_1",
-    "room_type": "standard",
-    "checkin": "2026-03-10",
-    "checkout": "2026-03-13",
-    "guests": [
-      { "first_name": "Alice", "last_name": "Lindqvist" }
-    ]
-  }'
-```
-
-## Response
-
-Returns a booking receipt with status `201 Created`:
+Send a POST request to `/api/hotels/book` with the hotel ID, room type, dates, and guest details:
 
 ```json
 {
-  "booking_id": "bkg_h_e5f6g7h8",
-  "confirmation_code": "M3N8R5",
-  "type": "hotel",
-  "status": "confirmed",
-  "created_at": "2026-03-01T12:00:00.000Z",
-  "hotel": {
-    "hotel_id": "htl_cdg_1",
-    "name": "Hotel Le Marais",
-    "city": "Paris",
-    "city_code": "CDG",
-    "stars": 4
-  },
-  "room": {
-    "type": "standard",
-    "beds": "1 queen"
-  },
-  "stay": {
-    "checkin": "2026-03-10",
-    "checkout": "2026-03-13",
-    "nights": 3
-  },
+  "hotel_id": "htl_lhr_1",
+  "room_type": "standard",
+  "checkin": "2026-03-10",
+  "checkout": "2026-03-14",
   "guests": [
     { "first_name": "Alice", "last_name": "Lindqvist" }
-  ],
-  "price": {
-    "per_night": { "amount": 185, "currency": "EUR" },
-    "nights": 3,
-    "total": { "amount": 555, "currency": "EUR" },
-    "guest_count": 1
-  }
+  ]
 }
 ```
 
-## Flow
+The checkout date must be after checkin. The number of guests must fit the room's capacity. The total price is the nightly rate multiplied by the number of nights.
 
-1. Search for hotels with [search hotels](/hotels-search)
-2. Pick a hotel and room type from the results
-3. POST to this endpoint with hotel ID, room type, dates, and guests
+## What you'll get back
+
+A confirmed booking with a `booking_id` and `confirmation_code`. The response includes hotel details, room info, stay dates, guest list, and full price breakdown.
+
+You can retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings).
+
+## Steps
+
+1. [Search for hotels](/hotels-search) and pick a hotel and room type
+2. Show the user a summary and get confirmation
+3. POST to `/api/hotels/book` with hotel ID, room type, dates, and guests
 4. Save the `booking_id` from the response
-5. Retrieve the booking anytime with `GET /api/bookings/{booking_id}` — see [bookings](/bookings)
-
-Total price is calculated as `per_night × number of nights`.

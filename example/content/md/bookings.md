@@ -23,38 +23,32 @@ action:
 
 # Bookings
 
-This section covers booking flights and hotels, and retrieving booking confirmations.
+This is where you manage your reservations. You can book flights, hotels, or both together as a package.
 
-## Booking flow
+## How booking works
 
 1. **Search** — find flights with [search flights](/flights-search) or hotels with [search hotels](/hotels-search)
-2. **Select** — pick an offer (flight) or hotel + room type from the results
-3. **Book** — submit a POST request to [book flight](/flights-book), [book hotel](/hotels-book), or [book both together](/package-book)
-4. **Confirm** — the response includes a `booking_id` and `confirmation_code`
-5. **Retrieve** — look up any booking with `GET /api/bookings/{booking_id}`
+2. **Choose** — pick a flight offer or a hotel and room type from the results
+3. **Confirm** — review the details and confirm with the user before proceeding
+4. **Book** — submit the booking to [book flight](/flights-book), [book hotel](/hotels-book), or [book package](/package-book) for both at once
+5. **Done** — the response includes a `booking_id` and `confirmation_code`
 
-## Retrieve a booking
+## Looking up a booking
+
+To retrieve any booking by its ID:
 
 `GET /api/bookings/{booking_id}`
 
-Returns the full booking record including confirmation code, details, and price breakdown.
-
-### Example
-
-```bash
-curl http://<host>/api/bookings/bkg_f_a1b2c3d4
-```
-
-### Response
-
-Returns the same receipt object that was returned when the booking was created.
+This returns the full booking record — confirmation code, flight or hotel details, traveler info, and price breakdown.
 
 ## Booking types
 
-- **Flight bookings** — ID prefix `bkg_f_`. See [book flight](/flights-book).
-- **Hotel bookings** — ID prefix `bkg_h_`. See [book hotel](/hotels-book).
-- **Package bookings** — ID prefix `bkg_p_`. Flight + hotel in one booking. See [book package](/package-book).
+There are three kinds of bookings:
 
-## Notes
+- **Flight** — a flight reservation for one or more passengers. Booking IDs start with `bkg_f_`. See [book flight](/flights-book).
+- **Hotel** — a hotel room reservation for specific dates. Booking IDs start with `bkg_h_`. See [book hotel](/hotels-book).
+- **Package** — a flight and hotel booked together. Booking IDs start with `bkg_p_`. See [book package](/package-book).
 
-Bookings are stored in memory and reset when the server restarts. This is a mock API for demonstration purposes.
+## Good to know
+
+Bookings are stored in memory and reset when the server restarts. This is a demo site for testing purposes.

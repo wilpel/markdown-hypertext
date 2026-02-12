@@ -15,44 +15,36 @@ links:
 
 # Flights
 
-This section covers flight search across all supported cities.
+Wayfare offers one-way flights between all 15 cities in our network. Every city connects to every other city, giving you 210 possible routes to choose from.
 
-## Searching
+## How to search
 
-Use the [search action](/flights-search) to find offers between two airports. You can filter by date, cabin class, and maximum price. Results are paginated with cursor-based pagination.
+Head over to [search flights](/flights-search) to find available offers. You'll need two airport codes — one for departure and one for arrival. You can also narrow results by date, cabin class, and maximum price.
 
-Each search result includes an `offer_id`. Use it with `GET /api/flights/offers/{id}` to get full details for a specific flight. See [search flights](/flights-search) for the complete API reference.
+Here's a quick example — flights from Stockholm to London:
 
-## Cities
+`GET /api/flights/search?from=ARN&to=LHR`
 
-Wayfare covers 15 cities. Every city connects to every other city — search any pair to see available offers.
+## What you'll get
 
-| City | Code |
-|------|------|
-| Stockholm | ARN |
-| London | LHR |
-| Paris | CDG |
-| Amsterdam | AMS |
-| Frankfurt | FRA |
-| Barcelona | BCN |
-| Madrid | MAD |
-| Rome | FCO |
-| Berlin | BER |
-| Copenhagen | CPH |
-| Oslo | OSL |
-| Helsinki | HEL |
-| Vienna | VIE |
-| Zurich | ZRH |
-| New York | JFK |
+Each search result is a flight offer with details like airline, flight number, departure and arrival times, number of stops, and price in EUR. Flights are available in economy and business class.
 
-All routes are one-way. For return trips, search each direction separately.
+Every offer has a unique `offer_id`. You can use it to get the full details of a specific flight:
 
-## Offer data
+`GET /api/flights/offers/{offer_id}`
 
-Each offer includes: airline, flight number, departure and arrival times, duration in minutes, number of stops, price (amount + currency), and cabin class (economy or business).
+## Cities and codes
 
-## Booking
+| City | Code | City | Code | City | Code |
+|------|------|------|------|------|------|
+| Stockholm | ARN | London | LHR | Paris | CDG |
+| Amsterdam | AMS | Frankfurt | FRA | Barcelona | BCN |
+| Madrid | MAD | Rome | FCO | Berlin | BER |
+| Copenhagen | CPH | Oslo | OSL | Helsinki | HEL |
+| Vienna | VIE | Zurich | ZRH | New York | JFK |
 
-Once you've found a flight, you can book it. See [book flight](/flights-book) for the POST booking action. You'll need the `offer_id` from search results and passenger details.
+For return trips, search each direction separately — all routes are one-way.
 
-For the full list of airport codes and names, see [airports](/airports). Looking for hotels too? See [hotels](/hotels).
+## Ready to book?
+
+Once you've picked a flight, you can reserve it on the [book flight](/flights-book) page. You can also book a flight and hotel together as a package — see [bookings](/bookings).

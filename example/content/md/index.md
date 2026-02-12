@@ -1,7 +1,7 @@
 ---
 id: index
 type: section
-title: Wayfare — Travel Search API
+title: Wayfare — Travel Search
 links:
   - rel: contains
     target: flights-search
@@ -50,9 +50,9 @@ actions:
     accept: application/json
 ---
 
-# Wayfare — Travel Search API
+# Wayfare — Travel Search
 
-Search and book flights and hotels. 15 cities across Europe and North America.
+Wayfare is a mock travel search site built to demonstrate MDH (Markdown Hypertext). It lets AI agents search and book flights and hotels across 15 cities in Europe and North America using standard HTTP requests. The content is served as Markdown with YAML frontmatter — agents read the pages, follow the links, and call the endpoints described below.
 
 ## API endpoints
 

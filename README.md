@@ -1,6 +1,6 @@
 # MDH (Markdown Hypertext)
 
-A spec for making websites that AI agents can read and use. Each page is a Markdown file with YAML frontmatter. Agents read pages and follow links with plain HTTP.
+MDH is a way to build websites that AI agents can actually use. Instead of scraping HTML or needing custom protocols, the agent just reads Markdown pages and follows links. Each page has YAML frontmatter that describes what the page is, how it connects to other pages, and what API actions are available. The agent reads pages with plain HTTP GET requests, the same way it would fetch any URL.
 
 ## What a page looks like
 
